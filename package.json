@@ -1,0 +1,36 @@
+{
+  "name": "i3-style",
+  "author": "Tony Crisci <tony@dubstepdish.com> (http://dubstepdish.com)",
+  "main": "./lib/index.js",
+  "bin": {
+    "i3-style": "./lib/cli.js"
+  },
+  "preferGlobal": true,
+  "keywords": [
+    "i3",
+    "i3wm",
+    "theme",
+    "style",
+    "colorscheme"
+  ],
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "js-yaml": "*",
+    "commander": "*",
+    "shelljs": "*"
+  },
+  "version": "0.0.1",
+  "description": "Make your i3wm config a little more stylish",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acrisci/i3-style.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acrisci/i3-style/issues"
+  },
+  "homepage": "https://github.com/acrisci/i3-style"
+}
