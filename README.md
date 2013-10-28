@@ -1,6 +1,6 @@
 # i3-style
 
-Make your (i3)[http://i3wm.org] config a little more stylish.
+Make your [i3](http://i3wm.org) config a little more stylish.
 
 **Warning:** i3-style is experimental. It may eat your config! Please back up
 your config file every time you use it until it is stable.
@@ -33,4 +33,5 @@ Coming Soon
 Use only by the terms of the FreeBSD License (see LICENSE).
 
 Copyright © 2013, Tony Crisci
+
 All rights reserved.
