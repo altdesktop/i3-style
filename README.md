@@ -22,9 +22,9 @@ Usage: `i3-style <theme> [options]`
 
 Options:
 
-  -c, --config <file>  The config file the theme should be applied to. Defaults to the default i3 location.
+  -c, --config `<file>`  The config file the theme should be applied to. Defaults to the default i3 config location.
 
-  -o, --output <file>  Applies the theme, attempts to validate the result, and writes it to <file>. Prints to STDOUT if no output file is given.
+  -o, --output `<file>`  Applies the theme, attempts to validate the result, and writes it to `<file>`. Prints to STDOUT if no output file is given.
 
 `i3-style` applies the theme to your config file and prints the new config to stdout or writes it to the file specified by the `--output` argument. *The changes made to the config cannot be undone* so back up your existing config in case you don't like the new theme.
 
