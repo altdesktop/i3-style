@@ -15,6 +15,7 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
+    "underscore": "*",
     "js-yaml": "*",
     "commander": "*",
     "shelljs": "*"
