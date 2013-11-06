@@ -21,13 +21,13 @@ colors:
   custom:    '#1c5766'
 window_colors:
   focused:
-    border:     'green'
+    border:     'base1'
     background: 'green'
     text:       'base3'
-    indicator:  'blue'
+    indicator:  'green'
   focused_inactive:
-    border:     'custom'
-    background: 'custom'
+    border:     'base02'
+    background: 'base02'
     text:       'base2'
     indicator:  'violet'
   unfocused:
@@ -41,21 +41,21 @@ window_colors:
     text:       'base3'
     indicator:  'red'
 bar_colors:
-  separator:          'blue'
-  background:         'base03'
-  statusline:         'base00'
+  separator:          'red'
+  background:         'base02'
+  statusline:         'blue'
   focused_workspace:
-    border:           'green'
+    border:           'base3'
     background:       'green'
-    text:             'base02'
+    text:             'base3'
   active_workspace:
-    border:           'custom'
-    background:       'custom'
-    text:             'base2'
+    border:           'base3'
+    background:       'violet'
+    text:             'base3'
   inactive_workspace:
-    border:           'base02'
-    background:       'base02'
-    text:             'base1'
+    border:           'base01'
+    background:       'base1'
+    text:             'base03'
   urgent_workspace:
     border:           'magenta'
     background:       'magenta'
