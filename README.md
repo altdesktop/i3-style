@@ -2,6 +2,8 @@
 
 Make your [i3](http://i3wm.org) config a little more stylish.
 
+For an overview of the capabilities of i3-style, see my [blog post](http://dubstepdish.com/blog/2013/11/06/introducing-i3-style/).
+
 **Warning:** i3-style is experimental. It may eat your config! Please back up your config file every time you use it until it is stable.
 
 ## About
