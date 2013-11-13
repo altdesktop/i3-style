@@ -38,30 +38,30 @@ stripConfig = (config) ->
 
 # takes color aliases and window_color directive object and returns i3 config
 # client color directives string
-mkWindowColors = (colors, windowColors) ->
+mkWindowColors = (colors = {}, windowColors) ->
   result = []
   _.each windowColors, (parts, state) ->
     result.push templates.windowColors
       state: state
-      border: colors[parts.border]
-      background: colors[parts.background]
-      text: colors[parts.text]
-      indicator: colors[parts.indicator]
+      border: colors[parts.border] or parts.border
+      background: colors[parts.background] or parts.background
+      text: colors[parts.text] or parts.text
+      indicator: colors[parts.indicator] or parts.indicator
   return result.join '\n'
 
 # takes color aliases and bar color directive object and returns i3 config bar
 # color directive string
-mkBarColors = (colors, bar_colors) ->
+mkBarColors = (colors = {}, bar_colors) ->
   result = []
   _.each bar_colors, (parts, state) ->
     if _.isString parts
-      result.push "#{state} #{colors[parts]}"
+      result.push "#{state} #{colors[parts] or parts}"
     else
       result.push templates.barColors
         state: state
-        border: colors[parts.border]
-        background: colors[parts.background]
-        text: colors[parts.text]
+        border: colors[parts.border] or parts.border
+        background: colors[parts.background] or parts.background
+        text: colors[parts.text] or parts.text
   return result.join "\n    "
 
 
