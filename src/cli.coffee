@@ -10,7 +10,7 @@ pathUtil = require 'path'
 sh.config.silent = yes
 
 program
-  .version('0.0.1')
+  .version('0.0.3')
   .usage('<theme> [options]')
   .option('-c, --config <file>', 'The config file the theme should be applied to. Defaults to the default i3 location.')
   .option('-o, --output <file>', 'Applies the theme, attempts to validate the result, and writes it to <file>. Prints to STDOUT if no output file is given.')

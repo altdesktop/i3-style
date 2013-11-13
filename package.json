@@ -20,7 +20,7 @@
     "commander": "*",
     "shelljs": "*"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Make your i3wm config a little more stylish",
   "devDependencies": {},
   "scripts": {
