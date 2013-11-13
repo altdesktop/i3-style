@@ -34,7 +34,7 @@ Check the `themes` directory for the list of built-in themes.
 
 If you want to modify a theme, copy it from `themes` and give it a `.yaml` extension. The object format is [well-documented](https://github.com/acrisci/i3-style/blob/master/doc/spec.md) and includes support for color aliases. Then back up your config and call i3-style.
 
-    i3-style ~/.i3/solarized.yaml ~/.i3/config
+    i3-style ~/.i3/solarized.yaml -o ~/.i3/config
 
 Just keep doing that until you get it perfect (which might be never).
 
