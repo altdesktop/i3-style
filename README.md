@@ -2,13 +2,17 @@
 
 Make your [i3](http://i3wm.org) config a little more stylish.
 
-For an overview of the capabilities of i3-style, see my [blog post](http://dubstepdish.com/blog/2013/11/06/introducing-i3-style/).
-
 **Warning:** i3-style is experimental. It may eat your config! Please back up your config file every time you use it until it is stable.
 
 ## About
 
-Coming soon
+i3-style applies a theme to your i3 config file to change the colorscheme of the window decorations and the different parts of i3bar. It's designed especially for people who make frequent changes to their colorscheme to get things just right.
+
+* Easy to try out new themes right after you install.
+* Themes are easy to read, modify, and share.
+* Modifies your theme in place - extra template files are not needed.
+
+For an overview of the capabilities of i3-style, see my [blog post](http://dubstepdish.com/blog/2013/11/06/introducing-i3-style/).
 
 ## Installing
 
@@ -20,99 +24,27 @@ The `i3-style` executable should now be in your PATH.
 
 ## Usage
 
-Usage: `i3-style <theme> [options]`
+First of all, it's always a good idea to make a backup of your config before you try a new theme so you can get things back to how they were. Then just call `i3-style` with the name of the theme you want to try and where you want to write the config file to. i3-style will look for your config in the default place and apply the theme. Then just reload and enjoy the new theme.
 
-Options:
+    cp ~/.i3/config ~/.i3/config.backup
+    i3-style solarized -o ~/.i3/config
+    i3-msg reload
 
-  -c, --config `<file>`  The config file the theme should be applied to. Defaults to the default i3 config location.
+Check the `themes` directory for the list of built-in themes.
 
-  -o, --output `<file>`  Applies the theme, attempts to validate the result, and writes it to `<file>`. Prints to STDOUT if no output file is given.
+If you want to modify a theme, copy it from `themes` and give it a `.yaml` extension. The object format is [well-documented](https://github.com/acrisci/i3-style/blob/master/doc/spec.md) and includes support for color aliases. Then back up your config and call i3-style.
 
-`i3-style` applies the theme to your config file and prints the new config to stdout or writes it to the file specified by the `--output` argument. *The changes made to the config cannot be undone* so back up your existing config in case you don't like the new theme.
+    i3-style ~/.i3/solarized.yaml ~/.i3/config
 
-`<theme>` should be the path to an i3-style theme file or the name of one of the built-in styles. Theme files specify the colors i3 should use for window deocrations and the i3-bar. For example, to use a [solarized](http://ethanschoonover.com/solarized) colorscheme, create the file `solarized.yaml` with the contents:
+Just keep doing that until you get it perfect (which might be never).
 
-```YAML
-# solarized colorscheme by lasers (no cyan version)
----
-colors:
-  base03:    '#002b36'
-  base02:    '#073642'
-  base01:    '#586e75'
-  base00:    '#657b83'
-  base0:     '#839496'
-  base1:     '#93a1a1'
-  base2:     '#eee8d5'
-  base3:     '#fdf6e3'
-  yellow:    '#b58900'
-  orange:    '#cb4b16'
-  red:       '#dc322f'
-  magenta:   '#d33682'
-  violet:    '#6c71c4'
-  blue:      '#268bd2'
-  cyan:      '#2aa198'
-  green:     '#859900'
-  custom:    '#1c5766'
-window_colors:
-  focused:
-    border:     'green'
-    background: 'green'
-    text:       'base3'
-    indicator:  'blue'
-  focused_inactive:
-    border:     'custom'
-    background: 'custom'
-    text:       'base2'
-    indicator:  'violet'
-  unfocused:
-    border:     'base02'
-    background: 'base02'
-    text:       'base1'
-    indicator:  'base01'
-  urgent:
-    border:     'magenta'
-    background: 'magenta'
-    text:       'base3'
-    indicator:  'red'
-bar_colors:
-  separator:          'blue'
-  background:         'base03'
-  statusline:         'base00'
-  focused_workspace:
-    border:           'green'
-    background:       'green'
-    text:             'base02'
-  active_workspace:
-    border:           'custom'
-    background:       'custom'
-    text:             'base2'
-  inactive_workspace:
-    border:           'base02'
-    background:       'base02'
-    text:             'base1'
-  urgent_workspace:
-    border:           'magenta'
-    background:       'magenta'
-    text:             'base3'
-```
+## Contributing - Send us themes!
 
-`i3-style` will apply this style by removing any existing style in your config and adding the new style to the client window decorations and to each bar config.
-
-This style happens to be built into `i3-style` by default, so you can try it out by simply typing `i3-style solarized` and examining stdout. If you like what you see, back up your old config, create the styled config, and reload i3 to see what it looks like.
-
-    $ cp ~/.i3/config ~/.i3/config.backup
-    $ i3-style solarized -o ~/.i3/config
-    $ i3-msg reload
-
-And enjoy your new i3 theme. More themes are on the way!
-
-## Contributing
-
-Coming Soon
+If you've made a new theme, or made an improvement to an existing theme, please make a pull request adding your theme to the `themes` directory!
 
 ## License
 
-Use only by the terms of the FreeBSD License (see LICENSE).
+This work is available under a FreeBSD License (see LICENSE).
 
 Copyright © 2013, Tony Crisci
 
