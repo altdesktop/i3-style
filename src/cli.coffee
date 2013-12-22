@@ -17,6 +17,11 @@ program
   .option('-o, --output <file>', 'Applies the theme, attempts to validate the result, and writes it to <file>. Prints to STDOUT if no output file is given.')
   .parse(process.argv)
 
+# print usage if no arguments
+unless program.args.length
+  program.outputHelp()
+  process.exit 0
+
 # convenience function to test existence of a file
 fileExists = (path) -> path? and sh.test('-f', path)
 
