@@ -38,7 +38,73 @@ If you want to modify a theme, copy it from `themes` and give it a `.yaml` exten
 
 Just keep doing that until you get it perfect (which might be never).
 
-## Contributing - Send us themes!
+## Example theme
+
+```yaml
+# solarized colorscheme by lasers (no cyan version)
+---
+colors:
+  base03:           '#002b36'
+  base02:           '#073642'
+  base01:           '#586e75'
+  base00:           '#657b83'
+  base0:            '#839496'
+  base1:            '#93a1a1'
+  base2:            '#eee8d5'
+  base3:            '#fdf6e3'
+  yellow:           '#b58900'
+  orange:           '#cb4b16'
+  red:              '#dc322f'
+  magenta:          '#d33682'
+  violet:           '#6c71c4'
+  blue:             '#268bd2'
+  cyan:             '#2aa198'
+  green:            '#859900'
+  custom:           '#1c5766'
+window_colors:
+  focused:
+    border:         'green'
+    background:     'green'
+    text:           'base3'
+    indicator:      'green'
+  focused_inactive:
+    border:         'base02'
+    background:     'base02'
+    text:           'base2'
+    indicator:      'violet'
+  unfocused:
+    border:         'base02'
+    background:     'base02'
+    text:           'base1'
+    indicator:      'base01'
+  urgent:
+    border:         'magenta'
+    background:     'magenta'
+    text:           'base3'
+    indicator:      'red'
+bar_colors:
+  separator:        'red'
+  background:       'base03'
+  statusline:       'blue'
+  focused_workspace:
+    border:         'base3'
+    background:     'green'
+    text:           'base3'
+  active_workspace:
+    border:         'base3'
+    background:     'violet'
+    text:           'base3'
+  inactive_workspace:
+    border:         'base01'
+    background:     'base1'
+    text:           'base03'
+  urgent_workspace:
+    border:         'magenta'
+    background:     'magenta'
+    text:           'base3'
+```
+
+## Send us themes!
 
 If you've made a new theme, or made an improvement to an existing theme, please make a pull request adding your theme to the `themes` directory!
 
