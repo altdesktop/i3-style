@@ -43,12 +43,12 @@ unless fileExists(program.args[0]) or program.args[0] in themesAvailable
 theme = switch
   when program.args[0].match /\.json$/
     JSON.parse sh.cat program.args[0]
-  when program.args[0].match /\.yaml$/
+  when program.args[0].match(/\.yaml$/) or program.args[0].match(/\.yml$/)
     yaml.safeLoad sh.cat program.args[0]
   when program.args[0] in themesAvailable
     yaml.safeLoad sh.cat pathUtil.join(themesDir, program.args[0])
   else
-    exitWithError "Theme must be a valid json or yaml file or a builtin theme"
+    yaml.safeLoad sh.cat program.args[0]
 
 # throw an error when a config file is specified and not found
 if program.config? and not fileExists program.config
