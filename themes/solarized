@@ -21,7 +21,7 @@ colors:
   custom:           '#1c5766'
 window_colors:
   focused:
-    border:         'base1'
+    border:         'green'
     background:     'green'
     text:           'base3'
     indicator:      'green'
@@ -42,7 +42,7 @@ window_colors:
     indicator:      'red'
 bar_colors:
   separator:        'red'
-  background:       'base02'
+  background:       'base03'
   statusline:       'blue'
   focused_workspace:
     border:         'base3'
