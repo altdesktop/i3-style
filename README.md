@@ -24,11 +24,11 @@ The `i3-style` executable should now be in your PATH.
 
 ## Usage
 
-First of all, it's always a good idea to make a backup of your config before you try a new theme so you can get things back to how they were. Then just call `i3-style` with the name of the theme you want to try and where you want to write the config file to. i3-style will look for your config in the default place and apply the theme. Then just reload and enjoy the new theme.
+First of all, it's always a good idea to make a backup of your config before you try a new theme so you can get things back to how they were. Then just call `i3-style` with the name of the theme you want to try and where you want to write the config file to. i3-style will look for your config in the default place and apply the theme. Then just restart i3 and enjoy the new theme.
 
     cp ~/.i3/config ~/.i3/config.backup
     i3-style solarized -o ~/.i3/config
-    i3-msg reload
+    i3-msg restart
 
 Check the `themes` directory for the list of built-in themes.
 
