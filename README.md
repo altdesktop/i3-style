@@ -3,6 +3,7 @@
 Make your [i3](http://i3wm.org) config a little more stylish.
 
 [![NPM](https://nodei.co/npm/i3-style.png?compact=true)](https://nodei.co/npm/i3-style/)
+
 [![NPM](https://nodei.co/npm-dl/i3-style.png?months=6)](https://nodei.co/npm/i3-style/)
 
 ## About
