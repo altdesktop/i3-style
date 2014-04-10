@@ -5,8 +5,6 @@ Make your [i3](http://i3wm.org) config a little more stylish.
 [![NPM](https://nodei.co/npm/i3-style.png?compact=true)](https://nodei.co/npm/i3-style/)
 [![NPM](https://nodei.co/npm-dl/i3-style.png?months=6)](https://nodei.co/npm/i3-style/)
 
-**Warning:** i3-style is experimental. It may eat your config! Please back up your config file every time you use it until it is stable.
-
 ## About
 
 i3-style applies a theme to your i3 config file to change the colorscheme of the window decorations and the different parts of i3bar. It's designed especially for people who make frequent changes to their colorscheme to get things just right.
