@@ -1,6 +1,7 @@
 # vim: filetype=yaml
-# solarized colorscheme by lasers (no cyan version)
 ---
+meta:
+  description: 'Solarized theme by lasers'
 colors:
   base03:           '#002b36'
   base02:           '#073642'

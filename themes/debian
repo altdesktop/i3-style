@@ -1,6 +1,7 @@
 # vim: filetype=yaml
-# debian theme for i3wm by lasers
 ---
+meta:
+  description: 'Debian theme by lasers'
 window_colors:
   focused:
     border:           '#d70a53'

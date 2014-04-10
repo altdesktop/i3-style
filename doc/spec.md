@@ -5,10 +5,10 @@
 <dd>Tony Crisci (dubstepdish.com)</dd>
 
 <dt>Revision</dt>
-<dd>0.0.2</dd>
+<dd>0.1.0</dd>
 
 <dt>Date</dt>
-<dd>30 October 2013</dd>
+<dd>10 April 2014</dd>
 
 <dt>Copyright</dt>
 <dd>Copyright © 2013 Tony Crisci. This work is licensed <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">CC-BY-SA 3.0</a>
@@ -94,6 +94,14 @@ bar_colors:
 ## i3-config-builder Objects
 
 An *i3-config-builder object* is always a single object. The i3-config-builder object may optionally have any of the members described below at its root. Each of the keys for the i3-config-builder object and all their members must only consist of word characters, digits, and the underscore.
+
+### The Meta Object
+
+The *meta object* may be present at the root of the i3-config-builder object with the key `meta`. If present, its value must be an object which may contain any of the following keys:
+
+* `description`
+
+If `description` is present, it must be a string less than 140 characters long and should briefly describe the purpose of the object.
 
 ### The Colors Object
 

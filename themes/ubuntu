@@ -1,6 +1,7 @@
 # vim: filetype=yaml
-# ubuntu theme for i3wm by lasers
 ---
+meta:
+  description: 'Ubuntu theme by lasers'
 window_colors:
   focused:
     border:           '#dd4814'

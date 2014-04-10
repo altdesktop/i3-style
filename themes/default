@@ -1,7 +1,7 @@
 # vim: filetype=yaml
-# i3 default theme
-# http://i3wm.org
 ---
+meta:
+  description: 'Default theme for i3wm <http://i3wm.org>'
 window_colors:
   focused:
     border:           '#4c7899'

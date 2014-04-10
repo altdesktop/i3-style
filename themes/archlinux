@@ -1,7 +1,7 @@
 # vim: filetype=yaml
-# archlinux theme for i3 by okraits
-# http://okraits.de
 ---
+meta:
+  description: 'Archlinux theme by okraits <http://okraits.de>'
 window_colors:
   focused:
     border:           '#0088CC'
