@@ -15,7 +15,22 @@ program
   .usage('<theme> [options]')
   .option('-c, --config <file>', 'The config file the theme should be applied to. Defaults to the default i3 location.')
   .option('-o, --output <file>', 'Applies the theme, attempts to validate the result, and writes it to <file>. Prints to STDOUT if no output file is given.')
+  .option('-l, --list-all', 'Prints a list of all available themes.')
   .parse(process.argv)
+
+themesDir = pathUtil.resolve(__dirname, '../themes')
+themesAvailable = sh.ls themesDir
+
+# if --list-all was passed, print themes and exit
+if program.listAll
+  sh.echo '\n  Available themes:\n'
+  themesList = []
+  themesAvailable.forEach (themePath) ->
+    theme = yaml.safeLoad sh.cat pathUtil.join(themesDir, themePath)
+    paddedName = (themePath[i] or ' ' for i in [0..10]).join('')
+    themesList.push "    #{paddedName} - #{theme.meta?.description or ''}"
+  sh.echo themesList.join('\n') + '\n'
+  process.exit 0
 
 # print usage if no arguments
 unless program.args.length
@@ -32,9 +47,6 @@ exitWithError = (msg) ->
   process.exit 1
 
 # throw an error if the theme file does not exist
-themesDir = pathUtil.resolve(__dirname, '../themes')
-themesAvailable = sh.ls themesDir
-
 unless fileExists(program.args[0]) or program.args[0] in themesAvailable
   exitWithError "Theme or file not found: #{program.args[0]}"
 
