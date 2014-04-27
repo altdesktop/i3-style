@@ -2,6 +2,7 @@
   "name": "i3-style",
   "author": "Tony Crisci <tony@dubstepdish.com> (http://dubstepdish.com)",
   "main": "./lib/index.js",
+  "directories": [ "lib", "doc", "themes" ],
   "bin": {
     "i3-style": "./lib/cli.js"
   },
@@ -25,7 +26,7 @@
     "mocha": "*",
     "chai": "*"
   },
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Make your i3wm config a little more stylish",
   "devDependencies": {},
   "scripts": {
