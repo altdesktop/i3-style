@@ -12,9 +12,9 @@ templates =
 # IMPORTANT: only works if the bar doesn't have colors directive! strip first!
 # TODO: fix this so it will ignore inner braces
 matchBar = ///
-  bar\s*{
+  bar\s*{\s*\n
     ([^}]*)
-  }
+  \n}
 ///g
 
 # matches a colors directive, such as may be inside a bar directive
