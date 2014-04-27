@@ -5,6 +5,7 @@ sh = require 'shelljs'
 chai.should()
 
 sh.config.silent = yes
+process.env.I3STYLETEST = "yes"
 
 commentedBar = """
 #bar {}

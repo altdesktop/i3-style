@@ -104,8 +104,8 @@ if i3Path and tmpdir
     if validation.output.indexOf('ERROR:') > 0 or validation.code > 0
       exitWithError "Could not validate output configuration.\n\n#{validation.output}"
 
-# make a backup
-if tmpdir
+# make a backup (if not testing)
+if tmpdir and not process.env.I3STYLETEST
   sh.mkdir pathUtil.join(tmpdir, 'i3-style')
   tmpPath = pathUtil.join(tmpdir, 'i3-style', "config.bak.#{Date.now()}")
   sh.echo "#{configPath} -> #{tmpPath}"
