@@ -1,0 +1,75 @@
+{
+    "bar_colors": {
+        "active_workspace": {
+            "background": "violet",
+            "border": "base3",
+            "text": "base3"
+        },
+        "background": "base03",
+        "focused_workspace": {
+            "background": "green",
+            "border": "base3",
+            "text": "base3"
+        },
+        "inactive_workspace": {
+            "background": "base1",
+            "border": "base01",
+            "text": "base03"
+        },
+        "separator": "red",
+        "statusline": "blue",
+        "urgent_workspace": {
+            "background": "magenta",
+            "border": "magenta",
+            "text": "base3"
+        }
+    },
+    "colors": {
+        "base0": "#839496",
+        "base00": "#657b83",
+        "base01": "#586e75",
+        "base02": "#073642",
+        "base03": "#002b36",
+        "base1": "#93a1a1",
+        "base2": "#eee8d5",
+        "base3": "#fdf6e3",
+        "blue": "#268bd2",
+        "custom": "#1c5766",
+        "cyan": "#2aa198",
+        "green": "#859900",
+        "magenta": "#d33682",
+        "orange": "#cb4b16",
+        "red": "#dc322f",
+        "violet": "#6c71c4",
+        "yellow": "#b58900"
+    },
+    "meta": {
+        "description": "Solarized theme by lasers"
+    },
+    "window_colors": {
+        "focused": {
+            "background": "green",
+            "border": "green",
+            "indicator": "green",
+            "text": "base3"
+        },
+        "focused_inactive": {
+            "background": "base02",
+            "border": "base02",
+            "indicator": "violet",
+            "text": "base2"
+        },
+        "unfocused": {
+            "background": "base02",
+            "border": "base02",
+            "indicator": "base01",
+            "text": "base1"
+        },
+        "urgent": {
+            "background": "magenta",
+            "border": "magenta",
+            "indicator": "red",
+            "text": "base3"
+        }
+    }
+}
