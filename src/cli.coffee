@@ -15,6 +15,7 @@ program
   .usage('<theme> [options]')
   .option('-c, --config <file>', 'The config file the theme should be applied to. Defaults to the default i3 location.')
   .option('-o, --output <file>', 'Applies the theme, attempts to validate the result, and writes it to <file>. Prints to STDOUT if no output file is given.')
+  .option('-r, --reload', 'Apply the theme by reloading your config with i3-msg (restart may be required to apply bar colors)')
   .option('-l, --list-all', 'Prints a list of all available themes.')
   .parse(process.argv)
 
@@ -85,6 +86,7 @@ config = mkConfig theme, sh.cat(configPath)
 # no output file specified. echo result to stdout and we are done.
 unless program.output
   sh.echo config
+  sh.exec('i3-msg reload') if program.reload
   process.exit 0
 
 # try to validate the generated config if we can
@@ -112,3 +114,4 @@ if tmpdir
 # finally write the file to the specified location
 fs.writeFile program.output, config, (err) ->
   exitWithError "Could not write to file: #{program.output}\n\n#{err}" if err
+  sh.exec('i3-msg reload') if program.reload
