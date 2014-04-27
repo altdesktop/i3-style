@@ -69,18 +69,18 @@ if program.config? and not fileExists program.config
 # get the contents of the config file specified on the command line, or look in
 # the default locations for the config file
 HOME = process.env.HOME
-config = switch
+configPath = switch
   when program.config
-    sh.cat program.config
+    program.config
   when HOME and fileExists "#{HOME}/.i3/config"
-    sh.cat "#{HOME}/.i3/config"
+    "#{HOME}/.i3/config"
   when HOME and fileExists "#{HOME}/.config/i3/config"
-    sh.cat "#{HOME}/.config/i3/config"
+    "#{HOME}/.config/i3/config"
   else
     exitWithError "Could not find a valid i3 config file"
 
 # do the heavy lifting
-config = mkConfig theme, config
+config = mkConfig theme, sh.cat(configPath)
 
 # no output file specified. echo result to stdout and we are done.
 unless program.output
@@ -101,6 +101,13 @@ if i3Path and tmpdir
     sh.rm tmpConfigPath
     if validation.output.indexOf('ERROR:') > 0 or validation.code > 0
       exitWithError "Could not validate output configuration.\n\n#{validation.output}"
+
+# make a backup
+if tmpdir
+  sh.mkdir pathUtil.join(tmpdir, 'i3-style')
+  tmpPath = pathUtil.join(tmpdir, 'i3-style', "config.bak.#{Date.now()}")
+  sh.echo "#{configPath} -> #{tmpPath}"
+  sh.cp(configPath, tmpPath)
 
 # finally write the file to the specified location
 fs.writeFile program.output, config, (err) ->
