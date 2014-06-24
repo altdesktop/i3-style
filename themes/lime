@@ -4,7 +4,7 @@ meta:
   description: 'Lime theme by wei2912 <http://wei2912.github.io>, based on Archlinux theme by okraits <http://okraits.de>'
 colors:
   lime:               '#4E9C00' # main colour
-  lime_inactive:      '#284F00'
+  lime_inactive:      '#1B3600'
 
   red:                '#C20000' # urgent colour
   black:              '#333333' # background
@@ -23,7 +23,7 @@ window_colors:
   focused_inactive:
     border:           'lime_inactive'
     background:       'lime_inactive'
-    text:             'txt_active'
+    text:             'txt_inactive'
     indicator:        'indicator'
   unfocused:
     border:           'black'
