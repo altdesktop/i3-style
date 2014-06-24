@@ -2,44 +2,55 @@
 ---
 meta:
   description: 'Lime theme by wei2912 <http://wei2912.github.io>, based on Archlinux theme by okraits <http://okraits.de>'
+colors:
+  lime:               '#4E9C00'
+  red:                '#C20000'
+
+  bg_black:           '#333333'
+
+  txt_active:         '#FFFFFF'
+  txt_inactive:       '#888888'
+
+  indicator:          '#DDDDDD'
+
 window_colors:
   focused:
-    border:           '#4E9C00'
-    background:       '#4E9C00'
-    text:             '#ffffff'
-    indicator:        '#dddddd'
+    border:           'lime'
+    background:       'lime'
+    text:             'txt_active'
+    indicator:        'indicator'
   focused_inactive:
-    border:           '#333333'
-    background:       '#333333'
-    text:             '#888888'
-    indicator:        '#292d2e'
+    border:           'lime'
+    background:       'lime'
+    text:             'txt_inactive'
+    indicator:        'indicator'
   unfocused:
-    border:           '#333333'
-    background:       '#333333'
-    text:             '#888888'
-    indicator:        '#292d2e'
+    border:           'bg_black'
+    background:       'bg_black'
+    text:             'txt_inactive'
+    indicator:        'indicator'
   urgent:
-    border:           '#2f343a'
-    background:       '#900000'
-    text:             '#ffffff'
-    indicator:        '#900000'
+    border:           'red'
+    background:       'red'
+    text:             'txt_active'
+    indicator:        'indicator'
 bar_colors:
-  separator:          '#666666'
-  background:         '#222222'
-  statusline:         '#dddddd'
+  separator:          'txt_inactive'
+  background:         'bg_black'
+  statusline:         'txt_active'
   focused_workspace:
-    border:           '#4E9C00'
-    background:       '#4E9C00'
-    text:             '#ffffff'
+    border:           'lime'
+    background:       'lime'
+    text:             'txt_active'
   active_workspace:
-    border:           '#333333'
-    background:       '#333333'
-    text:             '#ffffff'
+    border:           'bg_black'
+    background:       'bg_black'
+    text:             'txt_active'
   inactive_workspace:
-    border:           '#333333'
-    background:       '#333333'
-    text:             '#888888'
+    border:           'bg_black'
+    background:       'bg_black'
+    text:             'txt_inactive'
   urgent_workspace:
-    border:           '#2f343a'
-    background:       '#900000'
-    text:             '#ffffff'
+    border:           'red'
+    background:       'red'
+    text:             'txt_active'
