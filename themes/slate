@@ -1,0 +1,45 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'Slate theme by Jody Ribton <jody@ribton.me>'
+window_colors:
+  focused:
+    border:           '#586e75'
+    background:       '#586e75'
+    text:             '#fdf6e3'
+    indicator:        '#268bd2'
+  focused_inactive:
+    border:           '#073642'
+    background:       '#073642'
+    text:             '#93a1a1'
+    indicator:        '#002b36'
+  unfocused:
+    border:           '#002b36'
+    background:       '#002b36'
+    text:             '#586e75'
+    indicator:        '#002b36'
+  urgent:
+    border:           '#dc322f'
+    background:       '#dc322f'
+    text:             '#fdf6e3'
+    indicator:        '#dc322f'
+bar_colors:
+  separator:          '#586e75'
+  background:         '#002b36'
+  statusline:         '#aea79f'
+  focused_workspace:
+    border:           '#586e75'
+    background:       '#586e75'
+    text:             '#ffffff'
+  active_workspace:
+    border:           '#073642'
+    background:       '#073642'
+    text:             '#ffffff'
+  inactive_workspace:
+    border:           '#002b36'
+    background:       '#002b36'
+    text:             '#aea79f'
+  urgent_workspace:
+    border:           '#77216f'
+    background:       '#77216f'
+    text:             '#ffffff'
