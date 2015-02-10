@@ -1,4 +1,5 @@
 # vim: filetype=yaml
+# TODO: use color aliases to make the theme more readable
 ---
 meta:
   description: 'Slate theme by Jody Ribton <jody@ribton.me>'

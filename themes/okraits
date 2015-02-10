@@ -1,4 +1,5 @@
 # vim: filetype=yaml
+# TODO: use color aliases to make the theme more readable
 ---
 meta:
   description: 'A simple theme by okraits <http://okraits.de>'
