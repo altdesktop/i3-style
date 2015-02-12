@@ -1,7 +1,7 @@
 # vim: filetype=yaml
 ---
 meta:
-  description: 'seti theme by Jody Ribton - based on the set Atom theme at https://atom.io/themes/seti-ui'
+  description: 'seti theme by Jody Ribton - based on the seti Atom theme at https://atom.io/themes/seti-ui'
 colors:
   blue:          '#4F99D3'
   green:         '#9FCA56'
