@@ -22,7 +22,7 @@ window_colors:
   focused_inactive:
     border:      'green'
     background:  'green'
-    text:        'white'
+    text:        'base'
     indicator:   'purple'
   unfocused:
     border:      'grey'
