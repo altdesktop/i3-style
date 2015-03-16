@@ -1,0 +1,60 @@
+# vim: filetype=yaml
+# TODO: use color aliases to make the theme more readable
+---
+colors:
+  background:         '#2d2d2d'
+  current_line:       '#393939'
+  selection:          '#515151'
+  foreground:         '#cccccc'
+  comment:            '#999999'
+  red:                '#f2777a'
+  orange:             '#f99157'
+  yellow:             '#ffcc66'
+  green:              '#99cc99'
+  aqua:               '#66cccc'
+  blue:               '#6699cc'
+  purple:             '#cc99cc'  
+
+meta:
+  description: 'Tomorrow Night 80s theme by jmfurlott <http://jmfurlott.com>'
+window_colors:
+  focused:
+    border:           'green'
+    background:       'green'
+    text:             '#000000'
+    indicator:        'background'
+  focused_inactive:
+    border:           'current_line'
+    background:       'current_line'
+    text:             '#888888'
+    indicator:        '#292d2e'
+  unfocused:
+    border:           'background'
+    background:       'background'
+    text:             'comment'
+    indicator:        '#292d2e'
+  urgent:
+    border:           '#2f343a'
+    background:       '#900000'
+    text:             '#ffffff'
+    indicator:        '#900000'
+bar_colors:
+  separator:          'selection'
+  background:         'background'
+  statusline:         'foreground'
+  focused_workspace:
+    border:           'green'
+    background:       'green'
+    text:             '#000000'
+  active_workspace:
+    border:           '#333333'
+    background:       '#333333'
+    text:             '#ffffff'
+  inactive_workspace:
+    border:           'background'
+    background:       'background'
+    text:             'comment'
+  urgent_workspace:
+    border:           'red'
+    background:       'red'
+    text:             '#ffffff'
