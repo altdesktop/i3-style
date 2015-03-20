@@ -29,7 +29,7 @@ if program.listAll
   themesList = []
   themesAvailable.forEach (themePath) ->
     theme = yaml.safeLoad sh.cat pathUtil.join(themesDir, themePath)
-    paddedName = (themePath[i] or ' ' for i in [0..10]).join('')
+    paddedName = (themePath[i] or ' ' for i in [0..17]).join('')
     themesList.push "    #{paddedName} - #{theme.meta?.description or ''}"
   sh.echo themesList.join('\n') + '\n'
   process.exit 0
