@@ -19,7 +19,8 @@
     "underscore": "*",
     "js-yaml": "*",
     "commander": "*",
-    "shelljs": "*"
+    "shelljs": "*",
+    "color-namer": "*"
   },
   "devDependencies": {
     "coffee-script": ">=1.7.0",

@@ -1,4 +1,5 @@
 _ = require 'underscore'
+namer = require 'color-namer'
 
 # change to mustache style templates
 _.templateSettings =  interpolate :/\{\{(.+?)\}\}/g
@@ -81,5 +82,108 @@ mkConfig = (theme, config) ->
   config += "\n#{mkWindowColors theme.colors, theme.window_colors}"
   return config
 
+# takes a config and returns an i3-style theme
+mkTheme = (config) ->
+  theme =
+    meta:
+      description: 'AUTOMATICALLY GENERATED THEME'
+
+  # add a color name to the theme for the given hex color and return the name
+  # of the color
+  addColor = (hex) ->
+    if not hex
+      return null
+
+    unless theme.colors?
+      theme.colors = {}
+
+    colorName = namer(hex).html[0].name
+
+    if theme.colors[colorName]? and theme.colors[colorName] isnt hex
+      i = 0
+      while true
+        i += 1
+        c = "#{colorName}#{i}"
+        if not theme.colors[c] or theme.colors[c] == hex
+          colorName = c
+          break
+
+    theme.colors[colorName] = hex
+    return colorName
+
+  stateBarInside = off
+  stateColorsInside = off
+
+  for line in config.split('\n')
+    # trim the line
+    line = line.replace(/^\s+|\s+$/g, '')
+    # remove duplicate spaces between words
+    line = line.replace(/\s+/g, ' ')
+
+    # beginning of a bar block
+    if line.indexOf('bar {') is 0
+      stateBarInside = on
+      continue
+
+    # beginning of a bar color block
+    if line.indexOf('colors {') is 0 and stateBarInside
+      stateColorsInside = on
+      continue
+
+    if line.indexOf('}') is 0
+      if stateColorsInside
+        # end of a bar color block
+        stateColorsInside = off
+        continue
+      if stateBarInside
+        # end of a bar block
+        stateBarInside = off
+        continue
+
+    # check for window color config directive
+    if line.indexOf('client.') == 0
+      color = line.split(' ')
+      color[0] = color[0].substring('client.'.length)
+      if color[0] in ['focused', 'focused_inactive', 'unfocused', 'urgent']
+        border = addColor color[1]
+        background = addColor color[2]
+        text = addColor color[3]
+        indicator = addColor color[4]
+
+        unless theme.window_colors?
+          theme.window_colors = {}
+
+        theme.window_colors[color[0]] = {}
+        if border? then theme.window_colors[color[0]].border = border
+        if background? then theme.window_colors[color[0]].background = background
+        if text? then theme.window_colors[color[0]].text = text
+        if indicator? then theme.window_colors[color[0]].indicator = indicator
+
+      continue
+
+    # check for bar color config directive
+    if stateColorsInside
+      barColor = line.split(' ')
+      if barColor[0] in ['separator', 'background', 'statusline']
+        theme.bar_colors[barColor[0]] = addColor barColor[1]
+      else if barColor[0] in ['focused_workspace', 'active_workspace',
+                              'inactive_workspace', 'urgent_workspace']
+        border = addColor barColor[1]
+        background = addColor barColor[2]
+        text = addColor barColor[3]
+
+        unless theme.bar_colors?
+          theme.bar_colors = {}
+
+        theme.bar_colors[barColor[0]] = {}
+        if border? then theme.bar_colors[barColor[0]].border = border
+        if background? then theme.bar_colors[barColor[0]].background = background
+        if text? then theme.bar_colors[barColor[0]].text = text
+
+      continue
+
+  return theme
+
 module.exports =
   mkConfig: mkConfig
+  mkTheme: mkTheme

@@ -5,10 +5,13 @@ sh = require 'shelljs'
 program = require 'commander'
 yaml = require 'js-yaml'
 pathUtil = require 'path'
-{mkConfig} = require './index'
+{mkConfig, mkTheme} = require './index'
 VERSION = require('../package.json').version
 
 sh.config.silent = yes
+
+# convenience function to test existence of a file
+fileExists = (path) -> path? and sh.test('-f', path)
 
 program
   .version(VERSION)
@@ -18,6 +21,7 @@ program
   .option('-s, --save', 'Set the output file to the path of the input file.')
   .option('-r, --reload', 'Apply the theme by reloading the config.')
   .option('-l, --list-all', 'Print a list of all available themes.')
+  .option('-t, --to-theme', 'Prints an i3-style theme based on the given config suitable for sharing with others.')
   .parse(process.argv)
 
 themesDir = pathUtil.resolve(__dirname, '../themes')
@@ -34,13 +38,36 @@ if program.listAll
   sh.echo themesList.join('\n') + '\n'
   process.exit 0
 
+# get the contents of the config file specified on the command line, or look in
+# the default locations for the config file
+HOME = process.env.HOME
+configPath = switch
+  when program.config
+    program.config
+  when HOME and fileExists "#{HOME}/.i3/config"
+    "#{HOME}/.i3/config"
+  when HOME and fileExists "#{HOME}/.config/i3/config"
+    "#{HOME}/.config/i3/config"
+  else
+    exitWithError "Could not find a valid i3 config file"
+
+if program.toTheme
+  theme = mkTheme sh.cat configPath
+  yamlTheme = """# vim: filetype=yaml
+  ---
+  #{yaml.safeDump theme}"""
+
+  if program.output
+    fs.writeFileSync(program.output, yamlTheme)
+  else
+    sh.echo yamlTheme
+
+  process.exit 0
+
 # print usage if no arguments
 unless program.args.length
   program.outputHelp()
   process.exit 0
-
-# convenience function to test existence of a file
-fileExists = (path) -> path? and sh.test('-f', path)
 
 # convenience function to exit with code 1 error. also prints usage.
 exitWithError = (msg) ->
@@ -67,19 +94,6 @@ theme = switch
 # throw an error when a config file is specified and not found
 if program.config? and not fileExists program.config
   exitWithError "Config file not found: #{program.config}"
-
-# get the contents of the config file specified on the command line, or look in
-# the default locations for the config file
-HOME = process.env.HOME
-configPath = switch
-  when program.config
-    program.config
-  when HOME and fileExists "#{HOME}/.i3/config"
-    "#{HOME}/.i3/config"
-  when HOME and fileExists "#{HOME}/.config/i3/config"
-    "#{HOME}/.config/i3/config"
-  else
-    exitWithError "Could not find a valid i3 config file"
 
 # do the heavy lifting
 config = mkConfig theme, sh.cat(configPath)
