@@ -165,6 +165,9 @@ mkTheme = (config) ->
     if stateColorsInside
       barColor = line.split(' ')
       if barColor[0] in ['separator', 'background', 'statusline']
+        unless theme.bar_colors?
+          theme.bar_colors = {}
+
         theme.bar_colors[barColor[0]] = addColor barColor[1]
       else if barColor[0] in ['focused_workspace', 'active_workspace',
                               'inactive_workspace', 'urgent_workspace']
