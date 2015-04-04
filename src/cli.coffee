@@ -14,6 +14,12 @@ sh.config.silent = yes
 # convenience function to test existence of a file
 fileExists = (path) -> path? and sh.test('-f', path)
 
+# convenience function to exit with code 1 error. also prints usage.
+exitWithError = (msg) ->
+  program.outputHelp()
+  process.stderr.write "Error: #{msg}\n"
+  process.exit 1
+
 program
   .version(VERSION)
   .usage('<theme> [options]')
@@ -54,6 +60,10 @@ configPath = switch
   else
     exitWithError "Could not find a valid i3 config file"
 
+# throw an error when a config file is not found
+unless fileExists configPath
+  exitWithError "Config file not found: #{configPath}"
+
 if program.toTheme
   theme = mkTheme sh.cat configPath
   yamlTheme = """# vim: filetype=yaml
@@ -72,12 +82,6 @@ unless program.args.length
   program.outputHelp()
   process.exit 0
 
-# convenience function to exit with code 1 error. also prints usage.
-exitWithError = (msg) ->
-  program.outputHelp()
-  process.stderr.write "Error: #{msg}"
-  process.exit 1
-
 # throw an error if the theme file does not exist
 unless fileExists(program.args[0]) or program.args[0] in themesAvailable
   exitWithError "Theme or file not found: #{program.args[0]}"
@@ -93,10 +97,6 @@ theme = switch
     yaml.safeLoad sh.cat pathUtil.join(themesDir, program.args[0])
   else
     yaml.safeLoad sh.cat program.args[0]
-
-# throw an error when a config file is specified and not found
-if program.config? and not fileExists program.config
-  exitWithError "Config file not found: #{program.config}"
 
 # do the heavy lifting
 config = mkConfig theme, sh.cat(configPath)
