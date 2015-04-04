@@ -40,7 +40,11 @@ Just keep doing that until you get it perfect (which might be never).
 
 ## Send us themes!
 
-If you've made a new theme, or made an improvement to an existing theme, please make a pull request adding your theme to the `themes` directory!
+Do you have a cool colorscheme in your config file that you want to share with other people? i3-style can automatically convert it to a theme file:
+
+    i3-style --to-theme ~/.i3/config -o my-theme.yaml
+
+If you have a new theme, or made an improvement to an existing theme, please make a pull request adding your theme to the `themes` directory!
 
 ## License
 
