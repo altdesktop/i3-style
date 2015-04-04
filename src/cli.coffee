@@ -1,5 +1,6 @@
 #!/usr/bin/env coffee
 
+_ = require 'underscore'
 fs = require 'fs'
 sh = require 'shelljs'
 program = require 'commander'
@@ -21,7 +22,7 @@ program
   .option('-s, --save', 'Set the output file to the path of the input file.')
   .option('-r, --reload', 'Apply the theme by reloading the config.')
   .option('-l, --list-all', 'Print a list of all available themes.')
-  .option('-t, --to-theme', 'Prints an i3-style theme based on the given config suitable for sharing with others.')
+  .option('-t, --to-theme [file]', 'Prints an i3-style theme based on the given config suitable for sharing with others.')
   .parse(process.argv)
 
 themesDir = pathUtil.resolve(__dirname, '../themes')
@@ -44,6 +45,8 @@ HOME = process.env.HOME
 configPath = switch
   when program.config
     program.config
+  when _.isString program.toTheme
+    program.toTheme
   when HOME and fileExists "#{HOME}/.i3/config"
     "#{HOME}/.i3/config"
   when HOME and fileExists "#{HOME}/.config/i3/config"
