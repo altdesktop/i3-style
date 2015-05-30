@@ -1,7 +1,7 @@
 # vim: filetype=yaml
 ---
 meta:
-  description: AUTOMATICALLY GENERATED THEME
+  description: 'Purple theme by AAlakkad <http://aalakkad.me>'
 bar_colors:
   separator: darkgray
   background: black
