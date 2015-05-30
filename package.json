@@ -19,7 +19,7 @@
     "underscore": "*",
     "js-yaml": "*",
     "commander": "*",
-    "shelljs": "*",
+    "shelljs": "0.3.0",
     "color-namer": "*"
   },
   "devDependencies": {
