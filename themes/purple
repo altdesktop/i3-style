@@ -7,9 +7,9 @@ bar_colors:
   background: black
   statusline: white
   focused_workspace:
-    border: wheat
-    background: wheat
-    text: black1
+    border: darkslateblue
+    background: darkslateblue
+    text: lightgray
   active_workspace:
     border: khaki
     background: khaki
