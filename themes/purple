@@ -1,0 +1,56 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'Purple theme by AAlakkad <http://aalakkad.me>'
+bar_colors:
+  separator: darkgray
+  background: black
+  statusline: white
+  focused_workspace:
+    border: darkslateblue
+    background: darkslateblue
+    text: lightgray
+  active_workspace:
+    border: khaki
+    background: khaki
+    text: black1
+  inactive_workspace:
+    border: black
+    background: black
+    text: darkgray
+  urgent_workspace:
+    border: firebrick
+    background: firebrick
+    text: white
+colors:
+  darkgray: '#AAAAAA'
+  black: '#222133'
+  white: '#FFFFFF'
+  wheat: '#e7d8b1'
+  black1: '#181715'
+  khaki: '#DCCD69'
+  firebrick: '#CE4045'
+  darkslateblue: '#664477'
+  lightgray: '#cccccc'
+  mediumpurple: '#A074C4'
+window_colors:
+  focused:
+    border: darkslateblue
+    background: darkslateblue
+    text: lightgray
+    indicator: wheat
+  focused_inactive:
+    border: wheat
+    background: wheat
+    text: black1
+    indicator: mediumpurple
+  unfocused:
+    border: black
+    background: black
+    text: darkgray
+    indicator: mediumpurple
+  urgent:
+    border: firebrick
+    background: firebrick
+    text: wheat
+    indicator: khaki
