@@ -1,7 +1,7 @@
 # vim: filetype=yaml
 ---
 meta:
-  description: AUTOMATICALLY GENERATED THEME
+  description: 'Inspired by the Purple and Default themes. By jcpst <http://jcpst.com>'
 bar_colors:
   separator: dimgrey
   background: black
