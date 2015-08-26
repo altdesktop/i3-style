@@ -1,0 +1,63 @@
+# vim: filetype=yaml
+---
+colors:
+    base00:              '#282828'
+    base01:              '#282828'
+    base02:              '#282828'
+    base03:              '#928374'
+    base04:              '#ebdbb2'
+    base05:              '#ebdbb2'
+    base06:              '#ebdbb2'
+    base07:              '#ebdbb2'
+    base08:              '#cc241d'
+    base09:              '#fabd2f'
+    base0a:              '#d79921'
+    base0b:              '#98971a'
+    base0c:              '#689d6a'
+    base0d:              '#458588'
+    base0e:              '#b16286'
+    base0f:              '#fb4934'
+
+meta:
+    description:         'Gruvbox by morhetz (https://github.com/morhetz/gruvbox)'
+window_colors:
+    focused:
+        border:          'base0d'
+        background:      'base0d'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base09'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0b'
+        background:      'base0b'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base09'
+        background:      'base09'
+        text:            'base07'
