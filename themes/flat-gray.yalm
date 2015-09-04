@@ -1,0 +1,37 @@
+# vim: filetype=yaml
+---
+meta:
+  description: flat gray based theme
+colors:
+  darkslategrey: '#333333'
+  white: '#FFFFFF'
+  black: '#000000'
+  darkgray: '#AAAAAA'
+  black1: '#282828'
+window_colors:
+  unfocused:
+    border: darkslategrey
+    background: darkslategrey
+    text: white
+    indicator: darkslategrey
+  focused_inactive:
+    border: darkslategrey
+    background: darkslategrey
+    text: white
+    indicator: black
+  focused:
+    border: black
+    background: black
+    text: white
+    indicator: black
+bar_colors:
+  statusline: darkgray
+  background: darkslategrey
+  focused_workspace:
+    border: black1
+    background: black1
+    text: white
+  inactive_workspace:
+    border: darkslategrey
+    background: darkslategrey
+    text: darkgray
