@@ -23,12 +23,12 @@ exitWithError = (msg) ->
 program
   .version(VERSION)
   .usage('<theme> [options]')
-  .option('-c, --config <file>', 'The config file the theme should be applied to. Defaults to the default i3 location.')
-  .option('-o, --output <file>', 'Apply the theme, attempt to validate the result, and write it to <file>.')
-  .option('-s, --save', 'Set the output file to the path of the input file.')
-  .option('-r, --reload', 'Apply the theme by reloading the config.')
-  .option('-l, --list-all', 'Print a list of all available themes.')
-  .option('-t, --to-theme [file]', 'Prints an i3-style theme based on the given config suitable for sharing with others.')
+  .option('-c, --config <file>', 'The config file the theme should be applied to. Defaults to the default i3 location')
+  .option('-o, --output <file>', 'Apply the theme, attempt to validate the result, and write it to <file>')
+  .option('-s, --save', 'Set the output file to the path of the input file')
+  .option('-r, --reload', 'Apply the theme by reloading the config')
+  .option('-l, --list-all', 'Print a list of all available themes')
+  .option('-t, --to-theme [file]', 'Prints an i3-style theme based on the given config suitable for sharing with others')
   .parse(process.argv)
 
 themesDir = pathUtil.resolve(__dirname, '../themes')
