@@ -79,7 +79,7 @@ mkConfig = (theme, config) ->
       }
     }
     """
-  config += "\n#{mkWindowColors theme.colors, theme.window_colors}"
+  config += "\n#{mkWindowColors theme.colors, theme.window_colors}\n"
   return config
 
 # takes a config and returns an i3-style theme
