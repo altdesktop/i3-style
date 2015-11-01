@@ -2,7 +2,11 @@
   "name": "i3-style",
   "author": "Tony Crisci <tony@dubstepdish.com> (http://dubstepdish.com)",
   "main": "./lib/index.js",
-  "directories": [ "lib", "doc", "themes" ],
+  "directories": [
+    "lib",
+    "doc",
+    "themes"
+  ],
   "bin": {
     "i3-style": "./lib/cli.js"
   },
@@ -16,17 +20,17 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "underscore": "*",
-    "js-yaml": "*",
-    "commander": "*",
-    "shelljs": "0.3.0",
-    "color-namer": "*"
+    "color-namer": "^1.0.0",
+    "commander": "^2.9.0",
+    "js-yaml": "^3.4.3",
+    "shelljs": "^0.3.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "coffee-script": ">=1.7.0",
-    "which": "*",
-    "mocha": "*",
-    "chai": "*"
+    "chai": "^3.4.0",
+    "coffee-script": "^1.10.0",
+    "mocha": "^2.3.3",
+    "which": "^1.2.0"
   },
   "version": "0.5.0",
   "description": "Make your i3wm config a little more stylish",
