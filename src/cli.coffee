@@ -24,7 +24,7 @@ program
   .version(VERSION)
   .usage('<theme> [options]')
   .option('-c, --config <file>', 'The config file the theme should be applied to. Defaults to the default i3 location.')
-  .option('-o, --output <file>', 'Apply the theme, attempt to validate the result, and write it to <file>. Print to STDOUT if no output file is given.')
+  .option('-o, --output <file>', 'Apply the theme, attempt to validate the result, and write it to <file>.')
   .option('-s, --save', 'Set the output file to the path of the input file.')
   .option('-r, --reload', 'Apply the theme by reloading the config.')
   .option('-l, --list-all', 'Print a list of all available themes.')
