@@ -30,7 +30,6 @@
   },
   "version": "0.5.0",
   "description": "Make your i3wm config a little more stylish",
-  "devDependencies": {},
   "scripts": {
     "test": "cake test",
     "prepublish": "cake build"
