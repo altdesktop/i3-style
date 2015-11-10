@@ -32,7 +32,7 @@
     "mocha": "^2.3.3",
     "which": "^1.2.0"
   },
-  "version": "0.5.0",
+  "version": "0.7.0",
   "description": "Make your i3wm config a little more stylish",
   "scripts": {
     "test": "cake test",
