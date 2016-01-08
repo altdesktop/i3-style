@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 Eighties, by Chris Kempson (http://chriskempson.com)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#2d2d2d'
+    base01:              '#393939'
+    base02:              '#515151'
+    base03:              '#747369'
+    base04:              '#a09f93'
+    base05:              '#d3d0c8'
+    base06:              '#e8e6df'
+    base07:              '#f2f0ec'
+    base08:              '#f2777a'
+    base09:              '#f99157'
+    base0A:              '#ffcc66'
+    base0B:              '#99cc99'
+    base0C:              '#66cccc'
+    base0D:              '#6699cc'
+    base0E:              '#cc99cc'
+    base0F:              '#d27b53'
+
+meta:
+    description:         'Base16 Eighties, by Chris Kempson (http://chriskempson.com)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

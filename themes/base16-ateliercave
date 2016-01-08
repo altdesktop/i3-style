@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 Atelier Cave, by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/cave)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#19171c'
+    base01:              '#26232a'
+    base02:              '#585260'
+    base03:              '#655f6d'
+    base04:              '#7e7887'
+    base05:              '#8b8792'
+    base06:              '#e2dfe7'
+    base07:              '#efecf4'
+    base08:              '#be4678'
+    base09:              '#aa573c'
+    base0A:              '#a06e3b'
+    base0B:              '#2a9292'
+    base0C:              '#398bc6'
+    base0D:              '#576ddb'
+    base0E:              '#955ae7'
+    base0F:              '#bf40bf'
+
+meta:
+    description:         'Base16 Atelier Cave, by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/cave)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 Marrakesh, by Alexandre Gavioli (http://github.com/Alexx2/)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#201602'
+    base01:              '#302e00'
+    base02:              '#5f5b17'
+    base03:              '#6c6823'
+    base04:              '#86813b'
+    base05:              '#948e48'
+    base06:              '#ccc37a'
+    base07:              '#faf0a5'
+    base08:              '#c35359'
+    base09:              '#b36144'
+    base0A:              '#a88339'
+    base0B:              '#18974e'
+    base0C:              '#75a738'
+    base0D:              '#477ca1'
+    base0E:              '#8868b3'
+    base0F:              '#b3588e'
+
+meta:
+    description:         'Base16 Marrakesh, by Alexandre Gavioli (http://github.com/Alexx2/)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

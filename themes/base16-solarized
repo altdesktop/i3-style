@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 Solarized, by Ethan Schoonover (http://ethanschoonover.com/solarized)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#002b36'
+    base01:              '#073642'
+    base02:              '#586e75'
+    base03:              '#657b83'
+    base04:              '#839496'
+    base05:              '#93a1a1'
+    base06:              '#eee8d5'
+    base07:              '#fdf6e3'
+    base08:              '#dc322f'
+    base09:              '#cb4b16'
+    base0A:              '#b58900'
+    base0B:              '#859900'
+    base0C:              '#2aa198'
+    base0D:              '#268bd2'
+    base0E:              '#6c71c4'
+    base0F:              '#d33682'
+
+meta:
+    description:         'Base16 Solarized, by Ethan Schoonover (http://ethanschoonover.com/solarized)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'
