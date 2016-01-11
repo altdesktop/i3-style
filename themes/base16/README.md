@@ -20,7 +20,7 @@ I generated i3-style theme with
 Base16-builder works with YAML scheme defintions and ERB 
 templates.
 
-If you to know how to use it, check its 
+If you want to know how to use it, check its 
 [usage](https://github.com/chriskempson/base16-builder#usage) 
 part.
 
