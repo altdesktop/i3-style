@@ -25,7 +25,7 @@ window_colors:
     border:         'green'
     background:     'green'
     text:           'base3'
-    indicator:      'green'
+    indicator:      'violet'
   focused_inactive:
     border:         'base02'
     background:     'base02'
