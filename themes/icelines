@@ -7,6 +7,7 @@ colors:
     darkgray:       '#141414'
     ice:            '#00b0ef'
     gray:           '#7d7d7d'
+    darkred:        '#472b2a'
     urgent:         '#ff7066'
 window_colors:
   focused:
@@ -18,12 +19,12 @@ window_colors:
     border:         'darkgray'
     background:     'darkgray'
     text:           'ice'
-    indicator:      'urgent'
+    indicator:      'darkred'
   unfocused:
     border:         'darkgray'
     background:     'darkgray'
     text:           'gray'
-    indicator:      'urgent'
+    indicator:      'darkgray'
   urgent:
     border:         'urgent'
     background:     'urgent'
