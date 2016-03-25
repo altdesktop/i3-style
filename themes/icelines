@@ -1,0 +1,52 @@
+# vim: filetype=yaml
+# Theme meant to be simple but visually efficient
+---
+meta:
+  description: 'icelines theme by mbfraga'
+colors:
+    darkgray:       '#141414'
+    ice:            '#00b0ef'
+    gray:           '#7d7d7d'
+    darkred:        '#472b2a'
+    urgent:         '#ff7066'
+window_colors:
+  focused:
+    border:         'ice'
+    background:     'ice'
+    text:           'darkgray'
+    indicator:      'urgent'
+  focused_inactive:
+    border:         'darkgray'
+    background:     'darkgray'
+    text:           'ice'
+    indicator:      'darkred'
+  unfocused:
+    border:         'darkgray'
+    background:     'darkgray'
+    text:           'gray'
+    indicator:      'darkgray'
+  urgent:
+    border:         'urgent'
+    background:     'urgent'
+    text:           'darkgray'
+    indicator:      'urgent'
+bar_colors:
+  separator:        'gray'
+  background:       'darkgray'
+  statusline:       'ice'
+  focused_workspace:
+    border:         'ice'
+    background:     'darkgray'
+    text:           'ice'
+  active_workspace:
+    border:         'darkgray'
+    background:     'darkgray'
+    text:           'ice'
+  inactive_workspace:
+    border:         'darkgray'
+    background:     'darkgray'
+    text:           'gray'
+  urgent_workspace:
+    border:         'urgent'
+    background:     'darkgray'
+    text:           'urgent'
