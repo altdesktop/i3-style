@@ -5,8 +5,6 @@ meta:
 colors:
   green: '#87a752'
   lightgreen: '#adc487'
-  orange: '#f08763'
-  lightorange: '#f4aa90'
   darkgrey: '#3c3b37'
   grey: '#4c4c4c'
   lightgrey: '#aea79f'
@@ -20,15 +18,15 @@ window_colors:
     text: black
     indicator: lightgreen
   focused_inactive:
-    border: orange
-    background: orange 
-    text: darkgrey
-    indicator: lightorange
+    border: lightgrey
+    background: lightgrey 
+    text: black
+    indicator: lightgrey
   unfocused:
     border: darkgrey
     background: darkgrey
     text: lightgrey
-    indicator: grey
+    indicator: darkgrey
   urgent:
     border: red
     background: red
@@ -43,8 +41,8 @@ bar_colors:
     background: green
     text: black
   active_workspace:
-    border: orange
-    background: orange
+    border: grey
+    background: grey
     text: darkgrey
   inactive_workspace:
     border: darkgrey
