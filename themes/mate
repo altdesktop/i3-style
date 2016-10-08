@@ -1,0 +1,56 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'Theme for blending i3 into MATE'
+colors:
+  green: '#87a752'
+  lightgreen: '#adc487'
+  orange: '#f08763'
+  lightorange: '#f4aa90'
+  darkgrey: '#3c3b37'
+  grey: '#4c4c4c'
+  lightgrey: '#aea79f'
+  black: '#000000'
+  white: '#ffffff'
+  red: '#FF0000'
+window_colors:
+  focused:
+    border: green
+    background: green
+    text: black
+    indicator: lightgreen
+  focused_inactive:
+    border: orange
+    background: orange 
+    text: darkgrey
+    indicator: lightorange
+  unfocused:
+    border: darkgrey
+    background: darkgrey
+    text: lightgrey
+    indicator: grey
+  urgent:
+    border: red
+    background: red
+    text: white
+    indicator: red
+bar_colors:
+  separator: white
+  background: darkgrey
+  statusline: white
+  focused_workspace:
+    border: green
+    background: green
+    text: black
+  active_workspace:
+    border: orange
+    background: orange
+    text: darkgrey
+  inactive_workspace:
+    border: darkgrey
+    background: darkgrey
+    text: lightgrey
+  urgent_workspace:
+    border: red
+    background: red
+    text: white
