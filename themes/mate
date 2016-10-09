@@ -4,7 +4,7 @@ meta:
   description: 'Theme for blending i3 into MATE'
 colors:
   green: '#526532'  
-  lightgreen: '#87a752'
+  lightgreen: '#a4cb64'
   darkgrey: '#3c3b37'
   grey: '#4c4c4c'
   lightgrey: '#aea79f'
