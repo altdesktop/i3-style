@@ -3,8 +3,8 @@
 meta:
   description: 'Theme for blending i3 into MATE'
 colors:
-  green: '#87a752'
-  lightgreen: '#adc487'
+  green: '#526532'  
+  lightgreen: '#87a752'
   darkgrey: '#3c3b37'
   grey: '#4c4c4c'
   lightgrey: '#aea79f'
@@ -15,12 +15,12 @@ window_colors:
   focused:
     border: green
     background: green
-    text: black
+    text: white
     indicator: lightgreen
   focused_inactive:
     border: lightgrey
     background: lightgrey 
-    text: black
+    text: darkgrey
     indicator: lightgrey
   unfocused:
     border: darkgrey
@@ -39,7 +39,7 @@ bar_colors:
   focused_workspace:
     border: green
     background: green
-    text: black
+    text: white
   active_workspace:
     border: grey
     background: grey
