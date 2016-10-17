@@ -41,8 +41,8 @@ bar_colors:
     background: green
     text: white
   active_workspace:
-    border: grey
-    background: grey
+    border: lightgrey
+    background: lightgrey
     text: darkgrey
   inactive_workspace:
     border: darkgrey
