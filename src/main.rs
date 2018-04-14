@@ -3,7 +3,7 @@ use std::io::prelude::*;
 use std::fs::File;
 
 extern crate yaml_rust;
-use yaml_rust::{YamlLoader, Yaml};
+use yaml_rust::{YamlLoader};
 
 mod theme;
 
@@ -22,7 +22,7 @@ fn main() {
     println!("{:?}", theme);
 }
 
-fn template_config(path: String) {
+fn template_config() {
     /*
     let out_writer = match out {
         Some(x) => {

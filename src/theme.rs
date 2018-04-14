@@ -1,5 +1,5 @@
 extern crate yaml_rust;
-use yaml_rust::{YamlLoader, Yaml};
+use yaml_rust::{Yaml};
 
 #[derive(Debug)]
 pub struct ColorGroup {
@@ -70,7 +70,6 @@ fn parse_color_group(doc: &Yaml, top_key: String, bottom_key: String) -> Option<
     }
 
     let group_hash = &doc[top_key][bottom_key];
-    let colors = &doc["colors"];
 
     let mut group = ColorGroup {
         border: Option::None,
