@@ -1,0 +1,7 @@
+[package]
+name = "rust-test"
+version = "0.1.0"
+authors = ["Tony Crisci <tony@dubstepdish.com>"]
+
+[dependencies]
+yaml-rust = "0.4"
