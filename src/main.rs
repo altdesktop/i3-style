@@ -46,8 +46,8 @@ struct BarColors {
 
 #[derive(Debug)]
 struct Theme {
-    window_colors: WindowColors,
-    bar_colors: BarColors
+    window_colors: Option<WindowColors>,
+    bar_colors: Option<BarColors>
 }
 
 fn parse_color(doc: &Yaml, color_spec: &Yaml) -> Option<String> {
@@ -89,8 +89,12 @@ fn parse_color_group(doc: &Yaml, top_key: String, bottom_key: String) -> Option<
     Option::from(group)
 }
 
-fn parse_window_colors(doc: &Yaml) -> WindowColors {
-    WindowColors {
+fn parse_window_colors(doc: &Yaml) -> Option<WindowColors> {
+    if doc["window_colors"].as_hash().is_none() {
+        return Option::None;
+    }
+
+    Option::from(WindowColors {
         focused: parse_color_group(doc,
                           "window_colors".to_string(),
                           "focused".to_string()),
@@ -103,13 +107,17 @@ fn parse_window_colors(doc: &Yaml) -> WindowColors {
         urgent: parse_color_group(doc,
                         "window_colors".to_string(),
                         "urgent".to_string())
-    }
+    })
 }
 
-fn parse_bar_colors(doc: &Yaml) -> BarColors {
+fn parse_bar_colors(doc: &Yaml) -> Option<BarColors> {
     let bar_colors = &doc["bar_colors"];
 
-    BarColors {
+    if bar_colors.as_hash().is_none() {
+        return Option::None;
+    }
+
+    Option::from(BarColors {
         separator: parse_color(&doc, &bar_colors["separator"]),
         background: parse_color(&doc, &bar_colors["background"]),
         statusline: parse_color(&doc, &bar_colors["statusline"]),
@@ -117,7 +125,7 @@ fn parse_bar_colors(doc: &Yaml) -> BarColors {
         active_workspace: parse_color_group(doc, "bar_colors".to_string(), "active_workspace".to_string()),
         inactive_workspace: parse_color_group(doc, "bar_colors".to_string(), "inactive_workspace".to_string()),
         urgent_workspace: parse_color_group(doc, "bar_colors".to_string(), "urgent_workspace".to_string())
-    }
+    })
 }
 
 fn load_theme(path: String) -> Theme {
