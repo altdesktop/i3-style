@@ -46,6 +46,7 @@ struct BarColors {
 
 #[derive(Debug)]
 struct Theme {
+    description: Option<String>,
     window_colors: Option<WindowColors>,
     bar_colors: Option<BarColors>
 }
@@ -128,7 +129,21 @@ fn parse_bar_colors(doc: &Yaml) -> Option<BarColors> {
     })
 }
 
-fn load_theme(path: String) -> Theme {
+fn from_yaml(doc: &Yaml) -> Theme {
+    let description = match doc["meta"]["description"].as_str() {
+        Some(d) => Option::from(String::from(d)),
+        None => Option::None
+    };
+
+    Theme {
+        description: description,
+        window_colors: parse_window_colors(doc),
+        bar_colors: parse_bar_colors(doc)
+    }
+}
+
+fn main() {
+    let path = "./test-theme.yaml".to_string();
     let mut f = File::open(path).expect("file does not exist");
     let mut contents = String::new();
 
@@ -136,16 +151,8 @@ fn load_theme(path: String) -> Theme {
 
     let docs = YamlLoader::load_from_str(contents.as_str()).expect("could not parse yaml");
     let doc = &docs[0];
-    // TODO validate yaml
 
-    Theme {
-        window_colors: parse_window_colors(doc),
-        bar_colors: parse_bar_colors(doc)
-    }
-}
-
-fn main() {
-    let theme = load_theme("./test-theme.yaml".to_string());
+    let theme = from_yaml(&doc);
     println!("{:?}", theme);
 }
 
