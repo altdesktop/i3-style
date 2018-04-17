@@ -3,10 +3,10 @@ use yaml_rust::{Yaml};
 
 #[derive(Debug)]
 pub struct ColorGroup {
-    border: Option<String>,
-    background: Option<String>,
-    text: Option<String>,
-    indicator: Option<String>
+    pub border: Option<String>,
+    pub background: Option<String>,
+    pub text: Option<String>,
+    pub indicator: Option<String>
 }
 
 impl ColorGroup {
@@ -23,28 +23,28 @@ impl ColorGroup {
 
 #[derive(Debug)]
 pub struct WindowColors {
-    focused: Option<ColorGroup>,
-    focused_inactive: Option<ColorGroup>,
-    unfocused: Option<ColorGroup>,
-    urgent: Option<ColorGroup>
+    pub focused: Option<ColorGroup>,
+    pub focused_inactive: Option<ColorGroup>,
+    pub unfocused: Option<ColorGroup>,
+    pub urgent: Option<ColorGroup>
 }
 
 #[derive(Debug)]
 pub struct BarColors {
-    separator: Option<String>,
-    background: Option<String>,
-    statusline: Option<String>,
-    focused_workspace: Option<ColorGroup>,
-    active_workspace: Option<ColorGroup>,
-    inactive_workspace: Option<ColorGroup>,
-    urgent_workspace: Option<ColorGroup>
+    pub separator: Option<String>,
+    pub background: Option<String>,
+    pub statusline: Option<String>,
+    pub focused_workspace: Option<ColorGroup>,
+    pub active_workspace: Option<ColorGroup>,
+    pub inactive_workspace: Option<ColorGroup>,
+    pub urgent_workspace: Option<ColorGroup>
 }
 
 #[derive(Debug)]
 pub struct Theme {
-    description: Option<String>,
-    window_colors: Option<WindowColors>,
-    bar_colors: Option<BarColors>
+    pub description: Option<String>,
+    pub window_colors: Option<WindowColors>,
+    pub bar_colors: Option<BarColors>
 }
 
 fn parse_color(doc: &Yaml, color_spec: &Yaml) -> Option<String> {
