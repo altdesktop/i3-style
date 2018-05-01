@@ -59,9 +59,6 @@ fn template_config(input: BufReader<File>, output: Option<String>, theme: theme:
         let mut vec: Vec<&str> = Vec::new();
 
         for word in line.split(' ') {
-            if word.starts_with("#") {
-                break;
-            }
             if word != "" {
                 vec.push(word);
             }
@@ -70,43 +67,44 @@ fn template_config(input: BufReader<File>, output: Option<String>, theme: theme:
         if vec.len() > 0 && !vec[0].starts_with("#") {
             if in_colors && vec[0] == "}" {
                 in_colors = false;
-                //writer.write(original_line.as_bytes());
+                writer.write(original_line.as_bytes());
                 continue;
             } else if in_bar && vec[0] == "}" {
                 in_bar = false;
-                //writer.write(original_line.as_bytes());
+                writer.write(original_line.as_bytes());
                 continue;
             }
 
             if in_colors {
                 // TODO handle color block here
                 if theme.bar_colors.is_none() {
-                    //writer.write(original_line.as_bytes());
+                    writer.write(original_line.as_bytes());
                     continue;
                 }
 
                 let bar_colors = &theme.bar_colors.as_ref().unwrap();
-                let mut themed_vec = Vec::new();
-                themed_vec.push(vec[0].clone());
 
                 if vec!["separator", "background", "statusline"].contains(&vec[0]) {
-                    themed_vec.push(match vec[0] {
+                    writer.write(leading.as_bytes());
+                    writer.write(vec[0].as_bytes());
+                    writer.write(b" ");
+
+                    writer.write(match vec[0] {
                         "separator" => match bar_colors.separator {
-                            Some(ref color) => color.as_str().clone(),
-                            None => vec[1].clone()
+                            Some(ref color) => color.as_bytes(),
+                            None => vec[1].as_bytes()
                         },
                         "background" => match bar_colors.background {
-                            Some(ref color) => color.as_str().clone(),
-                            None => vec[1].clone()
+                            Some(ref color) => color.as_bytes(),
+                            None => vec[1].as_bytes(),
                         },
                         "statusline" => match bar_colors.statusline {
-                            Some(ref color) => color.as_str().clone(),
-                            None => vec[1].clone()
+                            Some(ref color) => color.as_bytes(),
+                            None => vec[1].as_bytes(),
                         },
-                        _ => vec[1].clone()
+                        _ => vec[1].as_bytes(),
                     });
-
-                    //writer.write((leading + themed_vec.join(" ").as_str() + "\n").as_bytes());
+                    writer.write(b"\n");
                     continue;
                 } else if vec!["focused_workspace", "active_workspace", "inactive_workspace", "urgent_workspace"].contains(&vec[0]) {
                     let group = match vec[0] {
@@ -118,26 +116,40 @@ fn template_config(input: BufReader<File>, output: Option<String>, theme: theme:
                     };
 
                     if group.is_none() {
-                        //writer.write(original_line.as_bytes());
+                        writer.write(original_line.as_bytes());
                         continue;
                     }
 
                     let group = group.unwrap();
-                    let mut themed_vec = Vec::new();
-                    themed_vec.push(vec[0].clone());
 
-                    let &border = match group.border.as_ref() {
-                        Some(color) => color.clone(),
-                        None => vec[1].to_string().clone()
-                    };
+                    writer.write(leading.as_bytes());
+                    writer.write(vec[0].as_bytes());
+                    writer.write(b" ");
 
-                    themed_vec.push(border.as_str());
+                    writer.write(match group.border.as_ref() {
+                        Some(color) => color.as_bytes(),
+                        None => vec[1].as_bytes()
+                    });
+                    writer.write(b" ");
 
-                    //themed_vec.push(group.border.unwrap_or(vec[1].clone().to_string()).as_str());
-                    //themed_vec.push(group.background.unwrap_or(vec[2].clone().to_string()).as_str());
-                    //themed_vec.push(group.text.unwrap_or(vec[3].clone().to_string()).as_str());
-                    //themed_vec.push(group.text.unwrap_or(vec[4].clone().to_string()).as_str());
-                    writer.write((leading + themed_vec.join(" ").as_str() + "\n").as_bytes());
+                    writer.write(match group.background.as_ref() {
+                        Some(color) => color.as_bytes(),
+                        None => vec[2].as_bytes()
+                    });
+                    writer.write(b" ");
+
+                    writer.write(match group.text.as_ref() {
+                        Some(color) => color.as_bytes(),
+                        None => vec[3].as_bytes()
+                    });
+                    writer.write(b" ");
+
+                    writer.write(match group.indicator.as_ref() {
+                        Some(color) => color.as_bytes(),
+                        None => vec[3].as_bytes()
+                    });
+                    writer.write(b"\n");
+
                     continue;
                 }
                 continue;
@@ -145,21 +157,71 @@ fn template_config(input: BufReader<File>, output: Option<String>, theme: theme:
 
             if vec[0] == "bar" {
                 in_bar = true;
-                //writer.write(original_line.as_bytes());
+                writer.write(original_line.as_bytes());
                 continue;
             }
             if in_bar && vec[0] == "colors" {
                 in_colors = true;
-                //writer.write(original_line.as_bytes());
+                writer.write(original_line.as_bytes());
                 continue;
             }
 
-            if vec[0].starts_with("client.") {
-                // TODO handle window color block here
+            if vec!["client.focused", "client.unfocused", "client.focused_inactive", "client.urgent"].contains(&vec[0]) {
+                if theme.window_colors.is_none() {
+                    writer.write(original_line.as_bytes());
+                    continue;
+                }
+
+                let window_colors = &theme.window_colors.as_ref().unwrap();
+
+                let group = match vec[0] {
+                    "client.focused" => window_colors.focused.as_ref(),
+                    "client.unfocused" => window_colors.unfocused.as_ref(),
+                    "client.focused_inactive" => window_colors.focused_inactive.as_ref(),
+                    "client.urgent" => window_colors.urgent.as_ref(),
+                    _ => panic!("not reached")
+                };
+
+                if group.is_none() {
+                    writer.write(original_line.as_bytes());
+                    continue;
+                }
+
+                let group = group.unwrap();
+
+                writer.write(leading.as_bytes());
+                writer.write(vec[0].as_bytes());
+                writer.write(b" ");
+
+                writer.write(match group.border.as_ref() {
+                    Some(color) => color.as_bytes(),
+                    None => vec[1].as_bytes()
+                });
+                writer.write(b" ");
+
+                writer.write(match group.background.as_ref() {
+                    Some(color) => color.as_bytes(),
+                    None => vec[2].as_bytes()
+                });
+                writer.write(b" ");
+
+                writer.write(match group.text.as_ref() {
+                    Some(color) => color.as_bytes(),
+                    None => vec[3].as_bytes()
+                });
+                writer.write(b" ");
+
+                writer.write(match group.indicator.as_ref() {
+                    Some(color) => color.as_bytes(),
+                    None => vec[3].as_bytes()
+                });
+                writer.write(b" ");
+
+                writer.write(b"\n");
                 continue;
             }
 
-            //writer.write(original_line.as_bytes());
+            writer.write(original_line.as_bytes());
         }
     }
 }
