@@ -1,0 +1,46 @@
+# vim: filetype=yaml
+# TODO: use color aliases to make the theme more readable
+---
+meta:
+  description: 'Default theme for i3wm <http://i3wm.org>'
+window_colors:
+  focused:
+    border:           '#4c7899'
+    background:       '#285577'
+    text:             '#ffffff'
+    indicator:        '#2e9ef4'
+  focused_inactive:
+    border:           '#333333'
+    background:       '#5f676a'
+    text:             '#ffffff'
+    indicator:        '#484e50'
+  unfocused:
+    border:           '#333333'
+    background:       '#222222'
+    text:             '#888888'
+    indicator:        '#292d2e'
+  urgent:
+    border:           '#2f343a'
+    background:       '#900000'
+    text:             '#ffffff'
+    indicator:        '#900000'
+bar_colors:
+  separator:          '#666666'
+  background:         '#000000'
+  statusline:         '#ffffff'
+  focused_workspace:
+    border:           '#4c7899'
+    background:       '#285577'
+    text:             '#ffffff'
+  active_workspace:
+    border:           '#333333'
+    background:       '#5f676a'
+    text:             '#ffffff'
+  inactive_workspace:
+    border:           '#333333'
+    background:       '#222222'
+    text:             '#888888'
+  urgent_workspace:
+    border:           '#2f343a'
+    background:       '#900000'
+    text:             '#ffffff'

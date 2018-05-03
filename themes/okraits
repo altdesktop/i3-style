@@ -1,0 +1,46 @@
+# vim: filetype=yaml
+# TODO: use color aliases to make the theme more readable
+---
+meta:
+  description: 'A simple theme by okraits <http://okraits.de>'
+window_colors:
+  focused:
+    border:           '#888888'
+    background:       '#dddddd'
+    text:             '#222222'
+    indicator:        '#2e9ef4'
+  focused_inactive:
+    border:           '#333333'
+    background:       '#555555'
+    text:             '#bbbbbb'
+    indicator:        '#484e50'
+  unfocused:
+    border:           '#333333'
+    background:       '#333333'
+    text:             '#888888'
+    indicator:        '#292d2e'
+  urgent:
+    border:           '#2f343a'
+    background:       '#900000'
+    text:             '#ffffff'
+    indicator:        '#900000'
+bar_colors:
+  separator:          '#666666'
+  background:         '#333333'
+  statusline:         '#bbbbbb'
+  focused_workspace:
+    border:           '#888888'
+    background:       '#dddddd'
+    text:             '#222222'
+  active_workspace:
+    border:           '#333333'
+    background:       '#555555'
+    text:             '#bbbbbb'
+  inactive_workspace:
+    border:           '#333333'
+    background:       '#555555'
+    text:             '#bbbbbb'
+  urgent_workspace:
+    border:           '#2f343a'
+    background:       '#900000'
+    text:             '#ffffff'

@@ -2,7 +2,14 @@
 name = "rust-test"
 version = "0.1.0"
 authors = ["Tony Crisci <tony@dubstepdish.com>"]
+build = "build.rs"
+include = ["./themes"]
 
 [dependencies]
 yaml-rust = "0.4"
 clap = "2"
+phf = "0.7.21"
+includedir = "0.4.0"
+
+[build-dependencies]
+includedir_codegen = "0.4.0"

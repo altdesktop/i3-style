@@ -1,0 +1,62 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'Slate theme by Jody Ribton <jody@ribton.me>'
+colors:
+  # focused
+  slate:              '#586e75' # main color
+  cream:              '#fdf6e3' # focused text color
+  sky_blue:           '#268bd2' # focused indicator color
+
+  # inactive and unfocused
+  dark_teal:          '#073642' # inactive windoww border
+  darker_teal:        '#002b36' # unfocused window border
+  white_teal:         '#93a1a1' # inactive text
+  grey:               '#aea79f' # statusline
+
+  # urgent
+  red:                '#dc322f' # urgent window border
+  white:              '#ffffff' # workspace text
+  purple:             '#77216f' # urgent workspace color
+
+window_colors:
+  focused:
+    border:           'slate'
+    background:       'slate'
+    text:             'cream'
+    indicator:        'sky_blue'
+  focused_inactive:
+    border:           'dark_teal'
+    background:       'dark_teal'
+    text:             'white_teal'
+    indicator:        'darker_teal'
+  unfocused:
+    border:           'darker_teal'
+    background:       'darker_teal'
+    text:             'slate'
+    indicator:        'darker_teal'
+  urgent:
+    border:           'red'
+    background:       'red'
+    text:             'cream'
+    indicator:        'red'
+bar_colors:
+  separator:          'slate'
+  background:         'darker_teal'
+  statusline:         'grey'
+  focused_workspace:
+    border:           'slate'
+    background:       'slate'
+    text:             'white'
+  active_workspace:
+    border:           'dark_teal'
+    background:       'dark_teal'
+    text:             'white'
+  inactive_workspace:
+    border:           'darker_teal'
+    background:       'darker_teal'
+    text:             'grey'
+  urgent_workspace:
+    border:           'purple'
+    background:       'purple'
+    text:             'white'

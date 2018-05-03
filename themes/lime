@@ -1,0 +1,57 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'Lime theme by wei2912 <http://wei2912.github.io>, based on Archlinux theme by okraits <http://okraits.de>'
+colors:
+  lime:               '#4E9C00' # main colour
+  lime_inactive:      '#1B3600'
+
+  red:                '#C20000' # urgent colour
+  black:              '#333333' # background
+
+  txt_active:         '#FFFFFF' # white
+  txt_inactive:       '#888888' # grey
+
+  indicator:          '#FFFFFF' # white
+
+window_colors:
+  focused:
+    border:           'lime'
+    background:       'lime'
+    text:             'txt_active'
+    indicator:        'indicator'
+  focused_inactive:
+    border:           'lime_inactive'
+    background:       'lime_inactive'
+    text:             'txt_inactive'
+    indicator:        'indicator'
+  unfocused:
+    border:           'black'
+    background:       'black'
+    text:             'txt_inactive'
+    indicator:        'indicator'
+  urgent:
+    border:           'red'
+    background:       'red'
+    text:             'txt_active'
+    indicator:        'indicator'
+bar_colors:
+  separator:          'txt_inactive'
+  background:         'black'
+  statusline:         'txt_active'
+  focused_workspace:
+    border:           'lime'
+    background:       'lime'
+    text:             'txt_active'
+  active_workspace:
+    border:           'black'
+    background:       'black'
+    text:             'txt_active'
+  inactive_workspace:
+    border:           'black'
+    background:       'black'
+    text:             'txt_inactive'
+  urgent_workspace:
+    border:           'red'
+    background:       'red'
+    text:             'txt_active'

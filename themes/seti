@@ -1,0 +1,58 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'seti theme by Jody Ribton - based on the seti Atom theme at https://atom.io/themes/seti-ui'
+colors:
+  blue:          '#4F99D3'
+  green:         '#9FCA56'
+  yellow:        '#DCCD69'
+  red:           '#CE4045'
+  orange:        '#FF8315'
+  purple:        '#A074C4'
+  grey:          '#1f2326'
+  white:         '#FFFFFF'
+  dull_white:    '#AAAAAA'
+  base:          '#151718'
+window_colors:
+  focused:
+    border:      'blue'
+    background:  'blue'
+    text:        'base'
+    indicator:   'green'
+  focused_inactive:
+    border:      'green'
+    background:  'green'
+    text:        'base'
+    indicator:   'purple'
+  unfocused:
+    border:      'grey'
+    background:  'grey'
+    text:        'dull_white'
+    indicator:   'purple'
+  urgent:
+    border:      'red'
+    background:  'red'
+    text:        'white'
+    indicator:   'yellow'
+bar_colors:
+  separator:     'dull_white'
+  background:    'grey'
+  statusline:    'white'
+  focused_workspace:
+    border:      'green'
+    background:  'green'
+    text:        'base'
+  active_workspace:
+    border:      'yellow'
+    background:  'yellow'
+    text:        'base'
+  inactive_workspace:
+    border:      'grey'
+    background:  'grey'
+    text:        'dull_white'
+  urgent_workspace:
+    border:      'red'
+    background:  'red'
+    text:        'white'
+
+
