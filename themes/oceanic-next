@@ -2,7 +2,7 @@
 ---
 description: Theme by Valentin Weber inspired by voronianski (https://github.com/voronianski/oceanic-next-color-scheme)
 bar_colors:
-  separator: base04
+  separator: base03
   background: base00
   statusline: base07
   focused_workspace:
