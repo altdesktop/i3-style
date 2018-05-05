@@ -19,7 +19,13 @@ fn leading_spaces(string: &String) -> String {
     leading
 }
 
-pub fn write_config(input: BufReader<File>, output: Option<String>, theme: Theme) {
+pub fn write_config(input: &String, output: Option<&String>, theme: Theme) {
+    let input_file = File::open(input).unwrap();
+    let reader = BufReader::new(input_file);
+    write_config_from_reader(reader, output, theme);
+}
+
+pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>, theme: Theme) {
     let mut writer = match output {
         Some(x) => {
             let path = Path::new(x.as_str());

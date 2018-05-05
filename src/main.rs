@@ -73,7 +73,8 @@ fn get_embedded_theme(name: &str) -> Option<theme::Theme> {
         return None;
     }
 
-    let contents = String::from_utf8(FILES.get("./themes/solarized").unwrap().to_vec()).expect("Theme yaml is not utf-8");
+    let contents = String::from_utf8(FILES.get(&format!("{}/{}", "./themes", name)).unwrap().to_vec()).expect("Theme yaml is not utf-8");
+
     let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
     let doc = &docs[0];
 
@@ -148,17 +149,23 @@ fn main() {
     let output =  if app.value_of("output").is_some() {
         app.value_of("output")
     } else if app.is_present("save") {
-        Some(config.as_str())
+        Some(config.as_str().clone())
     } else {
         None
     };
 
     if output.is_some() {
         let i3_style_tmp = get_run_tmp_dir();
+        let tmp_output = format!("{}/{}", i3_style_tmp, "config-output");
+        let tmp_input = format!("{}/{}", i3_style_tmp, "config-input");
         // 1. write the new config in the tmp folder
+        writer::write_config(&config, Some(&tmp_output), theme);
         // 2. copy the config to the tmp folder
+        println!("saving config at {} to {}", &config, &tmp_input);
+        fs::copy(&config, &tmp_input);
         // 3. copy the new config to the config location
+        fs::copy(&tmp_output, &config);
     } else {
-        writer::write_config(config_file, None, theme);
+        writer::write_config(&config, None, theme);
     }
 }
