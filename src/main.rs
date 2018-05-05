@@ -1,14 +1,8 @@
-use std::io::{BufReader, stdout};
-use std::io::prelude::*;
-use std::path::PathBuf;
 use std::path::Path;
 use std::env;
 use std::process;
 use std::fs;
-use std::fs::File;
 use std::fs::create_dir_all;
-use std::io::Error;
-use std::io::ErrorKind;
 use std::time::{SystemTime, UNIX_EPOCH};
 extern crate includedir;
 extern crate phf;
@@ -17,17 +11,12 @@ extern crate yaml_rust;
 use yaml_rust::{YamlLoader};
 
 extern crate clap;
-use clap::{Arg, App, ArgMatches};
+use clap::{Arg, App};
 
 mod theme;
 mod writer;
 
 include!(concat!(env!("OUT_DIR"), "/data.rs"));
-
-fn exit_help(app: &ArgMatches) {
-    println!("{}", app.usage());
-    process::exit(0);
-}
 
 fn exit_error(msg: &str) {
     println!("{}", msg);
@@ -153,7 +142,7 @@ fn main() {
 
     if !app.is_present("theme") {
         if app.args.is_empty() {
-            cli.print_help();
+            cli.print_help().unwrap();
             process::exit(0);
         } else {
             println!("{}\n", app.usage());
@@ -197,9 +186,9 @@ fn main() {
         writer::write_config(&config, Some(&tmp_output), theme);
         // 2. copy the config to the tmp folder
         println!("saving config at {} to {}", &config, &tmp_input);
-        fs::copy(&config, &tmp_input);
+        fs::copy(&config, &tmp_input).unwrap();
         // 3. copy the new config to the config location
-        fs::copy(&tmp_output, &config);
+        fs::copy(&tmp_output, &config).unwrap();
     } else {
         writer::write_config(&config, None, theme);
     }
