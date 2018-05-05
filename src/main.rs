@@ -81,13 +81,30 @@ fn get_embedded_theme(name: &str) -> Option<theme::Theme> {
     Some(theme::from_yaml(&doc))
 }
 
+fn list_themes() {
+    println!("\nAvailable themes:\n");
+    let prefix_count = "./themes/".chars().count();
+
+    for file in FILES.file_names() {
+        let contents = String::from_utf8(FILES.get(file).unwrap().to_vec()).expect("Theme yaml is not utf-8");
+
+        let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
+        let doc = &docs[0];
+
+        let description = doc["meta"]["description"].as_str().expect("Theme doesn't have a description");
+
+        let entry: String = file.chars().skip(prefix_count).collect();
+        let entry = format!("  {:width$} - {}", entry, description, width=18);
+        println!("{}", entry);
+    }
+}
+
 fn main() {
-    let app = App::new("i3-style")
+    let mut cli = App::new("i3-style")
         .version("1.0")
         .about("Make your i3 config a bit more stylish")
         .arg(Arg::with_name("theme")
              .help("The theme to use")
-             .required(true)
              .index(1)
              )
         .arg(Arg::with_name("config")
@@ -125,7 +142,25 @@ fn main() {
              .value_name("file")
              .help("Prints an i3-style theme based on the given config suitable for sharing with others")
              .takes_value(true)
-            ).get_matches();
+            );
+
+    let app = cli.clone().get_matches();
+
+    if app.is_present("list-all") {
+        list_themes();
+        process::exit(0);
+    }
+
+    if !app.is_present("theme") {
+        if app.args.is_empty() {
+            cli.print_help();
+            process::exit(0);
+        } else {
+            println!("{}\n", app.usage());
+            println!("Select a theme as the first argument. Use `--list-all` to see the themes.");
+            process::exit(1);
+        }
+    }
 
     let config = match app.value_of("config") {
         Some(c) => Some(String::from(c)),

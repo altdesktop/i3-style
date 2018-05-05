@@ -11,3 +11,7 @@ lib-cov
 /target/
 Cargo.lock
 **/*.rs.bk
+
+# legacy npm
+node_modules
+package-lock.json
