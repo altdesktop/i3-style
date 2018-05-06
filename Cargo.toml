@@ -7,9 +7,12 @@ include = ["./themes"]
 
 [dependencies]
 yaml-rust = "0.4"
-clap = "2"
+clap = "2.31.2"
 phf = "0.7.21"
 includedir = "0.4.0"
+colornamer = "0.1.0"
+regex = "1.0.0"
+lazy_static = "1.0.0"
 
 [build-dependencies]
 includedir_codegen = "0.4.0"

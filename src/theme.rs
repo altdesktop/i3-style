@@ -1,9 +1,12 @@
 extern crate yaml_rust;
+extern crate colornamer;
+extern crate regex;
 
-use yaml_rust::{Yaml};
+use yaml_rust::Yaml;
 use std::io::BufReader;
 use std::fs::File;
 use std::io::prelude::*;
+use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct ColorGroup {
@@ -60,6 +63,73 @@ pub struct Theme {
     pub bar_colors: Option<BarColors>
 }
 
+#[derive(Debug)]
+struct ColorMap {
+    colors: HashMap<String, String>
+}
+
+impl ColorMap {
+    pub fn new() -> ColorMap {
+        ColorMap {
+            colors: HashMap::new()
+        }
+    }
+
+    fn has_color(&self, hex: &String) -> bool {
+        for (key, value) in &self.colors {
+            if hex == value {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    fn add_hex(&mut self, hex: &Option<String>) {
+        lazy_static! {
+            static ref RE: regex::Regex = regex::Regex::new(r"-(\d+)$").unwrap();
+        }
+
+        match hex {
+            &Some(ref h) => {
+                let h = h.to_uppercase();
+                if self.has_color(&h) {
+                    return;
+                }
+
+                let mut color_name = colornamer::name_color_hex(h.as_str(), colornamer::Colors::Roygbiv);
+                let ref mut colors = self.colors;
+                while colors.contains_key(&color_name) {
+                    if !RE.is_match(&color_name) {
+                        color_name = color_name + "-1";
+                    } else {
+                        let cpy = color_name.clone();
+                        let captures = RE.captures(cpy.as_str()).unwrap().get(1).unwrap();
+                        let num: String = color_name.chars().skip(captures.start()).collect();
+                        let num: u32 = num.parse().unwrap();
+                        let num = num + 1;
+                        color_name = color_name.chars().take(captures.start()).collect();
+                        color_name = color_name + num.to_string().as_str();
+                    }
+                }
+                colors.insert(color_name.to_string(), h.to_string());
+            },
+            &None => ()
+        }
+    }
+
+    fn add_color_group(&mut self, group: &Option<ColorGroup>) {
+        match group {
+            &Some(ref g) => {
+                self.add_hex(&g.border);
+                self.add_hex(&g.background);
+                self.add_hex(&g.text);
+                self.add_hex(&g.indicator);
+            },
+            &None => ()
+        }
+    }
+}
+
 impl Theme {
     fn ensure_window_colors(&mut self) {
         if self.window_colors.is_none() {
@@ -84,6 +154,36 @@ impl Theme {
                 urgent_workspace: None
             });
         }
+    }
+
+    pub fn to_yaml_with_colors(self) {
+        let mut colormap = ColorMap::new();
+
+        let ref bar_colors = self.bar_colors;
+        match bar_colors {
+            &Some(ref bc) => {
+                colormap.add_hex(&bc.separator);
+                colormap.add_hex(&bc.background);
+                colormap.add_hex(&bc.statusline);
+                colormap.add_color_group(&bc.focused_workspace);
+                colormap.add_color_group(&bc.active_workspace);
+                colormap.add_color_group(&bc.inactive_workspace);
+                colormap.add_color_group(&bc.urgent_workspace);
+            },
+            &None => ()
+        }
+        let ref window_colors = self.window_colors;
+        match window_colors {
+            &Some(ref wc) => {
+                colormap.add_color_group(&wc.focused);
+                colormap.add_color_group(&wc.focused_inactive);
+                colormap.add_color_group(&wc.unfocused);
+                colormap.add_color_group(&wc.urgent);
+            },
+            &None => ()
+        }
+
+        println!("{:?}", colormap);
     }
 }
 

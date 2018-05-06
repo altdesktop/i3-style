@@ -1,3 +1,4 @@
+#[macro_use] extern crate lazy_static;
 use std::path::Path;
 use std::env;
 use std::process;
@@ -141,7 +142,7 @@ fn main() {
         process::exit(0);
     }
 
-    if app.is_present("to-theme") {
+    if app.occurrences_of("to-theme") > 0 {
         let mut config: String = String::from(app.value_of("to-theme").unwrap());
 
         if config.is_empty() {
@@ -160,7 +161,7 @@ fn main() {
 
         let theme = theme::from_config_file(&config);
 
-        println!("theme = {:?}", theme);
+        theme.to_yaml_with_colors();
 
         process::exit(0);
     }

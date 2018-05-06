@@ -206,8 +206,8 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                 writer.write(b"\n").unwrap();
                 continue;
             }
-
-            writer.write(original_line.as_bytes()).unwrap();
         }
+
+        writer.write(original_line.as_bytes()).unwrap();
     }
 }
