@@ -131,12 +131,37 @@ fn main() {
              .value_name("file")
              .help("Prints an i3-style theme based on the given config suitable for sharing with others")
              .takes_value(true)
+             .default_value("")
             );
 
     let app = cli.clone().get_matches();
 
     if app.is_present("list-all") {
         list_themes();
+        process::exit(0);
+    }
+
+    if app.is_present("to-theme") {
+        let mut config: String = String::from(app.value_of("to-theme").unwrap());
+
+        if config.is_empty() {
+            config = match app.value_of("config") {
+                Some(c) => String::from(c),
+                None => match get_system_config_path() {
+                    Some(c) =>  c,
+                    None => {
+                        exit_error("Could not find i3 config");
+                        // not reached
+                        String::from("")
+                    }
+                }
+            }
+        }
+
+        let theme = theme::from_config_file(&config);
+
+        println!("theme = {:?}", theme);
+
         process::exit(0);
     }
 

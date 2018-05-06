@@ -1,5 +1,9 @@
 extern crate yaml_rust;
+
 use yaml_rust::{Yaml};
+use std::io::BufReader;
+use std::fs::File;
+use std::io::prelude::*;
 
 #[derive(Debug)]
 pub struct ColorGroup {
@@ -17,6 +21,15 @@ impl ColorGroup {
             "text" => self.text = value,
             "indicator" => self.indicator = value,
             _ => panic!("got unknown part: {}", part)
+        }
+    }
+
+    fn empty() -> ColorGroup {
+        ColorGroup {
+            border: None,
+            background: None,
+            text: None,
+            indicator: None
         }
     }
 }
@@ -45,6 +58,33 @@ pub struct Theme {
     pub description: Option<String>,
     pub window_colors: Option<WindowColors>,
     pub bar_colors: Option<BarColors>
+}
+
+impl Theme {
+    fn ensure_window_colors(&mut self) {
+        if self.window_colors.is_none() {
+            self.window_colors = Some(WindowColors {
+                focused: None,
+                focused_inactive: None,
+                unfocused: None,
+                urgent: None
+            });
+        }
+    }
+
+    fn ensure_bar_colors(&mut self) {
+        if self.bar_colors.is_none() {
+            self.bar_colors = Some(BarColors {
+                background: None,
+                separator: None,
+                statusline: None,
+                active_workspace: None,
+                focused_workspace: None,
+                inactive_workspace: None,
+                urgent_workspace: None
+            });
+        }
+    }
 }
 
 fn parse_color(doc: &Yaml, color_spec: &Yaml) -> Option<String> {
@@ -127,4 +167,166 @@ pub fn from_yaml(doc: &Yaml) -> Theme {
         window_colors: parse_window_colors(doc),
         bar_colors: parse_bar_colors(doc)
     }
+}
+
+fn from_config_reader(input: BufReader<File>) -> Theme {
+    let mut theme = Theme {
+        description: Some("AUTOMATICALLY GENERATED THEME".to_string()),
+        window_colors: None,
+        bar_colors: None
+    };
+
+    let mut in_bar = false;
+    let mut in_colors = false;
+
+    for line in input.lines() {
+        let line = line.unwrap();
+        let line = line.trim();
+        let mut vec: Vec<&str> = Vec::new();
+
+        for word in line.split(' ') {
+            if word != "" {
+                vec.push(word);
+            }
+        }
+
+        if vec.len() == 0 || vec[0].starts_with("#") {
+            continue;
+        }
+
+        if in_colors && vec[0] == "}" {
+            in_colors = false;
+            continue;
+        } else if in_bar && vec[0] == "}" {
+            in_bar = false;
+            continue;
+        } else if vec[0] == "bar" {
+            in_bar = true;
+            continue;
+        } else if in_bar && vec[0] == "colors" {
+            in_colors = true;
+            continue;
+        }
+
+        if in_colors {
+            match vec[0] {
+                "separator" => {
+                    theme.ensure_bar_colors();
+                    let mut bar_colors = theme.bar_colors.unwrap();
+                    bar_colors.separator = Some(vec[1].to_string());
+                    theme.bar_colors = Some(bar_colors);
+                },
+                "background" => {
+                    theme.ensure_bar_colors();
+                    let mut bar_colors = theme.bar_colors.unwrap();
+                    bar_colors.background = Some(vec[1].to_string());
+                    theme.bar_colors = Some(bar_colors);
+                },
+                "statusline" => {
+                    theme.ensure_bar_colors();
+                    let mut bar_colors = theme.bar_colors.unwrap();
+                    bar_colors.statusline = Some(vec[1].to_string());
+                    theme.bar_colors = Some(bar_colors);
+                },
+                "focused_workspace" => {
+                    theme.ensure_bar_colors();
+                    let mut bar_colors = theme.bar_colors.unwrap();
+                    let mut group = bar_colors.focused_workspace.unwrap_or(ColorGroup::empty());
+                    group.border = Some(vec[1].to_string());
+                    group.background = Some(vec[2].to_string());
+                    group.text = Some(vec[3].to_string());
+                    bar_colors.focused_workspace = Some(group);
+                    theme.bar_colors = Some(bar_colors);
+                },
+                "inactive_workspace" => {
+                    theme.ensure_bar_colors();
+                    let mut bar_colors = theme.bar_colors.unwrap();
+                    let mut group = bar_colors.inactive_workspace.unwrap_or(ColorGroup::empty());
+                    group.border = Some(vec[1].to_string());
+                    group.background = Some(vec[2].to_string());
+                    group.text = Some(vec[3].to_string());
+                    bar_colors.inactive_workspace = Some(group);
+                    theme.bar_colors = Some(bar_colors);
+                },
+                "urgent_workspace" => {
+                    theme.ensure_bar_colors();
+                    let mut bar_colors = theme.bar_colors.unwrap();
+                    let mut group = bar_colors.urgent_workspace.unwrap_or(ColorGroup::empty());
+                    group.border = Some(vec[1].to_string());
+                    group.background = Some(vec[2].to_string());
+                    group.text = Some(vec[3].to_string());
+                    bar_colors.urgent_workspace = Some(group);
+                    theme.bar_colors = Some(bar_colors);
+                },
+                _ => ()
+            };
+        } else if !in_bar {
+            match vec[0] {
+                "client.focused" => {
+                    theme.ensure_window_colors();
+                    let mut window_colors = theme.window_colors.unwrap();
+                    let mut group = window_colors.focused.unwrap_or(ColorGroup::empty());
+
+                    group.border = Some(vec[1].to_string());
+                    group.background = Some(vec[2].to_string());
+                    group.text = Some(vec[3].to_string());
+                    group.indicator = Some(vec[4].to_string());
+
+                    window_colors.focused = Some(group);
+                    theme.window_colors = Some(window_colors);
+                },
+                "client.focused_inactive" => {
+                    theme.ensure_window_colors();
+                    let mut window_colors = theme.window_colors.unwrap();
+                    let mut group = window_colors.focused_inactive.unwrap_or(ColorGroup::empty());
+
+                    group.border = Some(vec[1].to_string());
+                    group.background = Some(vec[2].to_string());
+                    group.text = Some(vec[3].to_string());
+                    group.indicator = Some(vec[4].to_string());
+
+                    window_colors.focused_inactive = Some(group);
+                    theme.window_colors = Some(window_colors);
+
+                },
+                "client.unfocused" => {
+                    theme.ensure_window_colors();
+                    let mut window_colors = theme.window_colors.unwrap();
+                    let mut group = window_colors.unfocused.unwrap_or(ColorGroup::empty());
+
+                    group.border = Some(vec[1].to_string());
+                    group.background = Some(vec[2].to_string());
+                    group.text = Some(vec[3].to_string());
+                    group.indicator = Some(vec[4].to_string());
+
+                    window_colors.unfocused = Some(group);
+                    theme.window_colors = Some(window_colors);
+
+                },
+                "client.urgent" => {
+                    theme.ensure_window_colors();
+                    let mut window_colors = theme.window_colors.unwrap();
+                    let mut group = window_colors.urgent.unwrap_or(ColorGroup::empty());
+
+                    group.border = Some(vec[1].to_string());
+                    group.background = Some(vec[2].to_string());
+                    group.text = Some(vec[3].to_string());
+                    group.indicator = Some(vec[4].to_string());
+
+                    window_colors.urgent = Some(group);
+                    theme.window_colors = Some(window_colors);
+
+                },
+                _ => ()
+            };
+        }
+    }
+
+    theme
+}
+
+pub fn from_config_file(input: &String) -> Theme {
+    let input_file = File::open(input).unwrap();
+    let reader = BufReader::new(input_file);
+    from_config_reader(reader)
 }
