@@ -1,4 +1,5 @@
 #[macro_use] extern crate lazy_static;
+extern crate linked_hash_map;
 use std::path::Path;
 use std::env;
 use std::process;
@@ -9,7 +10,7 @@ extern crate includedir;
 extern crate phf;
 
 extern crate yaml_rust;
-use yaml_rust::{YamlLoader};
+use yaml_rust::{YamlLoader, YamlEmitter};
 
 extern crate clap;
 use clap::{Arg, App};
@@ -161,7 +162,14 @@ fn main() {
 
         let theme = theme::from_config_file(&config);
 
-        theme.to_yaml_with_colors();
+        let yaml = theme.to_yaml_with_colors();
+
+        let mut out_str = String::new();
+        {
+            let mut emitter = YamlEmitter::new(&mut out_str);
+            emitter.dump(&yaml).unwrap(); // dump the YAML object to a String
+        }
+        println!("{}", out_str);
 
         process::exit(0);
     }

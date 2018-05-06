@@ -1,12 +1,13 @@
 extern crate yaml_rust;
 extern crate colornamer;
 extern crate regex;
+extern crate linked_hash_map;
 
 use yaml_rust::Yaml;
 use std::io::BufReader;
 use std::fs::File;
 use std::io::prelude::*;
-use std::collections::HashMap;
+use linked_hash_map::LinkedHashMap;
 
 #[derive(Debug)]
 pub struct ColorGroup {
@@ -34,6 +35,23 @@ impl ColorGroup {
             text: None,
             indicator: None
         }
+    }
+
+    fn to_yaml(&self) -> Yaml {
+        let mut group_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
+        if self.border.is_some() {
+            group_yaml.insert(Yaml::String("border".to_string()), Yaml::String(self.border.as_ref().unwrap().to_string()));
+        }
+        if self.background.is_some() {
+            group_yaml.insert(Yaml::String("background".to_string()), Yaml::String(self.background.as_ref().unwrap().to_string()));
+        }
+        if self.text.is_some() {
+            group_yaml.insert(Yaml::String("text".to_string()), Yaml::String(self.text.as_ref().unwrap().to_string()));
+        }
+        if self.indicator.is_some() {
+            group_yaml.insert(Yaml::String("indicator".to_string()), Yaml::String(self.indicator.as_ref().unwrap().to_string()));
+        }
+        Yaml::Hash(group_yaml)
     }
 }
 
@@ -65,13 +83,13 @@ pub struct Theme {
 
 #[derive(Debug)]
 struct ColorMap {
-    colors: HashMap<String, String>
+    colors: LinkedHashMap<String, String>
 }
 
 impl ColorMap {
     pub fn new() -> ColorMap {
         ColorMap {
-            colors: HashMap::new()
+            colors: LinkedHashMap::new()
         }
     }
 
@@ -156,7 +174,7 @@ impl Theme {
         }
     }
 
-    pub fn to_yaml_with_colors(self) {
+    pub fn to_yaml_with_colors(self) -> Yaml {
         let mut colormap = ColorMap::new();
 
         let ref bar_colors = self.bar_colors;
@@ -183,7 +201,66 @@ impl Theme {
             &None => ()
         }
 
-        println!("{:?}", colormap);
+        let mut toplevel_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
+        let mut colormap_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
+        let mut metamap_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
+        let mut window_colors_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
+        let mut bar_colors_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
+
+        metamap_yaml.insert(Yaml::String("description".to_string()), Yaml::String(self.description.unwrap()));
+
+        for (key, value) in colormap.colors {
+            colormap_yaml.insert(Yaml::String(key), Yaml::String(value));
+        }
+
+        match window_colors {
+            &Some(ref wc) => {
+                if wc.focused.is_some() {
+                    window_colors_yaml.insert(Yaml::String("focused".to_string()), wc.focused.as_ref().unwrap().to_yaml());
+                }
+                if wc.focused_inactive.is_some() {
+                    window_colors_yaml.insert(Yaml::String("focused_inactive".to_string()), wc.focused_inactive.as_ref().unwrap().to_yaml());
+                }
+                if wc.unfocused.is_some() {
+                    window_colors_yaml.insert(Yaml::String("unfocused".to_string()), wc.unfocused.as_ref().unwrap().to_yaml());
+                }
+                if wc.urgent.is_some() {
+                    window_colors_yaml.insert(Yaml::String("urgent".to_string()), wc.urgent.as_ref().unwrap().to_yaml());
+                }
+            },
+            &None => ()
+        }
+
+        match bar_colors {
+            &Some(ref bc) => {
+                if bc.background.is_some() {
+                    bar_colors_yaml.insert(Yaml::String("background".to_string()), Yaml::String(bc.background.as_ref().unwrap().to_string()));
+                }
+                if bc.statusline.is_some() {
+                    bar_colors_yaml.insert(Yaml::String("statusline".to_string()), Yaml::String(bc.statusline.as_ref().unwrap().to_string()));
+                }
+                if bc.separator.is_some() {
+                    bar_colors_yaml.insert(Yaml::String("separator".to_string()), Yaml::String(bc.separator.as_ref().unwrap().to_string()));
+                }
+                if bc.focused_workspace.is_some() {
+                    bar_colors_yaml.insert(Yaml::String("focused_workspace".to_string()), bc.focused_workspace.as_ref().unwrap().to_yaml());
+                }
+                if bc.active_workspace.is_some() {
+                    bar_colors_yaml.insert(Yaml::String("active_workspace".to_string()), bc.active_workspace.as_ref().unwrap().to_yaml());
+                }
+                if bc.urgent_workspace.is_some() {
+                    bar_colors_yaml.insert(Yaml::String("urgent_workspace".to_string()), bc.urgent_workspace.as_ref().unwrap().to_yaml());
+                }
+            },
+            &None => ()
+        }
+
+        toplevel_yaml.insert(Yaml::String("meta".to_string()), Yaml::Hash(metamap_yaml));
+        toplevel_yaml.insert(Yaml::String("colors".to_string()), Yaml::Hash(colormap_yaml));
+        toplevel_yaml.insert(Yaml::String("window_colors".to_string()), Yaml::Hash(window_colors_yaml));
+        toplevel_yaml.insert(Yaml::String("bar_colors".to_string()), Yaml::Hash(bar_colors_yaml));
+
+        Yaml::Hash(toplevel_yaml)
     }
 }
 
