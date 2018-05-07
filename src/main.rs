@@ -6,6 +6,7 @@ use std::process;
 use std::fs;
 use std::fs::create_dir_all;
 use std::time::{SystemTime, UNIX_EPOCH};
+use std::process::Command;
 extern crate includedir;
 extern crate phf;
 
@@ -55,6 +56,28 @@ fn get_system_config_path() -> Option<String> {
     }
 
     None
+}
+
+fn validate_config(path: &String) -> bool {
+    let status = Command::new("command")
+        .arg("-v")
+        .arg("i3")
+        .status()
+        .unwrap();
+
+    if !status.success() {
+        println!("Could not find i3 binary in the system PATH to validate the config before parsing");
+        return false
+    }
+
+    let status = Command::new("i3")
+        .arg("-C")
+        .arg("-c")
+        .arg(path)
+        .status()
+        .unwrap();
+
+    status.success()
 }
 
 fn get_embedded_theme(name: &str) -> Option<theme::Theme> {
@@ -160,6 +183,11 @@ fn main() {
             }
         }
 
+        if (!validate_config(&config)) {
+            println!("Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
+            process::exit(1);
+        }
+
         let theme = theme::from_config_file(&config);
 
         let yaml = theme.to_yaml_with_colors();
@@ -194,6 +222,11 @@ fn main() {
         exit_error("Could not find i3 config");
     }
     let config = config.unwrap();
+
+    if (!validate_config(&config)) {
+        println!("Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
+        process::exit(1);
+    }
 
     let theme_name = app.value_of("theme").unwrap();
     let theme = get_embedded_theme(theme_name);
