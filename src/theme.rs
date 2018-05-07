@@ -37,19 +37,19 @@ impl ColorGroup {
         }
     }
 
-    fn to_yaml(&self) -> Yaml {
+    fn to_yaml(&self, color_map: &ColorMap) -> Yaml {
         let mut group_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
         if self.border.is_some() {
-            group_yaml.insert(Yaml::String("border".to_string()), Yaml::String(self.border.as_ref().unwrap().to_string()));
+            group_yaml.insert(Yaml::String("border".to_string()), Yaml::String(color_map.get_color(&self.border.as_ref().unwrap().to_string())));
         }
         if self.background.is_some() {
-            group_yaml.insert(Yaml::String("background".to_string()), Yaml::String(self.background.as_ref().unwrap().to_string()));
+            group_yaml.insert(Yaml::String("background".to_string()), Yaml::String(color_map.get_color(&self.background.as_ref().unwrap().to_string())));
         }
         if self.text.is_some() {
-            group_yaml.insert(Yaml::String("text".to_string()), Yaml::String(self.text.as_ref().unwrap().to_string()));
+            group_yaml.insert(Yaml::String("text".to_string()), Yaml::String(color_map.get_color(&self.text.as_ref().unwrap().to_string())));
         }
         if self.indicator.is_some() {
-            group_yaml.insert(Yaml::String("indicator".to_string()), Yaml::String(self.indicator.as_ref().unwrap().to_string()));
+            group_yaml.insert(Yaml::String("indicator".to_string()), Yaml::String(color_map.get_color(&self.indicator.as_ref().unwrap().to_string())));
         }
         Yaml::Hash(group_yaml)
     }
@@ -94,12 +94,22 @@ impl ColorMap {
     }
 
     fn has_color(&self, hex: &String) -> bool {
-        for (key, value) in &self.colors {
+        for (_key, value) in &self.colors {
             if hex == value {
                 return true;
             }
         }
         return false;
+    }
+
+    fn get_color(&self, hex: &String) -> String {
+        let hex_uc = hex.to_uppercase();
+        for (key, value) in &self.colors {
+            if &hex_uc == value {
+                return key.to_string();
+            }
+        }
+        return hex.to_string();
     }
 
     fn add_hex(&mut self, hex: &Option<String>) {
@@ -114,7 +124,7 @@ impl ColorMap {
                     return;
                 }
 
-                let mut color_name = colornamer::name_color_hex(h.as_str(), colornamer::Colors::Roygbiv);
+                let mut color_name = colornamer::name_color_hex(h.as_str(), colornamer::Colors::HTML);
                 let ref mut colors = self.colors;
                 while colors.contains_key(&color_name) {
                     if !RE.is_match(&color_name) {
@@ -209,23 +219,23 @@ impl Theme {
 
         metamap_yaml.insert(Yaml::String("description".to_string()), Yaml::String(self.description.unwrap()));
 
-        for (key, value) in colormap.colors {
-            colormap_yaml.insert(Yaml::String(key), Yaml::String(value));
+        for (key, value) in &colormap.colors {
+            colormap_yaml.insert(Yaml::String(key.to_string()), Yaml::String(value.to_string()));
         }
 
         match window_colors {
             &Some(ref wc) => {
                 if wc.focused.is_some() {
-                    window_colors_yaml.insert(Yaml::String("focused".to_string()), wc.focused.as_ref().unwrap().to_yaml());
+                    window_colors_yaml.insert(Yaml::String("focused".to_string()), wc.focused.as_ref().unwrap().to_yaml(&colormap));
                 }
                 if wc.focused_inactive.is_some() {
-                    window_colors_yaml.insert(Yaml::String("focused_inactive".to_string()), wc.focused_inactive.as_ref().unwrap().to_yaml());
+                    window_colors_yaml.insert(Yaml::String("focused_inactive".to_string()), wc.focused_inactive.as_ref().unwrap().to_yaml(&colormap));
                 }
                 if wc.unfocused.is_some() {
-                    window_colors_yaml.insert(Yaml::String("unfocused".to_string()), wc.unfocused.as_ref().unwrap().to_yaml());
+                    window_colors_yaml.insert(Yaml::String("unfocused".to_string()), wc.unfocused.as_ref().unwrap().to_yaml(&colormap));
                 }
                 if wc.urgent.is_some() {
-                    window_colors_yaml.insert(Yaml::String("urgent".to_string()), wc.urgent.as_ref().unwrap().to_yaml());
+                    window_colors_yaml.insert(Yaml::String("urgent".to_string()), wc.urgent.as_ref().unwrap().to_yaml(&colormap));
                 }
             },
             &None => ()
@@ -234,22 +244,22 @@ impl Theme {
         match bar_colors {
             &Some(ref bc) => {
                 if bc.background.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("background".to_string()), Yaml::String(bc.background.as_ref().unwrap().to_string()));
+                    bar_colors_yaml.insert(Yaml::String("background".to_string()), Yaml::String(colormap.get_color(&bc.background.as_ref().unwrap().to_string())));
                 }
                 if bc.statusline.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("statusline".to_string()), Yaml::String(bc.statusline.as_ref().unwrap().to_string()));
+                    bar_colors_yaml.insert(Yaml::String("statusline".to_string()), Yaml::String(colormap.get_color(&bc.statusline.as_ref().unwrap().to_string())));
                 }
                 if bc.separator.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("separator".to_string()), Yaml::String(bc.separator.as_ref().unwrap().to_string()));
+                    bar_colors_yaml.insert(Yaml::String("separator".to_string()), Yaml::String(colormap.get_color(&bc.separator.as_ref().unwrap().to_string())));
                 }
                 if bc.focused_workspace.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("focused_workspace".to_string()), bc.focused_workspace.as_ref().unwrap().to_yaml());
+                    bar_colors_yaml.insert(Yaml::String("focused_workspace".to_string()), bc.focused_workspace.as_ref().unwrap().to_yaml(&colormap));
                 }
                 if bc.active_workspace.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("active_workspace".to_string()), bc.active_workspace.as_ref().unwrap().to_yaml());
+                    bar_colors_yaml.insert(Yaml::String("active_workspace".to_string()), bc.active_workspace.as_ref().unwrap().to_yaml(&colormap));
                 }
                 if bc.urgent_workspace.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("urgent_workspace".to_string()), bc.urgent_workspace.as_ref().unwrap().to_yaml());
+                    bar_colors_yaml.insert(Yaml::String("urgent_workspace".to_string()), bc.urgent_workspace.as_ref().unwrap().to_yaml(&colormap));
                 }
             },
             &None => ()
