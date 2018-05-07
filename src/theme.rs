@@ -421,7 +421,9 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     let mut group = bar_colors.focused_workspace.unwrap_or(ColorGroup::empty());
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
-                    group.text = Some(vec[3].to_string());
+                    if vec.get(3).is_some() {
+                        group.text = Some(vec[3].to_string());
+                    }
                     bar_colors.focused_workspace = Some(group);
                     theme.bar_colors = Some(bar_colors);
                 },
@@ -431,7 +433,9 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     let mut group = bar_colors.inactive_workspace.unwrap_or(ColorGroup::empty());
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
-                    group.text = Some(vec[3].to_string());
+                    if vec.get(3).is_some() {
+                        group.text = Some(vec[3].to_string());
+                    }
                     bar_colors.inactive_workspace = Some(group);
                     theme.bar_colors = Some(bar_colors);
                 },
@@ -441,7 +445,9 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     let mut group = bar_colors.urgent_workspace.unwrap_or(ColorGroup::empty());
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
-                    group.text = Some(vec[3].to_string());
+                    if vec.get(3).is_some() {
+                        group.text = Some(vec[3].to_string());
+                    }
                     bar_colors.urgent_workspace = Some(group);
                     theme.bar_colors = Some(bar_colors);
                 },
@@ -457,7 +463,9 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
                     group.text = Some(vec[3].to_string());
-                    group.indicator = Some(vec[4].to_string());
+                    if vec.get(4).is_some() {
+                        group.indicator = Some(vec[4].to_string());
+                    }
 
                     window_colors.focused = Some(group);
                     theme.window_colors = Some(window_colors);
@@ -470,7 +478,9 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
                     group.text = Some(vec[3].to_string());
-                    group.indicator = Some(vec[4].to_string());
+                    if vec.get(4).is_some() {
+                        group.indicator = Some(vec[4].to_string());
+                    }
 
                     window_colors.focused_inactive = Some(group);
                     theme.window_colors = Some(window_colors);
@@ -484,7 +494,9 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
                     group.text = Some(vec[3].to_string());
-                    group.indicator = Some(vec[4].to_string());
+                    if vec.get(4).is_some() {
+                        group.indicator = Some(vec[4].to_string());
+                    }
 
                     window_colors.unfocused = Some(group);
                     theme.window_colors = Some(window_colors);
@@ -498,7 +510,9 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
                     group.text = Some(vec[3].to_string());
-                    group.indicator = Some(vec[4].to_string());
+                    if vec.get(4).is_some() {
+                        group.indicator = Some(vec[4].to_string());
+                    }
 
                     window_colors.urgent = Some(group);
                     theme.window_colors = Some(window_colors);
@@ -516,4 +530,20 @@ pub fn from_config_file(input: &String) -> Theme {
     let input_file = File::open(input).unwrap();
     let reader = BufReader::new(input_file);
     from_config_reader(reader)
+}
+
+#[cfg(test)]
+mod tests {
+    extern crate tempfile;
+    use super::*;
+
+    use std::fs::File;
+    use std::path::PathBuf;
+
+    #[test]
+    pub fn test_config_parsing() {
+        let mut d = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        d.push("test-configs/minimal-config");
+        let theme = from_config_file(&d.to_str().unwrap().to_string());
+    }
 }

@@ -62,7 +62,6 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
             }
 
             if in_colors {
-                // TODO handle color block here
                 if theme.bar_colors.is_none() {
                     writer.write(original_line.as_bytes()).unwrap();
                     continue;
