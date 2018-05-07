@@ -543,7 +543,38 @@ mod tests {
     #[test]
     pub fn test_config_parsing() {
         let mut d = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-        d.push("test-configs/minimal-config");
+        d.push("test-resources/minimal-config");
         let theme = from_config_file(&d.to_str().unwrap().to_string());
+
+        assert_eq!(theme.description.unwrap(), "AUTOMATICALLY GENERATED THEME");
+
+        let wc = theme.window_colors.unwrap();
+        let bc = theme.bar_colors.unwrap();
+
+        let group = wc.focused.unwrap();
+        assert_eq!(group.border, Some("#859900".to_string()));
+        assert_eq!(group.background, Some("#859900".to_string()));
+        assert_eq!(group.text, Some("#fdf6e3".to_string()));
+        assert_eq!(group.indicator, None);
+
+        let group = wc.focused_inactive.unwrap();
+        assert_eq!(group.border, Some("#073642".to_string()));
+        assert_eq!(group.background, Some("#073642".to_string()));
+        assert_eq!(group.text, Some("#eee8d5".to_string()));
+        assert_eq!(group.indicator, None);
+
+        let group = wc.unfocused.unwrap();
+        assert_eq!(group.border, Some("#073642".to_string()));
+        assert_eq!(group.background, Some("#073642".to_string()));
+        assert_eq!(group.text, Some("#93a1a1".to_string()));
+        assert_eq!(group.indicator, None);
+
+        let group = wc.urgent.unwrap();
+        assert_eq!(group.border, Some("#d33682".to_string()));
+        assert_eq!(group.background, Some("#d33682".to_string()));
+        assert_eq!(group.text, Some("#fdf6e3".to_string()));
+        assert_eq!(group.indicator, None);
+
+        // TODO finish these tests
     }
 }
