@@ -1,12 +1,15 @@
 #[macro_use] extern crate lazy_static;
 extern crate linked_hash_map;
 use std::path::Path;
+use std::fs::File;
+use std::io::prelude::*;
+use std::io::Error;
 use std::env;
 use std::process;
 use std::fs;
 use std::fs::create_dir_all;
 use std::time::{SystemTime, UNIX_EPOCH};
-use std::process::Command;
+use std::process::{Command, Stdio};
 extern crate includedir;
 extern crate phf;
 
@@ -62,6 +65,8 @@ fn validate_config(path: &String) -> bool {
     let status = Command::new("command")
         .arg("-v")
         .arg("i3")
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
         .status()
         .unwrap();
 
@@ -74,6 +79,8 @@ fn validate_config(path: &String) -> bool {
         .arg("-C")
         .arg("-c")
         .arg(path)
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
         .status()
         .unwrap();
 
@@ -93,6 +100,18 @@ fn get_embedded_theme(name: &str) -> Option<theme::Theme> {
     let doc = &docs[0];
 
     Some(theme::from_yaml(&doc))
+}
+
+fn get_theme_from_path(path: String) -> Result<theme::Theme, Error> {
+    let mut file = File::open(path)?;
+
+    let mut contents = String::new();
+    file.read_to_string(&mut contents);
+
+    let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
+    let doc = &docs[0];
+
+    Ok(theme::from_yaml(&doc))
 }
 
 fn list_themes() {
@@ -183,7 +202,7 @@ fn main() {
             }
         }
 
-        if (!validate_config(&config)) {
+        if !validate_config(&config) {
             println!("Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
             process::exit(1);
         }
@@ -223,17 +242,23 @@ fn main() {
     }
     let config = config.unwrap();
 
-    if (!validate_config(&config)) {
+    if !validate_config(&config) {
         println!("Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
         process::exit(1);
     }
 
     let theme_name = app.value_of("theme").unwrap();
-    let theme = get_embedded_theme(theme_name);
+    let mut theme: Option<theme::Theme> = get_embedded_theme(theme_name);
 
     if theme.is_none() {
         // TODO get theme from the filesystem
-        exit_error(format!("Could not find theme: {}", theme_name).as_str());
+        theme = match get_theme_from_path(theme_name.to_string()) {
+            Ok(t) => Some(t),
+            Err(e) => {
+                exit_error(format!("Could not open theme: {} - {}\n Use `i3-style --list-all` to see the available themes.", theme_name, e).as_str());
+                None
+            }
+        }
     }
     let theme = theme.unwrap();
 
