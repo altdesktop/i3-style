@@ -1,0 +1,14 @@
+# this is the minimum config but with the colors missing
+
+font pango:Fira Mono 8
+
+# I guess it needs at least one bindsym?
+bindsym Right focus right
+
+bar {
+}
+
+bar {
+  colors {
+  }
+}
