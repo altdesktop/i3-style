@@ -1,5 +1,5 @@
 [package]
-name = "rust-test"
+name = "i3-style"
 version = "0.1.0"
 authors = ["Tony Crisci <tony@dubstepdish.com>"]
 build = "build.rs"
