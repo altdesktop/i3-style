@@ -534,10 +534,8 @@ pub fn from_config_file(input: &String) -> Theme {
 
 #[cfg(test)]
 mod tests {
-    extern crate tempfile;
     use super::*;
 
-    use std::fs::File;
     use std::path::PathBuf;
 
     #[test]

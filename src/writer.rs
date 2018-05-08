@@ -4,6 +4,7 @@ use std::path::Path;
 use std::fs::File;
 
 use theme::Theme;
+use theme::from_yaml;
 
 fn leading_spaces(string: &String) -> String {
     let mut leading = String::new();
@@ -129,10 +130,12 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                     }).unwrap();
                     writer.write(b" ").unwrap();
 
-                    writer.write(match group.indicator.as_ref() {
-                        Some(color) => color.as_bytes(),
-                        None => vec[3].as_bytes()
-                    }).unwrap();
+                    if vec.get(3).is_some() || group.indicator.is_some() {
+                        writer.write(match group.indicator.as_ref() {
+                            Some(color) => color.as_bytes(),
+                            None => vec[3].as_bytes()
+                        }).unwrap();
+                    }
                     writer.write(b"\n").unwrap();
 
                     continue;
@@ -190,17 +193,22 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                 }).unwrap();
                 writer.write(b" ").unwrap();
 
-                writer.write(match group.text.as_ref() {
-                    Some(color) => color.as_bytes(),
-                    None => vec[3].as_bytes()
-                }).unwrap();
-                writer.write(b" ").unwrap();
+                if vec.get(3).is_some() || group.text.is_some() {
+                    writer.write(match group.text.as_ref() {
+                        Some(color) => color.as_bytes(),
+                        None => vec[3].as_bytes()
+                    }).unwrap();
+                    writer.write(b" ").unwrap();
 
-                writer.write(match group.indicator.as_ref() {
-                    Some(color) => color.as_bytes(),
-                    None => vec[3].as_bytes()
-                }).unwrap();
-                writer.write(b" ").unwrap();
+                    // cant write the indicator in the text field
+                    if vec.get(4).is_some() || group.indicator.is_some() {
+                        writer.write(match group.indicator.as_ref() {
+                            Some(color) => color.as_bytes(),
+                            None => vec[4].as_bytes()
+                        }).unwrap();
+                        writer.write(b" ").unwrap();
+                    }
+                }
 
                 writer.write(b"\n").unwrap();
                 continue;
@@ -208,5 +216,56 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
         }
 
         writer.write(original_line.as_bytes()).unwrap();
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    extern crate yaml_rust;
+    extern crate tempfile;
+
+    use self::tempfile::tempdir;
+    use yaml_rust::YamlLoader;
+    use std::path::PathBuf;
+
+    fn get_file_contents(path: &String) -> String {
+        let mut file = File::open(path).expect("could not open file");
+        let mut contents = String::new();
+        file.read_to_string(&mut contents);
+        contents
+    }
+
+    fn get_resource_contents(path: &str) -> String {
+        let mut d = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        d.push("test-resources");
+        d.push(path);
+        get_file_contents(&d.to_str().unwrap().to_string())
+    }
+
+    #[test]
+    fn test_minimal_config_template() {
+        let contents = get_resource_contents("test-theme.yaml");
+
+        let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
+        let doc = &docs[0];
+
+        let theme = from_yaml(&doc);
+
+        let dir = tempdir().unwrap();
+        let output_path = dir.path().join("writer-test-output").to_str().unwrap().to_string();
+
+        let mut d = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        d.push("test-resources/minimal-config");
+        let input_path = d.to_str().unwrap().to_string();
+
+        write_config(&input_path, Some(&output_path), theme);
+
+        println!("{}", output_path);
+        let contents = get_file_contents(&output_path);
+        let expected_contents = get_resource_contents("minimal-config-after-template");
+
+        assert_eq!(contents, expected_contents);
     }
 }

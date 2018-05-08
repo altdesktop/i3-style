@@ -1,63 +1,61 @@
 # vim: filetype=yaml
 ---
 meta:
-  description: 'Solarized theme by lasers'
+  description: A beige theme by Alphare
 colors:
-  base03:           '#002b36'
-  base02:           '#073642'
-  base01:           '#586e75'
-  base00:           '#657b83'
-  base0:            '#839496'
-  base1:            '#93a1a1'
-  base2:            '#eee8d5'
-  base3:            '#fdf6e3'
-  yellow:           '#b58900'
-  orange:           '#cb4b16'
-  red:              '#dc322f'
-  magenta:          '#d33682'
-  violet:           '#6c71c4'
-  blue:             '#268bd2'
-  cyan:             '#2aa198'
-  green:            '#859900'
-  custom:           '#1c5766'
+  black: '#000000'
+  oldlace: '#FDF6E3'
+  darkslategray: '#002B36'
+  steelblue: '#268BD2'
+  dimgray: '#5F676A'
+  darkslategrey: '#484E50'
+  crimson: '#DC322F'
+  steelblue1: '#4C7899'
+  steelblue2: '#285577'
+  white: '#FFFFFF'
+  darkslategrey1: '#333333'
+  black1: '#222222'
+  gray: '#888888'
+  darkslategray1: '#2F343A'
+  darkred: '#900000'
 window_colors:
   focused:
-    border:         'green'
-    background:     'green'
-    text:           'base3'
-    indicator:      'violet'
+    border: black
+    background: oldlace
+    text: darkslategray
+    indicator: black
   focused_inactive:
-    border:         'base02'
-    background:     'base02'
-    text:           'base2'
-    indicator:      'violet'
+    border: black
+    background: dimgray
+    text: oldlace
+    indicator: darkslategrey
   unfocused:
-    border:         'base02'
-    background:     'base02'
-    text:           'base1'
-    indicator:      'base01'
+    border: black
+    background: black
+    text: oldlace
+    indicator: black
   urgent:
-    border:         'magenta'
-    background:     'magenta'
-    text:           'base3'
-    indicator:      'red'
+    border: black
+    background: crimson
+    text: oldlace
+    indicator: crimson
 bar_colors:
-  separator:        'red'
-  background:       'base03'
-  statusline:       'blue'
+  background: oldlace
+  statusline: darkslategray
+  separator: black
   focused_workspace:
-    border:         'base3'
-    background:     'green'
-    text:           'base3'
+    border: black
+    background: steelblue
+    text: white
   active_workspace:
-    border:         'base3'
-    background:     'violet'
-    text:           'base3'
+    border: darkslategrey1
+    background: black1
+    text: white
   inactive_workspace:
-    border:         'base01'
-    background:     'base1'
-    text:           'base03'
+    border: darkslategrey1
+    background: black1
+    text: gray
   urgent_workspace:
-    border:         'magenta'
-    background:     'magenta'
-    text:           'base3'
+    border: darkslategray1
+    background: darkred
+    text: white
