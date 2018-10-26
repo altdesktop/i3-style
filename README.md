@@ -8,7 +8,7 @@ Make your [i3](http://i3wm.org) config a little more stylish.
 
 ## About
 
-i3-style applies a theme to your i3 config file to change the colorscheme of the window decorations and the different parts of i3bar. It's designed especially for people who make frequent changes to their colorscheme to get things just right.
+`i3-style` applies a theme to your i3 config file to change the colorscheme of the window decorations and the different parts of i3bar. It's designed especially for people who make frequent changes to their colorscheme to get things just right.
 
 * Easy to try out new themes right after you install.
 * Themes are easy to read, modify, and share.
