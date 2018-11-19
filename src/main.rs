@@ -271,6 +271,7 @@ fn main() {
     };
 
     if output.is_some() {
+        let output = output.unwrap();
         let i3_style_tmp = get_run_tmp_dir();
         let tmp_output = format!("{}/{}", i3_style_tmp, "config-output");
         let tmp_input = format!("{}/{}", i3_style_tmp, "config-input");
@@ -280,7 +281,7 @@ fn main() {
         println!("saving config at {} to {}", &config, &tmp_input);
         fs::copy(&config, &tmp_input).unwrap();
         // 3. copy the new config to the config location
-        fs::copy(&tmp_output, &config).unwrap();
+        fs::copy(&tmp_output, output).unwrap();
     } else {
         writer::write_config(&config, None, &theme);
     }
