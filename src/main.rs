@@ -25,7 +25,7 @@ mod writer;
 include!(concat!(env!("OUT_DIR"), "/data.rs"));
 
 fn exit_error(msg: &str) {
-    println!("{}", msg);
+    writeln!(&mut std::io::stderr(), "{}", msg);
     process::exit(1);
 
 }
@@ -71,7 +71,7 @@ fn validate_config(path: &String) -> bool {
         .unwrap();
 
     if !status.success() {
-        println!("Could not find i3 binary in the system PATH to validate the config before parsing");
+        writeln!(&mut std::io::stderr(), "Could not find i3 binary in the system PATH to validate the config before parsing");
         return false
     }
 
@@ -203,7 +203,7 @@ fn main() {
         }
 
         if !validate_config(&config) {
-            println!("Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
+            writeln!(&mut std::io::stderr(), "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
             process::exit(1);
         }
 
@@ -243,7 +243,7 @@ fn main() {
     let config = config.unwrap();
 
     if !validate_config(&config) {
-        println!("Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
+        writeln!(&mut std::io::stderr(), "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
         process::exit(1);
     }
 
@@ -278,7 +278,7 @@ fn main() {
         // 1. write the new config in the tmp folder
         writer::write_config(&config, Some(&tmp_output), &theme);
         // 2. copy the config to the tmp folder
-        println!("saving config at {} to {}", &config, &tmp_input);
+        writeln!(&mut std::io::stderr(), "saving config at {} to {}", &config, &tmp_input);
         fs::copy(&config, &tmp_input).unwrap();
         // 3. copy the new config to the config location
         fs::copy(&tmp_output, output).unwrap();
