@@ -1,9 +1,12 @@
 [package]
 name = "i3-style"
+description = "Make your i3 config a little more stylish"
 version = "1.0.1"
 authors = ["Tony Crisci <tony@dubstepdish.com>"]
+license = "BSD-2-Clause"
+repository = "https://github.com/acrisci/i3-style"
 build = "build.rs"
-include = ["./themes"]
+exclude = ["legacy/*", "test-resources/*"]
 
 [dependencies]
 yaml-rust = "0.4"
