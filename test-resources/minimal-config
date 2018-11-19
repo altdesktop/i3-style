@@ -1,8 +1,6 @@
-# this is the minimum config with all the colors declarations that will validate
-
+# test templating with a minimal config
 font pango:Fira Mono 8
 
-# I guess it needs at least one bindsym?
 bindsym Right focus right
 
 bar {
@@ -16,7 +14,6 @@ bar {
     urgent_workspace #d33682 #d33682
   }
 }
-
 client.focused #859900 #859900 #fdf6e3
 client.focused_inactive #073642 #073642 #eee8d5
 client.unfocused #073642 #073642 #93a1a1

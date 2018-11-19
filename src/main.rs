@@ -275,13 +275,13 @@ fn main() {
         let tmp_output = format!("{}/{}", i3_style_tmp, "config-output");
         let tmp_input = format!("{}/{}", i3_style_tmp, "config-input");
         // 1. write the new config in the tmp folder
-        writer::write_config(&config, Some(&tmp_output), theme);
+        writer::write_config(&config, Some(&tmp_output), &theme);
         // 2. copy the config to the tmp folder
         println!("saving config at {} to {}", &config, &tmp_input);
         fs::copy(&config, &tmp_input).unwrap();
         // 3. copy the new config to the config location
         fs::copy(&tmp_output, &config).unwrap();
     } else {
-        writer::write_config(&config, None, theme);
+        writer::write_config(&config, None, &theme);
     }
 }

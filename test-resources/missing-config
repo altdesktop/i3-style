@@ -1,0 +1,12 @@
+# test config templating when things are missing
+font pango:Fira Mono 8
+
+bindsym Right focus right
+
+bar {
+}
+
+bar {
+  colors {
+  }
+}

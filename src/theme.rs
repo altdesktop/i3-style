@@ -572,7 +572,5 @@ mod tests {
         assert_eq!(group.background, Some("#d33682".to_string()));
         assert_eq!(group.text, Some("#fdf6e3".to_string()));
         assert_eq!(group.indicator, None);
-
-        // TODO finish these tests
     }
 }
