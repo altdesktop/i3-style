@@ -284,4 +284,40 @@ fn main() {
     } else {
         writer::write_config(&config, None, &theme);
     }
+
+    if app.is_present("reload") {
+        if env::var_os("WAYLAND_DISPLAY").is_some() {
+            let cmd = Command::new("swaymsg")
+                .arg("reload")
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status();
+
+            match cmd {
+                Ok(result) => {
+                    // nop
+                }
+                Err(err) => {
+                    writeln!(&mut std::io::stderr(), "Could not reload config with swaymsg: {}", err);
+                }
+            }
+        } else if env::var_os("DISPLAY").is_some() {
+            let cmd = Command::new("i3-msg")
+                .arg("reload")
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status();
+
+            match cmd {
+                Ok(result) => {
+                    // nop
+                }
+                Err(err) => {
+                    writeln!(&mut std::io::stderr(), "Could not reload config with i3-msg: {}", err);
+                }
+            }
+        } else {
+            writeln!(&mut std::io::stderr(), "Could not reload config: no display environment variable set.");
+        }
+    }
 }
