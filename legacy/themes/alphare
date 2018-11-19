@@ -1,0 +1,61 @@
+# vim: filetype=yaml
+---
+meta:
+  description: A beige theme by Alphare
+colors:
+  black: '#000000'
+  oldlace: '#FDF6E3'
+  darkslategray: '#002B36'
+  steelblue: '#268BD2'
+  dimgray: '#5F676A'
+  darkslategrey: '#484E50'
+  crimson: '#DC322F'
+  steelblue1: '#4C7899'
+  steelblue2: '#285577'
+  white: '#FFFFFF'
+  darkslategrey1: '#333333'
+  black1: '#222222'
+  gray: '#888888'
+  darkslategray1: '#2F343A'
+  darkred: '#900000'
+window_colors:
+  focused:
+    border: black
+    background: oldlace
+    text: darkslategray
+    indicator: black
+  focused_inactive:
+    border: black
+    background: dimgray
+    text: oldlace
+    indicator: darkslategrey
+  unfocused:
+    border: black
+    background: black
+    text: oldlace
+    indicator: black
+  urgent:
+    border: black
+    background: crimson
+    text: oldlace
+    indicator: crimson
+bar_colors:
+  background: oldlace
+  statusline: darkslategray
+  separator: black
+  focused_workspace:
+    border: black
+    background: steelblue
+    text: white
+  active_workspace:
+    border: darkslategrey1
+    background: black1
+    text: white
+  inactive_workspace:
+    border: darkslategrey1
+    background: black1
+    text: gray
+  urgent_workspace:
+    border: darkslategray1
+    background: darkred
+    text: white

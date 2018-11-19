@@ -1,0 +1,60 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'Inspired by the Purple and Default themes. By jcpst <http://jcpst.com>'
+bar_colors:
+  separator: dimgrey
+  background: black
+  statusline: white
+  focused_workspace:
+    border: indigo
+    background: indigo
+    text: white
+  active_workspace:
+    border: darkslategrey
+    background: dimgray
+    text: white
+  inactive_workspace:
+    border: black
+    background: black
+    text: gray
+  urgent_workspace:
+    border: darkslategray
+    background: darkred
+    text: white
+colors:
+  dimgrey: '#666666'
+  black: '#000000'
+  white: '#ffffff'
+  indigo: '#551a8b'
+  darkslategrey: '#333333'
+  dimgray: '#5f676a'
+  gray: '#888888'
+  darkslategray: '#2f343a'
+  darkred: '#900000'
+  midnightblue: '#3b1261'
+  indigo1: '#662b9c'
+  darkslategrey1: '#484e50'
+  black1: '#222222'
+  darkslategray1: '#292d2e'
+window_colors:
+  focused:
+    border: midnightblue
+    background: midnightblue
+    text: white
+    indicator: indigo1
+  focused_inactive:
+    border: darkslategrey
+    background: dimgray
+    text: white
+    indicator: darkslategrey1
+  unfocused:
+    border: black1
+    background: black1
+    text: gray
+    indicator: darkslategray1
+  urgent:
+    border: darkslategray
+    background: darkred
+    text: white
+    indicator: darkred

@@ -1,6 +1,7 @@
 # vim: filetype=yaml
 ---
-description: Theme by Valentin Weber inspired by voronianski (https://github.com/voronianski/oceanic-next-color-scheme)
+meta:
+  description: Theme by Valentin Weber inspired by voronianski (https://github.com/voronianski/oceanic-next-color-scheme)
 bar_colors:
   separator: base03
   background: base00

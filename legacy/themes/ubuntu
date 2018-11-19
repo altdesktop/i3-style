@@ -1,0 +1,46 @@
+# vim: filetype=yaml
+# TODO: use color aliases to make the theme more readable
+---
+meta:
+  description: 'Ubuntu theme by lasers'
+window_colors:
+  focused:
+    border:           '#dd4814'
+    background:       '#dd4814'
+    text:             '#ffffff'
+    indicator:        '#902a07'
+  focused_inactive:
+    border:           '#5e2750'
+    background:       '#5e2750'
+    text:             '#aea79f'
+    indicator:        '#5e2750'
+  unfocused:
+    border:           '#5e2750'
+    background:       '#5e2750'
+    text:             '#aea79f'
+    indicator:        '#5e2750'
+  urgent:
+    border:           '#77216f'
+    background:       '#77216f'
+    text:             '#ffffff'
+    indicator:        '#efb73e'
+bar_colors:
+  separator:          '#333333'
+  background:         '#2c001e'
+  statusline:         '#aea79f'
+  focused_workspace:
+    border:           '#dd4814'
+    background:       '#dd4814'
+    text:             '#ffffff'
+  active_workspace:
+    border:           '#902a07'
+    background:       '#902a07'
+    text:             '#aea79f'
+  inactive_workspace:
+    border:           '#902a07'
+    background:       '#902a07'
+    text:             '#aea79f'
+  urgent_workspace:
+    border:           '#77216f'
+    background:       '#77216f'
+    text:             '#ffffff'

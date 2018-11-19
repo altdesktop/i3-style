@@ -2,6 +2,10 @@
 
 Make your [i3](http://i3wm.org) config a little more stylish.
 
+[![NPM](https://nodei.co/npm/i3-style.png?compact=true)](https://nodei.co/npm/i3-style/)
+
+[![NPM](https://nodei.co/npm-dl/i3-style.png?months=6)](https://nodei.co/npm/i3-style/)
+
 ## About
 
 `i3-style` applies a theme to your i3 config file to change the colorscheme of the window decorations and the different parts of i3bar. It's designed especially for people who make frequent changes to their colorscheme to get things just right.
@@ -10,13 +14,15 @@ Make your [i3](http://i3wm.org) config a little more stylish.
 * Themes are easy to read, modify, and share.
 * Modifies your theme in place - extra template files are not needed.
 
+For an overview of the capabilities of i3-style, see my [blog post](http://dubstepdish.com/blog/2013/11/06/introducing-i3-style/).
+
 ## Installing
 
-If you have a Rust toolchain available, you can install with Cargo:
+To install with [npm](https://npmjs.org/):
 
-    cargo install i3-style
+    npm install -g i3-style
 
-Otherwise, check the [releases](https://github.com/acrisci/i3-style/releases) page where I post precompiled binaries.
+The `i3-style` executable should now be in your PATH.
 
 ## Usage
 
@@ -25,6 +31,8 @@ Just call `i3-style` with the name of the theme you want to try and where you wa
     i3-style solarized -o ~/.config/i3/config --reload
 
 Check the `themes` directory for the list of built-in themes.
+
+If you want to modify a theme, copy it from `themes` and give it a `.yaml` extension. The object format is [well-documented](https://github.com/acrisci/i3-style/blob/master/doc/spec.md) and includes support for color aliases. Then back up your config and call i3-style.
 
     i3-style ~/.config/i3/solarized.yaml -o ~/.config/i3/config
 

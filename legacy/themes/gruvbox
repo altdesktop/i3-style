@@ -1,0 +1,54 @@
+# vim: filetype=yaml
+---
+meta:
+    description: Made by freeware-preacher <https://github.com/freeware-preacher> to match gruvbox by morhetz <https://github.com/morhetz>
+bar_colors:
+  separator: grey
+  background: black
+  statusline: wheat
+  focused_workspace:
+    border: darkseagreen
+    background: darkseagreen
+    text: black
+  active_workspace:
+    border: black1
+    background: black1
+    text: grey
+  inactive_workspace:
+    border: darkslategray
+    background: darkslategray
+    text: grey
+  urgent_workspace:
+    border: firebrick
+    background: firebrick
+    text: wheat
+colors:
+  grey: '#928374'
+  black: '#282828'
+  wheat: '#ebdbb2'
+  darkseagreen: '#689d6a'
+  black1: '#1d2021'
+  darkslategray: '#32302f'
+  firebrick: '#cc241d'
+window_colors:
+  focused:
+    border: darkseagreen
+    background: darkseagreen
+    text: black
+    indicator: black
+  focused_inactive:
+    border: black1
+    background: black1
+    text: grey
+    indicator: black
+  unfocused:
+    border: darkslategray
+    background: darkslategray
+    text: grey
+    indicator: black
+  urgent:
+    border: firebrick
+    background: firebrick
+    text: wheat
+    indicator: black
+

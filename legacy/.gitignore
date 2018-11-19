@@ -8,10 +8,9 @@ lib-cov
 *.pid
 *.gz
 
-/target/
-Cargo.lock
-**/*.rs.bk
+pids
+logs
+results
 
-# legacy npm
+npm-debug.log
 node_modules
-package-lock.json

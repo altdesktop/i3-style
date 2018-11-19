@@ -1,0 +1,46 @@
+# vim: filetype=yaml
+# TODO: use color aliases to make the theme more readable
+---
+meta:
+  description: 'Archlinux theme by okraits <http://okraits.de>'
+window_colors:
+  focused:
+    border:           '#0088CC'
+    background:       '#0088CC'
+    text:             '#ffffff'
+    indicator:        '#dddddd'
+  focused_inactive:
+    border:           '#333333'
+    background:       '#333333'
+    text:             '#888888'
+    indicator:        '#292d2e'
+  unfocused:
+    border:           '#333333'
+    background:       '#333333'
+    text:             '#888888'
+    indicator:        '#292d2e'
+  urgent:
+    border:           '#2f343a'
+    background:       '#900000'
+    text:             '#ffffff'
+    indicator:        '#900000'
+bar_colors:
+  separator:          '#666666'
+  background:         '#222222'
+  statusline:         '#dddddd'
+  focused_workspace:
+    border:           '#0088CC'
+    background:       '#0088CC'
+    text:             '#ffffff'
+  active_workspace:
+    border:           '#333333'
+    background:       '#333333'
+    text:             '#ffffff'
+  inactive_workspace:
+    border:           '#333333'
+    background:       '#333333'
+    text:             '#888888'
+  urgent_workspace:
+    border:           '#2f343a'
+    background:       '#900000'
+    text:             '#ffffff'
