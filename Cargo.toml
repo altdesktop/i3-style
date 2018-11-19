@@ -1,6 +1,6 @@
 [package]
 name = "i3-style"
-version = "0.1.0"
+version = "1.0.1"
 authors = ["Tony Crisci <tony@dubstepdish.com>"]
 build = "build.rs"
 include = ["./themes"]
@@ -14,7 +14,8 @@ colornamer = "0.1.0"
 regex = "1.0.0"
 lazy_static = "1.0.0"
 linked-hash-map = "0.5.1"
-# TODO tempfile is only used for tests
+
+[dev-dependencies]
 tempfile = "3.0.1"
 
 [build-dependencies]
