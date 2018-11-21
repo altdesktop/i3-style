@@ -1,20 +1,20 @@
-extern crate yaml_rust;
 extern crate colornamer;
-extern crate regex;
 extern crate linked_hash_map;
+extern crate regex;
+extern crate yaml_rust;
 
-use yaml_rust::Yaml;
-use std::io::BufReader;
+use linked_hash_map::LinkedHashMap;
 use std::fs::File;
 use std::io::prelude::*;
-use linked_hash_map::LinkedHashMap;
+use std::io::BufReader;
+use yaml_rust::Yaml;
 
 #[derive(Debug)]
 pub struct ColorGroup {
     pub border: Option<String>,
     pub background: Option<String>,
     pub text: Option<String>,
-    pub indicator: Option<String>
+    pub indicator: Option<String>,
 }
 
 impl ColorGroup {
@@ -24,7 +24,7 @@ impl ColorGroup {
             "background" => self.background = value,
             "text" => self.text = value,
             "indicator" => self.indicator = value,
-            _ => panic!("got unknown part: {}", part)
+            _ => panic!("got unknown part: {}", part),
         }
     }
 
@@ -33,23 +33,35 @@ impl ColorGroup {
             border: None,
             background: None,
             text: None,
-            indicator: None
+            indicator: None,
         }
     }
 
     fn to_yaml(&self, color_map: &ColorMap) -> Yaml {
         let mut group_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
         if self.border.is_some() {
-            group_yaml.insert(Yaml::String("border".to_string()), Yaml::String(color_map.get_color(&self.border.as_ref().unwrap().to_string())));
+            group_yaml.insert(
+                Yaml::String("border".to_string()),
+                Yaml::String(color_map.get_color(&self.border.as_ref().unwrap().to_string())),
+            );
         }
         if self.background.is_some() {
-            group_yaml.insert(Yaml::String("background".to_string()), Yaml::String(color_map.get_color(&self.background.as_ref().unwrap().to_string())));
+            group_yaml.insert(
+                Yaml::String("background".to_string()),
+                Yaml::String(color_map.get_color(&self.background.as_ref().unwrap().to_string())),
+            );
         }
         if self.text.is_some() {
-            group_yaml.insert(Yaml::String("text".to_string()), Yaml::String(color_map.get_color(&self.text.as_ref().unwrap().to_string())));
+            group_yaml.insert(
+                Yaml::String("text".to_string()),
+                Yaml::String(color_map.get_color(&self.text.as_ref().unwrap().to_string())),
+            );
         }
         if self.indicator.is_some() {
-            group_yaml.insert(Yaml::String("indicator".to_string()), Yaml::String(color_map.get_color(&self.indicator.as_ref().unwrap().to_string())));
+            group_yaml.insert(
+                Yaml::String("indicator".to_string()),
+                Yaml::String(color_map.get_color(&self.indicator.as_ref().unwrap().to_string())),
+            );
         }
         Yaml::Hash(group_yaml)
     }
@@ -60,7 +72,7 @@ pub struct WindowColors {
     pub focused: Option<ColorGroup>,
     pub focused_inactive: Option<ColorGroup>,
     pub unfocused: Option<ColorGroup>,
-    pub urgent: Option<ColorGroup>
+    pub urgent: Option<ColorGroup>,
 }
 
 #[derive(Debug)]
@@ -71,25 +83,25 @@ pub struct BarColors {
     pub focused_workspace: Option<ColorGroup>,
     pub active_workspace: Option<ColorGroup>,
     pub inactive_workspace: Option<ColorGroup>,
-    pub urgent_workspace: Option<ColorGroup>
+    pub urgent_workspace: Option<ColorGroup>,
 }
 
 #[derive(Debug)]
 pub struct Theme {
     pub description: Option<String>,
     pub window_colors: Option<WindowColors>,
-    pub bar_colors: Option<BarColors>
+    pub bar_colors: Option<BarColors>,
 }
 
 #[derive(Debug)]
 struct ColorMap {
-    colors: LinkedHashMap<String, String>
+    colors: LinkedHashMap<String, String>,
 }
 
 impl ColorMap {
     pub fn new() -> ColorMap {
         ColorMap {
-            colors: LinkedHashMap::new()
+            colors: LinkedHashMap::new(),
         }
     }
 
@@ -124,7 +136,8 @@ impl ColorMap {
                     return;
                 }
 
-                let mut color_name = colornamer::name_color_hex(h.as_str(), colornamer::Colors::HTML);
+                let mut color_name =
+                    colornamer::name_color_hex(h.as_str(), colornamer::Colors::HTML);
                 let ref mut colors = self.colors;
                 while colors.contains_key(&color_name) {
                     if !RE.is_match(&color_name) {
@@ -140,8 +153,8 @@ impl ColorMap {
                     }
                 }
                 colors.insert(color_name.to_string(), h.to_string());
-            },
-            &None => ()
+            }
+            &None => (),
         }
     }
 
@@ -152,8 +165,8 @@ impl ColorMap {
                 self.add_hex(&g.background);
                 self.add_hex(&g.text);
                 self.add_hex(&g.indicator);
-            },
-            &None => ()
+            }
+            &None => (),
         }
     }
 }
@@ -165,7 +178,7 @@ impl Theme {
                 focused: None,
                 focused_inactive: None,
                 unfocused: None,
-                urgent: None
+                urgent: None,
             });
         }
     }
@@ -179,7 +192,7 @@ impl Theme {
                 active_workspace: None,
                 focused_workspace: None,
                 inactive_workspace: None,
-                urgent_workspace: None
+                urgent_workspace: None,
             });
         }
     }
@@ -197,8 +210,8 @@ impl Theme {
                 colormap.add_color_group(&bc.active_workspace);
                 colormap.add_color_group(&bc.inactive_workspace);
                 colormap.add_color_group(&bc.urgent_workspace);
-            },
-            &None => ()
+            }
+            &None => (),
         }
         let ref window_colors = self.window_colors;
         match window_colors {
@@ -207,8 +220,8 @@ impl Theme {
                 colormap.add_color_group(&wc.focused_inactive);
                 colormap.add_color_group(&wc.unfocused);
                 colormap.add_color_group(&wc.urgent);
-            },
-            &None => ()
+            }
+            &None => (),
         }
 
         let mut toplevel_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
@@ -217,58 +230,109 @@ impl Theme {
         let mut window_colors_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
         let mut bar_colors_yaml: LinkedHashMap<Yaml, Yaml> = LinkedHashMap::new();
 
-        metamap_yaml.insert(Yaml::String("description".to_string()), Yaml::String(self.description.unwrap()));
+        metamap_yaml.insert(
+            Yaml::String("description".to_string()),
+            Yaml::String(self.description.unwrap()),
+        );
 
         for (key, value) in &colormap.colors {
-            colormap_yaml.insert(Yaml::String(key.to_string()), Yaml::String(value.to_string()));
+            colormap_yaml.insert(
+                Yaml::String(key.to_string()),
+                Yaml::String(value.to_string()),
+            );
         }
 
         match window_colors {
             &Some(ref wc) => {
                 if wc.focused.is_some() {
-                    window_colors_yaml.insert(Yaml::String("focused".to_string()), wc.focused.as_ref().unwrap().to_yaml(&colormap));
+                    window_colors_yaml.insert(
+                        Yaml::String("focused".to_string()),
+                        wc.focused.as_ref().unwrap().to_yaml(&colormap),
+                    );
                 }
                 if wc.focused_inactive.is_some() {
-                    window_colors_yaml.insert(Yaml::String("focused_inactive".to_string()), wc.focused_inactive.as_ref().unwrap().to_yaml(&colormap));
+                    window_colors_yaml.insert(
+                        Yaml::String("focused_inactive".to_string()),
+                        wc.focused_inactive.as_ref().unwrap().to_yaml(&colormap),
+                    );
                 }
                 if wc.unfocused.is_some() {
-                    window_colors_yaml.insert(Yaml::String("unfocused".to_string()), wc.unfocused.as_ref().unwrap().to_yaml(&colormap));
+                    window_colors_yaml.insert(
+                        Yaml::String("unfocused".to_string()),
+                        wc.unfocused.as_ref().unwrap().to_yaml(&colormap),
+                    );
                 }
                 if wc.urgent.is_some() {
-                    window_colors_yaml.insert(Yaml::String("urgent".to_string()), wc.urgent.as_ref().unwrap().to_yaml(&colormap));
+                    window_colors_yaml.insert(
+                        Yaml::String("urgent".to_string()),
+                        wc.urgent.as_ref().unwrap().to_yaml(&colormap),
+                    );
                 }
-            },
-            &None => ()
+            }
+            &None => (),
         }
 
         match bar_colors {
             &Some(ref bc) => {
                 if bc.background.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("background".to_string()), Yaml::String(colormap.get_color(&bc.background.as_ref().unwrap().to_string())));
+                    bar_colors_yaml.insert(
+                        Yaml::String("background".to_string()),
+                        Yaml::String(
+                            colormap.get_color(&bc.background.as_ref().unwrap().to_string()),
+                        ),
+                    );
                 }
                 if bc.statusline.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("statusline".to_string()), Yaml::String(colormap.get_color(&bc.statusline.as_ref().unwrap().to_string())));
+                    bar_colors_yaml.insert(
+                        Yaml::String("statusline".to_string()),
+                        Yaml::String(
+                            colormap.get_color(&bc.statusline.as_ref().unwrap().to_string()),
+                        ),
+                    );
                 }
                 if bc.separator.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("separator".to_string()), Yaml::String(colormap.get_color(&bc.separator.as_ref().unwrap().to_string())));
+                    bar_colors_yaml.insert(
+                        Yaml::String("separator".to_string()),
+                        Yaml::String(
+                            colormap.get_color(&bc.separator.as_ref().unwrap().to_string()),
+                        ),
+                    );
                 }
                 if bc.focused_workspace.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("focused_workspace".to_string()), bc.focused_workspace.as_ref().unwrap().to_yaml(&colormap));
+                    bar_colors_yaml.insert(
+                        Yaml::String("focused_workspace".to_string()),
+                        bc.focused_workspace.as_ref().unwrap().to_yaml(&colormap),
+                    );
                 }
                 if bc.active_workspace.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("active_workspace".to_string()), bc.active_workspace.as_ref().unwrap().to_yaml(&colormap));
+                    bar_colors_yaml.insert(
+                        Yaml::String("active_workspace".to_string()),
+                        bc.active_workspace.as_ref().unwrap().to_yaml(&colormap),
+                    );
                 }
                 if bc.urgent_workspace.is_some() {
-                    bar_colors_yaml.insert(Yaml::String("urgent_workspace".to_string()), bc.urgent_workspace.as_ref().unwrap().to_yaml(&colormap));
+                    bar_colors_yaml.insert(
+                        Yaml::String("urgent_workspace".to_string()),
+                        bc.urgent_workspace.as_ref().unwrap().to_yaml(&colormap),
+                    );
                 }
-            },
-            &None => ()
+            }
+            &None => (),
         }
 
         toplevel_yaml.insert(Yaml::String("meta".to_string()), Yaml::Hash(metamap_yaml));
-        toplevel_yaml.insert(Yaml::String("colors".to_string()), Yaml::Hash(colormap_yaml));
-        toplevel_yaml.insert(Yaml::String("window_colors".to_string()), Yaml::Hash(window_colors_yaml));
-        toplevel_yaml.insert(Yaml::String("bar_colors".to_string()), Yaml::Hash(bar_colors_yaml));
+        toplevel_yaml.insert(
+            Yaml::String("colors".to_string()),
+            Yaml::Hash(colormap_yaml),
+        );
+        toplevel_yaml.insert(
+            Yaml::String("window_colors".to_string()),
+            Yaml::Hash(window_colors_yaml),
+        );
+        toplevel_yaml.insert(
+            Yaml::String("bar_colors".to_string()),
+            Yaml::Hash(bar_colors_yaml),
+        );
 
         Yaml::Hash(toplevel_yaml)
     }
@@ -284,7 +348,7 @@ fn parse_color(doc: &Yaml, color_spec: &Yaml) -> Option<String> {
 
     match colors[color_spec].as_str() {
         Some(color) => Option::from(color.to_string()),
-        None => Option::from(color_spec.to_string())
+        None => Option::from(color_spec.to_string()),
     }
 }
 
@@ -302,7 +366,7 @@ fn parse_color_group(doc: &Yaml, top_key: String, bottom_key: String) -> Option<
         border: Option::None,
         background: Option::None,
         text: Option::None,
-        indicator: Option::None
+        indicator: Option::None,
     };
 
     for &part in vec!["border", "background", "text", "indicator"].iter() {
@@ -319,9 +383,13 @@ fn parse_window_colors(doc: &Yaml) -> Option<WindowColors> {
 
     Option::from(WindowColors {
         focused: parse_color_group(doc, "window_colors".to_string(), "focused".to_string()),
-        focused_inactive: parse_color_group(doc, "window_colors".to_string(), "focused_inactive".to_string()),
+        focused_inactive: parse_color_group(
+            doc,
+            "window_colors".to_string(),
+            "focused_inactive".to_string(),
+        ),
         unfocused: parse_color_group(doc, "window_colors".to_string(), "unfocused".to_string()),
-        urgent: parse_color_group(doc, "window_colors".to_string(), "urgent".to_string())
+        urgent: parse_color_group(doc, "window_colors".to_string(), "urgent".to_string()),
     })
 }
 
@@ -336,23 +404,39 @@ fn parse_bar_colors(doc: &Yaml) -> Option<BarColors> {
         separator: parse_color(&doc, &bar_colors["separator"]),
         background: parse_color(&doc, &bar_colors["background"]),
         statusline: parse_color(&doc, &bar_colors["statusline"]),
-        focused_workspace: parse_color_group(doc, "bar_colors".to_string(), "focused_workspace".to_string()),
-        active_workspace: parse_color_group(doc, "bar_colors".to_string(), "active_workspace".to_string()),
-        inactive_workspace: parse_color_group(doc, "bar_colors".to_string(), "inactive_workspace".to_string()),
-        urgent_workspace: parse_color_group(doc, "bar_colors".to_string(), "urgent_workspace".to_string())
+        focused_workspace: parse_color_group(
+            doc,
+            "bar_colors".to_string(),
+            "focused_workspace".to_string(),
+        ),
+        active_workspace: parse_color_group(
+            doc,
+            "bar_colors".to_string(),
+            "active_workspace".to_string(),
+        ),
+        inactive_workspace: parse_color_group(
+            doc,
+            "bar_colors".to_string(),
+            "inactive_workspace".to_string(),
+        ),
+        urgent_workspace: parse_color_group(
+            doc,
+            "bar_colors".to_string(),
+            "urgent_workspace".to_string(),
+        ),
     })
 }
 
 pub fn from_yaml(doc: &Yaml) -> Theme {
     let description = match doc["meta"]["description"].as_str() {
         Some(d) => Option::from(String::from(d)),
-        None => Option::None
+        None => Option::None,
     };
 
     Theme {
         description: description,
         window_colors: parse_window_colors(doc),
-        bar_colors: parse_bar_colors(doc)
+        bar_colors: parse_bar_colors(doc),
     }
 }
 
@@ -360,7 +444,7 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
     let mut theme = Theme {
         description: Some("AUTOMATICALLY GENERATED THEME".to_string()),
         window_colors: None,
-        bar_colors: None
+        bar_colors: None,
     };
 
     let mut in_bar = false;
@@ -402,19 +486,19 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     let mut bar_colors = theme.bar_colors.unwrap();
                     bar_colors.separator = Some(vec[1].to_string());
                     theme.bar_colors = Some(bar_colors);
-                },
+                }
                 "background" => {
                     theme.ensure_bar_colors();
                     let mut bar_colors = theme.bar_colors.unwrap();
                     bar_colors.background = Some(vec[1].to_string());
                     theme.bar_colors = Some(bar_colors);
-                },
+                }
                 "statusline" => {
                     theme.ensure_bar_colors();
                     let mut bar_colors = theme.bar_colors.unwrap();
                     bar_colors.statusline = Some(vec[1].to_string());
                     theme.bar_colors = Some(bar_colors);
-                },
+                }
                 "focused_workspace" => {
                     theme.ensure_bar_colors();
                     let mut bar_colors = theme.bar_colors.unwrap();
@@ -426,7 +510,7 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     }
                     bar_colors.focused_workspace = Some(group);
                     theme.bar_colors = Some(bar_colors);
-                },
+                }
                 "inactive_workspace" => {
                     theme.ensure_bar_colors();
                     let mut bar_colors = theme.bar_colors.unwrap();
@@ -438,7 +522,7 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     }
                     bar_colors.inactive_workspace = Some(group);
                     theme.bar_colors = Some(bar_colors);
-                },
+                }
                 "urgent_workspace" => {
                     theme.ensure_bar_colors();
                     let mut bar_colors = theme.bar_colors.unwrap();
@@ -450,8 +534,8 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
                     }
                     bar_colors.urgent_workspace = Some(group);
                     theme.bar_colors = Some(bar_colors);
-                },
-                _ => ()
+                }
+                _ => (),
             };
         } else if !in_bar {
             match vec[0] {
@@ -469,11 +553,13 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
 
                     window_colors.focused = Some(group);
                     theme.window_colors = Some(window_colors);
-                },
+                }
                 "client.focused_inactive" => {
                     theme.ensure_window_colors();
                     let mut window_colors = theme.window_colors.unwrap();
-                    let mut group = window_colors.focused_inactive.unwrap_or(ColorGroup::empty());
+                    let mut group = window_colors
+                        .focused_inactive
+                        .unwrap_or(ColorGroup::empty());
 
                     group.border = Some(vec[1].to_string());
                     group.background = Some(vec[2].to_string());
@@ -484,8 +570,7 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
 
                     window_colors.focused_inactive = Some(group);
                     theme.window_colors = Some(window_colors);
-
-                },
+                }
                 "client.unfocused" => {
                     theme.ensure_window_colors();
                     let mut window_colors = theme.window_colors.unwrap();
@@ -500,8 +585,7 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
 
                     window_colors.unfocused = Some(group);
                     theme.window_colors = Some(window_colors);
-
-                },
+                }
                 "client.urgent" => {
                     theme.ensure_window_colors();
                     let mut window_colors = theme.window_colors.unwrap();
@@ -516,9 +600,8 @@ fn from_config_reader(input: BufReader<File>) -> Theme {
 
                     window_colors.urgent = Some(group);
                     theme.window_colors = Some(window_colors);
-
-                },
-                _ => ()
+                }
+                _ => (),
             };
         }
     }

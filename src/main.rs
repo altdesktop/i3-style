@@ -1,23 +1,24 @@
-#[macro_use] extern crate lazy_static;
+#[macro_use]
+extern crate lazy_static;
 extern crate linked_hash_map;
-use std::path::Path;
+use std::env;
+use std::fs;
+use std::fs::create_dir_all;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::Error;
-use std::env;
+use std::path::Path;
 use std::process;
-use std::fs;
-use std::fs::create_dir_all;
-use std::time::{SystemTime, UNIX_EPOCH};
 use std::process::{Command, Stdio};
+use std::time::{SystemTime, UNIX_EPOCH};
 extern crate includedir;
 extern crate phf;
 
 extern crate yaml_rust;
-use yaml_rust::{YamlLoader, YamlEmitter};
+use yaml_rust::{YamlEmitter, YamlLoader};
 
 extern crate clap;
-use clap::{Arg, App};
+use clap::{App, Arg};
 
 mod theme;
 mod writer;
@@ -27,12 +28,12 @@ include!(concat!(env!("OUT_DIR"), "/data.rs"));
 fn exit_error(msg: &str) {
     writeln!(&mut std::io::stderr(), "{}", msg);
     process::exit(1);
-
 }
 
 fn get_run_tmp_dir() -> String {
     let start = SystemTime::now();
-    let elapsed = start.duration_since(UNIX_EPOCH)
+    let elapsed = start
+        .duration_since(UNIX_EPOCH)
         .expect("Time went backwards");
     let sec = (elapsed.as_secs() as u64) + (elapsed.subsec_nanos() as u64) / 1000_000;
     let mut tmp_dir = env::temp_dir();
@@ -49,7 +50,7 @@ fn get_system_config_path() -> Option<String> {
         format!("{}/{}", home, ".i3/config"),
         format!("{}/{}", home, ".config/i3/config"),
         String::from("/etc/i3/config"),
-        String::from("/etc/xdg/i3/config")
+        String::from("/etc/xdg/i3/config"),
     ];
 
     for p in config_path {
@@ -71,8 +72,11 @@ fn validate_config(path: &String) -> bool {
         .unwrap();
 
     if !status.success() {
-        writeln!(&mut std::io::stderr(), "Could not find i3 binary in the system PATH to validate the config before parsing");
-        return false
+        writeln!(
+            &mut std::io::stderr(),
+            "Could not find i3 binary in the system PATH to validate the config before parsing"
+        );
+        return false;
     }
 
     let status = Command::new("i3")
@@ -94,9 +98,16 @@ fn get_embedded_theme(name: &str) -> Option<theme::Theme> {
         return None;
     }
 
-    let contents = String::from_utf8(FILES.get(&format!("{}/{}", "./themes", name)).unwrap().to_vec()).expect("Theme yaml is not utf-8");
+    let contents = String::from_utf8(
+        FILES
+            .get(&format!("{}/{}", "./themes", name))
+            .unwrap()
+            .to_vec(),
+    )
+    .expect("Theme yaml is not utf-8");
 
-    let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
+    let docs =
+        YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
     let doc = &docs[0];
 
     Some(theme::from_yaml(&doc))
@@ -106,9 +117,10 @@ fn get_theme_from_path(path: String) -> Result<theme::Theme, Error> {
     let mut file = File::open(path)?;
 
     let mut contents = String::new();
-    file.read_to_string(&mut contents);
+    file.read_to_string(&mut contents)?;
 
-    let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
+    let docs =
+        YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
     let doc = &docs[0];
 
     Ok(theme::from_yaml(&doc))
@@ -119,15 +131,19 @@ fn list_themes() {
     let prefix_count = "./themes/".chars().count();
 
     for file in FILES.file_names() {
-        let contents = String::from_utf8(FILES.get(file).unwrap().to_vec()).expect("Theme yaml is not utf-8");
+        let contents =
+            String::from_utf8(FILES.get(file).unwrap().to_vec()).expect("Theme yaml is not utf-8");
 
-        let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
+        let docs =
+            YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
         let doc = &docs[0];
 
-        let description = doc["meta"]["description"].as_str().expect("Theme doesn't have a description");
+        let description = doc["meta"]["description"]
+            .as_str()
+            .expect("Theme doesn't have a description");
 
         let entry: String = file.chars().skip(prefix_count).collect();
-        let entry = format!("  {:width$} - {}", entry, description, width=18);
+        let entry = format!("  {:width$} - {}", entry, description, width = 18);
         println!("{}", entry);
     }
 }
@@ -192,18 +208,23 @@ fn main() {
             config = match app.value_of("config") {
                 Some(c) => String::from(c),
                 None => match get_system_config_path() {
-                    Some(c) =>  c,
+                    Some(c) => c,
                     None => {
                         exit_error("Could not find i3 config");
                         // not reached
                         String::from("")
                     }
-                }
+                },
             }
         }
 
         if !validate_config(&config) {
-            writeln!(&mut std::io::stderr(), "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
+            writeln!(
+                &mut std::io::stderr(),
+                "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.",
+                config,
+                config
+            );
             process::exit(1);
         }
 
@@ -234,7 +255,7 @@ fn main() {
 
     let config = match app.value_of("config") {
         Some(c) => Some(String::from(c)),
-        None => get_system_config_path()
+        None => get_system_config_path(),
     };
 
     if config.is_none() {
@@ -243,7 +264,12 @@ fn main() {
     let config = config.unwrap();
 
     if !validate_config(&config) {
-        writeln!(&mut std::io::stderr(), "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.", config, config);
+        writeln!(
+            &mut std::io::stderr(),
+            "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.",
+            config,
+            config
+        );
         process::exit(1);
     }
 
@@ -262,7 +288,7 @@ fn main() {
     }
     let theme = theme.unwrap();
 
-    let output =  if app.value_of("output").is_some() {
+    let output = if app.value_of("output").is_some() {
         app.value_of("output")
     } else if app.is_present("save") {
         Some(config.as_str().clone())
@@ -278,7 +304,12 @@ fn main() {
         // 1. write the new config in the tmp folder
         writer::write_config(&config, Some(&tmp_output), &theme);
         // 2. copy the config to the tmp folder
-        writeln!(&mut std::io::stderr(), "saving config at {} to {}", &config, &tmp_input);
+        writeln!(
+            &mut std::io::stderr(),
+            "saving config at {} to {}",
+            &config,
+            &tmp_input
+        );
         fs::copy(&config, &tmp_input).unwrap();
         // 3. copy the new config to the config location
         fs::copy(&tmp_output, output).unwrap();
@@ -295,11 +326,15 @@ fn main() {
                 .status();
 
             match cmd {
-                Ok(result) => {
+                Ok(_) => {
                     // nop
                 }
                 Err(err) => {
-                    writeln!(&mut std::io::stderr(), "Could not reload config with swaymsg: {}", err);
+                    writeln!(
+                        &mut std::io::stderr(),
+                        "Could not reload config with swaymsg: {}",
+                        err
+                    );
                 }
             }
         } else if env::var_os("DISPLAY").is_some() {
@@ -310,15 +345,22 @@ fn main() {
                 .status();
 
             match cmd {
-                Ok(result) => {
+                Ok(_) => {
                     // nop
                 }
                 Err(err) => {
-                    writeln!(&mut std::io::stderr(), "Could not reload config with i3-msg: {}", err);
+                    writeln!(
+                        &mut std::io::stderr(),
+                        "Could not reload config with i3-msg: {}",
+                        err
+                    );
                 }
             }
         } else {
-            writeln!(&mut std::io::stderr(), "Could not reload config: no display environment variable set.");
+            writeln!(
+                &mut std::io::stderr(),
+                "Could not reload config: no display environment variable set."
+            );
         }
     }
 }

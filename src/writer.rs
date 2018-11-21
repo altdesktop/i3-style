@@ -1,11 +1,10 @@
-use std::io::{BufReader, stdout};
-use std::io::prelude::*;
-use std::path::Path;
-use std::fs::File;
 use std::collections::HashSet;
+use std::fs::File;
+use std::io::prelude::*;
+use std::io::{stdout, BufReader};
+use std::path::Path;
 
 use theme::Theme;
-use theme::from_yaml;
 
 fn leading_spaces(string: &String) -> String {
     let mut leading = String::new();
@@ -88,17 +87,22 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                     });
                 }
 
-                let group_names = vec!["focused_workspace", "active_workspace", "inactive_workspace", "urgent_workspace"];
+                let group_names = vec![
+                    "focused_workspace",
+                    "active_workspace",
+                    "inactive_workspace",
+                    "urgent_workspace",
+                ];
                 for group_name in &group_names {
                     if found_bar_colors.contains(&group_name.to_string()) {
-                        continue
+                        continue;
                     }
                     let group = match group_name.as_ref() {
                         "focused_workspace" => bar_colors.focused_workspace.as_ref(),
                         "active_workspace" => bar_colors.active_workspace.as_ref(),
                         "inactive_workspace" => bar_colors.inactive_workspace.as_ref(),
                         "urgent_workspace" => bar_colors.urgent_workspace.as_ref(),
-                        _ => panic!("not reached")
+                        _ => panic!("not reached"),
                     };
                     if group.is_none() {
                         continue;
@@ -106,7 +110,8 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
 
                     let group = group.unwrap();
 
-                    if group.border.is_none() || group.background.is_none() || group.text.is_none() {
+                    if group.border.is_none() || group.background.is_none() || group.text.is_none()
+                    {
                         continue;
                     }
 
@@ -114,11 +119,17 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                     writer.write(leading.as_bytes()).unwrap();
                     writer.write(group_name.as_bytes()).unwrap();
                     writer.write(b" ").unwrap();
-                    writer.write(group.border.as_ref().unwrap().as_bytes()).unwrap();
+                    writer
+                        .write(group.border.as_ref().unwrap().as_bytes())
+                        .unwrap();
                     writer.write(b" ").unwrap();
-                    writer.write(group.background.as_ref().unwrap().as_bytes()).unwrap();
+                    writer
+                        .write(group.background.as_ref().unwrap().as_bytes())
+                        .unwrap();
                     writer.write(b" ").unwrap();
-                    writer.write(group.text.as_ref().unwrap().as_bytes()).unwrap();
+                    writer
+                        .write(group.text.as_ref().unwrap().as_bytes())
+                        .unwrap();
                     writer.write(b" ").unwrap();
 
                     match group.indicator {
@@ -127,7 +138,7 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                             writer.write(color.as_bytes()).unwrap();
                             ()
                         }
-                        None => ()
+                        None => (),
                     };
 
                     writer.write(b"\n").unwrap();
@@ -139,7 +150,7 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                 continue;
             } else if in_bar && vec[0] == "}" {
                 let bar_colors = &theme.bar_colors.as_ref().unwrap();
-                if (!colors_found) {
+                if !colors_found {
                     writer.write(b"  colors {\n").unwrap();
                     bar_colors.separator.as_ref().map(|color| {
                         writer.write(b"    separator ").unwrap();
@@ -157,14 +168,19 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                         writer.write(b"\n").unwrap();
                     });
 
-                    let group_names = vec!["focused_workspace", "active_workspace", "inactive_workspace", "urgent_workspace"];
+                    let group_names = vec![
+                        "focused_workspace",
+                        "active_workspace",
+                        "inactive_workspace",
+                        "urgent_workspace",
+                    ];
                     for group_name in &group_names {
                         let group = match group_name.as_ref() {
                             "focused_workspace" => bar_colors.focused_workspace.as_ref(),
                             "active_workspace" => bar_colors.active_workspace.as_ref(),
                             "inactive_workspace" => bar_colors.inactive_workspace.as_ref(),
                             "urgent_workspace" => bar_colors.urgent_workspace.as_ref(),
-                            _ => panic!("not reached")
+                            _ => panic!("not reached"),
                         };
                         if group.is_none() {
                             continue;
@@ -172,18 +188,27 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
 
                         let group = group.unwrap();
 
-                        if group.border.is_none() || group.background.is_none() || group.text.is_none() {
+                        if group.border.is_none()
+                            || group.background.is_none()
+                            || group.text.is_none()
+                        {
                             continue;
                         }
 
                         writer.write(b"    ").unwrap();
                         writer.write(group_name.as_bytes()).unwrap();
                         writer.write(b" ").unwrap();
-                        writer.write(group.border.as_ref().unwrap().as_bytes()).unwrap();
+                        writer
+                            .write(group.border.as_ref().unwrap().as_bytes())
+                            .unwrap();
                         writer.write(b" ").unwrap();
-                        writer.write(group.background.as_ref().unwrap().as_bytes()).unwrap();
+                        writer
+                            .write(group.background.as_ref().unwrap().as_bytes())
+                            .unwrap();
                         writer.write(b" ").unwrap();
-                        writer.write(group.text.as_ref().unwrap().as_bytes()).unwrap();
+                        writer
+                            .write(group.text.as_ref().unwrap().as_bytes())
+                            .unwrap();
                         writer.write(b" ").unwrap();
 
                         match group.indicator {
@@ -192,7 +217,7 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                                 writer.write(color.as_bytes()).unwrap();
                                 ()
                             }
-                            None => ()
+                            None => (),
                         };
 
                         writer.write(b"\n").unwrap();
@@ -220,31 +245,40 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                     writer.write(vec[0].as_bytes()).unwrap();
                     writer.write(b" ").unwrap();
 
-                    writer.write(match vec[0] {
-                        "separator" => match bar_colors.separator {
-                            Some(ref color) => color.as_bytes(),
-                            None => vec[1].as_bytes()
-                        },
-                        "background" => match bar_colors.background {
-                            Some(ref color) => color.as_bytes(),
-                            None => vec[1].as_bytes(),
-                        },
-                        "statusline" => match bar_colors.statusline {
-                            Some(ref color) => color.as_bytes(),
-                            None => vec[1].as_bytes(),
-                        },
-                        _ => vec[1].as_bytes(),
-                    }).unwrap();
+                    writer
+                        .write(match vec[0] {
+                            "separator" => match bar_colors.separator {
+                                Some(ref color) => color.as_bytes(),
+                                None => vec[1].as_bytes(),
+                            },
+                            "background" => match bar_colors.background {
+                                Some(ref color) => color.as_bytes(),
+                                None => vec[1].as_bytes(),
+                            },
+                            "statusline" => match bar_colors.statusline {
+                                Some(ref color) => color.as_bytes(),
+                                None => vec[1].as_bytes(),
+                            },
+                            _ => vec[1].as_bytes(),
+                        })
+                        .unwrap();
                     writer.write(b"\n").unwrap();
                     continue;
-                } else if vec!["focused_workspace", "active_workspace", "inactive_workspace", "urgent_workspace"].contains(&vec[0]) {
+                } else if vec![
+                    "focused_workspace",
+                    "active_workspace",
+                    "inactive_workspace",
+                    "urgent_workspace",
+                ]
+                .contains(&vec[0])
+                {
                     found_bar_colors.insert(vec[0].to_string());
                     let group = match vec[0] {
                         "focused_workspace" => bar_colors.focused_workspace.as_ref(),
                         "active_workspace" => bar_colors.active_workspace.as_ref(),
                         "inactive_workspace" => bar_colors.inactive_workspace.as_ref(),
                         "urgent_workspace" => bar_colors.urgent_workspace.as_ref(),
-                        _ => panic!("not reached")
+                        _ => panic!("not reached"),
                     };
 
                     if group.is_none() {
@@ -258,29 +292,37 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                     writer.write(vec[0].as_bytes()).unwrap();
                     writer.write(b" ").unwrap();
 
-                    writer.write(match group.border.as_ref() {
-                        Some(color) => color.as_bytes(),
-                        None => vec[1].as_bytes()
-                    }).unwrap();
+                    writer
+                        .write(match group.border.as_ref() {
+                            Some(color) => color.as_bytes(),
+                            None => vec[1].as_bytes(),
+                        })
+                        .unwrap();
                     writer.write(b" ").unwrap();
 
-                    writer.write(match group.background.as_ref() {
-                        Some(color) => color.as_bytes(),
-                        None => vec[2].as_bytes()
-                    }).unwrap();
+                    writer
+                        .write(match group.background.as_ref() {
+                            Some(color) => color.as_bytes(),
+                            None => vec[2].as_bytes(),
+                        })
+                        .unwrap();
                     writer.write(b" ").unwrap();
 
-                    writer.write(match group.text.as_ref() {
-                        Some(color) => color.as_bytes(),
-                        None => vec[3].as_bytes()
-                    }).unwrap();
+                    writer
+                        .write(match group.text.as_ref() {
+                            Some(color) => color.as_bytes(),
+                            None => vec[3].as_bytes(),
+                        })
+                        .unwrap();
 
                     if vec.get(3).is_some() || group.indicator.is_some() {
                         writer.write(b" ").unwrap();
-                        writer.write(match group.indicator.as_ref() {
-                            Some(color) => color.as_bytes(),
-                            None => vec[3].as_bytes()
-                        }).unwrap();
+                        writer
+                            .write(match group.indicator.as_ref() {
+                                Some(color) => color.as_bytes(),
+                                None => vec[3].as_bytes(),
+                            })
+                            .unwrap();
                     }
                     writer.write(b"\n").unwrap();
 
@@ -301,7 +343,14 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                 continue;
             }
 
-            if vec!["client.focused", "client.unfocused", "client.focused_inactive", "client.urgent"].contains(&vec[0]) {
+            if vec![
+                "client.focused",
+                "client.unfocused",
+                "client.focused_inactive",
+                "client.urgent",
+            ]
+            .contains(&vec[0])
+            {
                 found_window_colors.insert(vec[0].to_string());
                 if theme.window_colors.is_none() {
                     writer.write(original_line.as_bytes()).unwrap();
@@ -315,7 +364,7 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                     "client.unfocused" => window_colors.unfocused.as_ref(),
                     "client.focused_inactive" => window_colors.focused_inactive.as_ref(),
                     "client.urgent" => window_colors.urgent.as_ref(),
-                    _ => panic!("not reached")
+                    _ => panic!("not reached"),
                 };
 
                 if group.is_none() {
@@ -329,31 +378,39 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
                 writer.write(vec[0].as_bytes()).unwrap();
                 writer.write(b" ").unwrap();
 
-                writer.write(match group.border.as_ref() {
-                    Some(color) => color.as_bytes(),
-                    None => vec[1].as_bytes()
-                }).unwrap();
+                writer
+                    .write(match group.border.as_ref() {
+                        Some(color) => color.as_bytes(),
+                        None => vec[1].as_bytes(),
+                    })
+                    .unwrap();
                 writer.write(b" ").unwrap();
 
-                writer.write(match group.background.as_ref() {
-                    Some(color) => color.as_bytes(),
-                    None => vec[2].as_bytes()
-                }).unwrap();
+                writer
+                    .write(match group.background.as_ref() {
+                        Some(color) => color.as_bytes(),
+                        None => vec[2].as_bytes(),
+                    })
+                    .unwrap();
                 writer.write(b" ").unwrap();
 
                 if vec.get(3).is_some() || group.text.is_some() {
-                    writer.write(match group.text.as_ref() {
-                        Some(color) => color.as_bytes(),
-                        None => vec[3].as_bytes()
-                    }).unwrap();
+                    writer
+                        .write(match group.text.as_ref() {
+                            Some(color) => color.as_bytes(),
+                            None => vec[3].as_bytes(),
+                        })
+                        .unwrap();
                     writer.write(b" ").unwrap();
 
                     // cant write the indicator in the text field
                     if vec.get(4).is_some() || group.indicator.is_some() {
-                        writer.write(match group.indicator.as_ref() {
-                            Some(color) => color.as_bytes(),
-                            None => vec[4].as_bytes()
-                        }).unwrap();
+                        writer
+                            .write(match group.indicator.as_ref() {
+                                Some(color) => color.as_bytes(),
+                                None => vec[4].as_bytes(),
+                            })
+                            .unwrap();
                     }
                 }
 
@@ -365,7 +422,12 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
         writer.write(original_line.as_bytes()).unwrap();
     }
 
-    let window_color_names = vec!["client.focused", "client.focused_inactive", "client.unfocused", "client.urgent"];
+    let window_color_names = vec![
+        "client.focused",
+        "client.focused_inactive",
+        "client.unfocused",
+        "client.urgent",
+    ];
     for window_color_name in &window_color_names {
         if found_window_colors.contains(&window_color_name.to_string()) {
             continue;
@@ -377,7 +439,7 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
             "client.unfocused" => window_colors.unfocused.as_ref(),
             "client.focused_inactive" => window_colors.focused_inactive.as_ref(),
             "client.urgent" => window_colors.urgent.as_ref(),
-            _ => panic!("not reached")
+            _ => panic!("not reached"),
         };
 
         if group.is_none() {
@@ -386,24 +448,30 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
 
         let group = group.unwrap();
 
-        writer.write(window_color_name.as_bytes());
-        writer.write(b" ");
-        writer.write(match group.border.as_ref() {
-            Some(color) => color.as_bytes(),
-            None => b"#000000"
-        }).unwrap();
+        writer.write(window_color_name.as_bytes()).unwrap();
+        writer.write(b" ").unwrap();
+        writer
+            .write(match group.border.as_ref() {
+                Some(color) => color.as_bytes(),
+                None => b"#000000",
+            })
+            .unwrap();
         writer.write(b" ").unwrap();
 
-        writer.write(match group.background.as_ref() {
-            Some(color) => color.as_bytes(),
-            None => b"#000000"
-        }).unwrap();
+        writer
+            .write(match group.background.as_ref() {
+                Some(color) => color.as_bytes(),
+                None => b"#000000",
+            })
+            .unwrap();
         writer.write(b" ").unwrap();
 
-        writer.write(match group.text.as_ref() {
-            Some(color) => color.as_bytes(),
-            None => b"#000000"
-        }).unwrap();
+        writer
+            .write(match group.text.as_ref() {
+                Some(color) => color.as_bytes(),
+                None => b"#000000",
+            })
+            .unwrap();
 
         group.indicator.as_ref().map(|color| {
             writer.write(b" ").unwrap();
@@ -418,12 +486,12 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
 mod tests {
     use super::*;
 
-    extern crate yaml_rust;
     extern crate tempfile;
+    extern crate yaml_rust;
 
     use self::tempfile::tempdir;
-    use yaml_rust::YamlLoader;
     use std::path::PathBuf;
+    use yaml_rust::YamlLoader;
 
     fn get_file_contents(path: &String) -> String {
         let mut file = File::open(path).expect("could not open file");
@@ -443,17 +511,23 @@ mod tests {
     fn test_minimal_config_template() {
         let contents = get_resource_contents("test-theme.yaml");
 
-        let docs = YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
+        let docs =
+            YamlLoader::load_from_str(contents.as_str()).expect("Could not parse yaml for theme");
         let doc = &docs[0];
 
         let theme = from_yaml(&doc);
 
         let dir = tempdir().unwrap();
-        let output_path = dir.path().join("writer-test-output").to_str().unwrap().to_string();
+        let output_path = dir
+            .path()
+            .join("writer-test-output")
+            .to_str()
+            .unwrap()
+            .to_string();
 
         let configs = vec![
             vec!["test-resources/minimal-config", "minimal-config-expected"],
-            vec!["test-resources/missing-config", "missing-config-expected"]
+            vec!["test-resources/missing-config", "missing-config-expected"],
         ];
 
         for config in &configs {
