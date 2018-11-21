@@ -62,33 +62,38 @@ fn get_system_config_path() -> Option<String> {
     None
 }
 
-fn validate_config(path: &String) -> bool {
-    let status = Command::new("command")
-        .arg("-v")
-        .arg("i3")
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status()
-        .unwrap();
-
-    if !status.success() {
-        writeln!(
-            &mut std::io::stderr(),
-            "Could not find i3 binary in the system PATH to validate the config before parsing"
-        );
-        return false;
-    }
-
-    let status = Command::new("i3")
+fn validate_config(path: &String) -> Result<bool, Error> {
+    let cmd = Command::new("i3")
         .arg("-C")
         .arg("-c")
         .arg(path)
         .stdout(Stdio::null())
         .stderr(Stdio::null())
-        .status()
-        .unwrap();
+        .status()?;
 
-    status.success()
+    Ok(cmd.success())
+}
+
+fn validate_config_or_exit(path: &String) {
+    match validate_config(&path) {
+        Ok(result) => {
+            if !result {
+                writeln!(
+                    &mut std::io::stderr(),
+                    "Could not validate config.\nUse `i3 -C -c {}` to see validation errors.",
+                    path
+                );
+                process::exit(1);
+            }
+        }
+        Err(err) => {
+            eprintln!(
+                "Could not validate config with `i3 -C -c {}` (is i3 in the PATH?) {}",
+                path, err
+            );
+            process::exit(1);
+        }
+    }
 }
 
 fn get_embedded_theme(name: &str) -> Option<theme::Theme> {
@@ -218,15 +223,7 @@ fn main() {
             }
         }
 
-        if !validate_config(&config) {
-            writeln!(
-                &mut std::io::stderr(),
-                "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.",
-                config,
-                config
-            );
-            process::exit(1);
-        }
+        validate_config_or_exit(&config);
 
         let theme = theme::from_config_file(&config);
 
@@ -263,15 +260,7 @@ fn main() {
     }
     let config = config.unwrap();
 
-    if !validate_config(&config) {
-        writeln!(
-            &mut std::io::stderr(),
-            "Could not validate config at {}. Use `i3 -C -c {}` to see validation errors.",
-            config,
-            config
-        );
-        process::exit(1);
-    }
+    validate_config_or_exit(&config);
 
     let theme_name = app.value_of("theme").unwrap();
     let mut theme: Option<theme::Theme> = get_embedded_theme(theme_name);
