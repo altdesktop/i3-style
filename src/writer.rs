@@ -485,6 +485,7 @@ pub fn write_config_from_reader(input: BufReader<File>, output: Option<&String>,
 #[cfg(test)]
 mod tests {
     use super::*;
+    use theme::from_yaml;
 
     extern crate tempfile;
     extern crate yaml_rust;
@@ -496,7 +497,7 @@ mod tests {
     fn get_file_contents(path: &String) -> String {
         let mut file = File::open(path).expect("could not open file");
         let mut contents = String::new();
-        file.read_to_string(&mut contents);
+        file.read_to_string(&mut contents).unwrap();
         contents
     }
 

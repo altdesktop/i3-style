@@ -630,7 +630,6 @@ mod tests {
         assert_eq!(theme.description.unwrap(), "AUTOMATICALLY GENERATED THEME");
 
         let wc = theme.window_colors.unwrap();
-        let bc = theme.bar_colors.unwrap();
 
         let group = wc.focused.unwrap();
         assert_eq!(group.border, Some("#859900".to_string()));
