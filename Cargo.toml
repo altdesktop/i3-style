@@ -1,7 +1,7 @@
 [package]
 name = "i3-style"
 description = "Make your i3 config a little more stylish"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Tony Crisci <tony@dubstepdish.com>"]
 license = "BSD-2-Clause"
 repository = "https://github.com/acrisci/i3-style"
