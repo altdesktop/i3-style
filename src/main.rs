@@ -26,7 +26,7 @@ mod writer;
 include!(concat!(env!("OUT_DIR"), "/data.rs"));
 
 fn exit_error(msg: &str) {
-    writeln!(&mut std::io::stderr(), "{}", msg);
+    writeln!(&mut std::io::stderr(), "{}", msg).unwrap();
     process::exit(1);
 }
 
@@ -82,7 +82,7 @@ fn validate_config_or_exit(path: &String) {
                     &mut std::io::stderr(),
                     "Could not validate config.\nUse `i3 -C -c {}` to see validation errors.",
                     path
-                );
+                ).unwrap();
                 process::exit(1);
             }
         }
@@ -298,7 +298,7 @@ fn main() {
             "saving config at {} to {}",
             &config,
             &tmp_input
-        );
+        ).unwrap();
         fs::copy(&config, &tmp_input).unwrap();
         // 3. copy the new config to the config location
         fs::copy(&tmp_output, output).unwrap();
@@ -323,10 +323,11 @@ fn main() {
                         &mut std::io::stderr(),
                         "Could not reload config with swaymsg: {}",
                         err
-                    );
+                    ).unwrap();
+                    process::exit(1);
                 }
             }
-        } else if env::var_os("DISPLAY").is_some() {
+        } else {
             let cmd = Command::new("i3-msg")
                 .arg("reload")
                 .stdout(Stdio::null())
@@ -342,14 +343,10 @@ fn main() {
                         &mut std::io::stderr(),
                         "Could not reload config with i3-msg: {}",
                         err
-                    );
+                    ).unwrap();
+                    process::exit(1);
                 }
             }
-        } else {
-            writeln!(
-                &mut std::io::stderr(),
-                "Could not reload config: no display environment variable set."
-            );
         }
     }
 }
