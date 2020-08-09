@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 shapeshifter, by Tyler Benziger (http://tybenz.com)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#000000'
+    base01:              '#040404'
+    base02:              '#102015'
+    base03:              '#343434'
+    base04:              '#555555'
+    base05:              '#ababab'
+    base06:              '#e0e0e0'
+    base07:              '#f9f9f9'
+    base08:              '#e92f2f'
+    base09:              '#e09448'
+    base0A:              '#dddd13'
+    base0B:              '#0ed839'
+    base0C:              '#23edda'
+    base0D:              '#3b48e3'
+    base0E:              '#f996e2'
+    base0F:              '#69542d'
+
+meta:
+    description:         'Base16 shapeshifter, by Tyler Benziger (http://tybenz.com)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

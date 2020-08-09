@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 Macintosh, by Rebecca Bettencourt (http://www.kreativekorp.com)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#000000'
+    base01:              '#404040'
+    base02:              '#404040'
+    base03:              '#808080'
+    base04:              '#808080'
+    base05:              '#c0c0c0'
+    base06:              '#c0c0c0'
+    base07:              '#ffffff'
+    base08:              '#dd0907'
+    base09:              '#ff6403'
+    base0A:              '#fbf305'
+    base0B:              '#1fb714'
+    base0C:              '#02abea'
+    base0D:              '#0000d3'
+    base0E:              '#4700a5'
+    base0F:              '#90713a'
+
+meta:
+    description:         'Base16 Macintosh, by Rebecca Bettencourt (http://www.kreativekorp.com)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 IR Black, by Timothée Poisot (http://timotheepoisot.fr)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#000000'
+    base01:              '#242422'
+    base02:              '#484844'
+    base03:              '#6c6c66'
+    base04:              '#918f88'
+    base05:              '#b5b3aa'
+    base06:              '#d9d7cc'
+    base07:              '#fdfbee'
+    base08:              '#ff6c60'
+    base09:              '#e9c062'
+    base0A:              '#ffffb6'
+    base0B:              '#a8ff60'
+    base0C:              '#c6c5fe'
+    base0D:              '#96cbfe'
+    base0E:              '#ff73fd'
+    base0F:              '#b18a3d'
+
+meta:
+    description:         'Base16 IR Black, by Timothée Poisot (http://timotheepoisot.fr)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

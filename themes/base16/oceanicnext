@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 OceanicNext, by https://github.com/voronianski/oceanic-next-color-scheme
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#1B2B34'
+    base01:              '#343D46'
+    base02:              '#4F5B66'
+    base03:              '#65737E'
+    base04:              '#A7ADBA'
+    base05:              '#C0C5CE'
+    base06:              '#CDD3DE'
+    base07:              '#D8DEE9'
+    base08:              '#EC5f67'
+    base09:              '#F99157'
+    base0A:              '#FAC863'
+    base0B:              '#99C794'
+    base0C:              '#5FB3B3'
+    base0D:              '#6699CC'
+    base0E:              '#C594C5'
+    base0F:              '#AB7967'
+
+meta:
+    description:         'Base16 OceanicNext, by https://github.com/voronianski/oceanic-next-color-scheme'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 Bespin, by Jan T. Sott
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#28211c'
+    base01:              '#36312e'
+    base02:              '#5e5d5c'
+    base03:              '#666666'
+    base04:              '#797977'
+    base05:              '#8a8986'
+    base06:              '#9d9b97'
+    base07:              '#baae9e'
+    base08:              '#cf6a4c'
+    base09:              '#cf7d34'
+    base0A:              '#f9ee98'
+    base0B:              '#54be0d'
+    base0C:              '#afc4db'
+    base0D:              '#5ea6ea'
+    base0E:              '#9b859d'
+    base0F:              '#937121'
+
+meta:
+    description:         'Base16 Bespin, by Jan T. Sott'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'

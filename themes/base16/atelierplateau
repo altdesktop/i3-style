@@ -1,0 +1,66 @@
+# vim: filetype=yaml
+# i3-style Template
+# Base16 Atelier Plateau, by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/plateau)
+# template by Matt Parnell, @parnmatt
+---
+colors:
+    base00:              '#1b1818'
+    base01:              '#292424'
+    base02:              '#585050'
+    base03:              '#655d5d'
+    base04:              '#7e7777'
+    base05:              '#8a8585'
+    base06:              '#e7dfdf'
+    base07:              '#f4ecec'
+    base08:              '#ca4949'
+    base09:              '#b45a3c'
+    base0A:              '#a06e3b'
+    base0B:              '#4b8b8b'
+    base0C:              '#5485b6'
+    base0D:              '#7272ca'
+    base0E:              '#8464c4'
+    base0F:              '#bd5187'
+
+meta:
+    description:         'Base16 Atelier Plateau, by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/plateau)'
+window_colors:
+    focused:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+        indicator:       'base01'
+    focused_inactive:
+        border:          'base02'
+        background:      'base02'
+        text:            'base03'
+        indicator:       'base01'
+    unfocused:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+        indicator:       'base01'
+    urgent:
+        border:          'base02'
+        background:      'base08'
+        text:            'base07'
+        indicator:       'base08'
+bar_colors:
+    separator:           'base03'
+    background:          'base00'
+    statusline:          'base05'
+    focused_workspace:
+        border:          'base0D'
+        background:      'base0D'
+        text:            'base00'
+    active_workspace:
+        border:          'base02'
+        background:      'base02'
+        text:            'base07'
+    inactive_workspace:
+        border:          'base01'
+        background:      'base01'
+        text:            'base03'
+    urgent_workspace:
+        border:          'base08'
+        background:      'base08'
+        text:            'base07'
