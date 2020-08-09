@@ -10,6 +10,8 @@ Make your [i3](http://i3wm.org) config a little more stylish.
 * Themes are easy to read, modify, and share.
 * Modifies your theme in place - extra template files are not needed.
 
+[Chat](https://discord.gg/UdbXHVX)
+
 ## Installing
 
 If you have a Rust toolchain available, you can install with Cargo:
