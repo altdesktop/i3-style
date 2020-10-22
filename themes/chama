@@ -1,0 +1,49 @@
+# vim: filetype=yaml
+---
+meta:
+  description: 'Chama theme by xerxeslins'
+colors:
+  darkgray: "#B1A7A6"
+  black: "#0B090A"
+  lightgray: "#D3D3D3"
+  firebrick: "#BA181B"
+  white: "#FFFFFF"
+  firebrick-1: "#A4161A"
+  crimson: "#E5383B"
+  darkorange: "#F48C06"
+  black-1: "#161A1D"
+  whitesmoke: "#F5F3F4"
+window_colors:
+  focused:
+    border: firebrick
+    background: firebrick
+    text: white
+    indicator: darkorange
+  focused_inactive:
+    border: black-1
+    background: black-1
+    text: lightgray
+    indicator: black-1
+  unfocused:
+    border: black-1
+    background: black-1
+    text: lightgray
+    indicator: black-1
+  urgent:
+    border: crimson
+    background: crimson
+    text: white
+    indicator: whitesmoke
+bar_colors:
+  background: black
+  statusline: lightgray
+  separator: darkgray
+  focused_workspace:
+    border: firebrick
+    background: firebrick
+    text: white
+  urgent_workspace:
+    border: crimson
+    background: crimson
+    text: white
+
