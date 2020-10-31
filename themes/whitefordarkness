@@ -1,0 +1,41 @@
+---
+meta:
+  description: White for Darkness created by: AltArt<pedromendescraft@gmail.com>
+colors:
+  white: "#FFFFFF"
+  black: "#00000000"
+  grey: "#777777"
+  crimson: "#E53935"
+  black-1: "#000000"
+window_colors:
+  focused:
+    border: grey
+    background: grey
+    text: white
+    indicator: white
+  focused_inactive:
+    border: black
+    background: black
+    text: grey
+    indicator: black-1
+  unfocused:
+    border: black
+    background: black
+    text: grey
+    indicator: black-1
+  urgent:
+    border: crimson
+    background: crimson
+    text: white
+    indicator: white
+bar_colors:
+  background: black
+  separator: white
+  focused_workspace:
+    border: white
+    background: black
+    text: white
+  urgent_workspace:
+    border: white
+    background: crimson
+    text: white
